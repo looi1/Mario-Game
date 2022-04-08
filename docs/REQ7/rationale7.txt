@@ -1,0 +1,8 @@
+FIT2099 Assignment 1 MA_Lab10Team3
+Design Rationale
+Requirement 7
+
+-Tree, Enemy, Player, Coin implements Resettable
+-By using the Resettable interface, any additional features that happen upon a reset can be easily added.
+-All Resettables will implement a reset method that handles their own behaviour upon reset.
+

@@ -1,0 +1,29 @@
+FIT2099 Assignment 1 MA_Lab10 Team 3
+Design Rationale
+Requirement 1
+
+A new class has been created. Because the Tree class represents all of them and may be
+named its Parent class, Sprout, Sapling, and Mature will inherit from it. 
+We'll also be following along the Object Oriented Program design.
+
+New class Sprout -> Inherit from Tree class:
+It's associated to Goomba because it has a 10% chance of spawning Goomba on its position
+if no actor stands on the Sprout, which is why it depends on the abstract Actor class.
+Depending on the probability and whether or not the actor stands on it, each Sprout can
+spawn 0 or more Goomba.
+
+New class Sapling -> Inherit from Tree class:
+It's associated to Coin since it has a 10% chance of dropping a ($20) coin on its position
+every turn. Sapling can only grow from Sprout, hence it is likewise depend on Sprout 
+(10 turns).
+
+New class Mature -> Inherit from Tree class:
+It's associated to Sprout since it can grow a new Sprout in its surroundings every 5 turns
+if it's a Dirt, which is why it's also depends on Dirt. It is also associated to Koopa
+because it has a 15% chance of spawning Koopa every turn if no actor stands on it.
+As a result, it is likewise dependent on the abstract Actor class.
+
+Abstract class Tree:
+We will abstract the Tree class so that it may represent all trees. It will represent
+all of the trees and will be dependent on the Location class because we need to know
+where each tree is in order to spawn foes and drop a coin on its location.

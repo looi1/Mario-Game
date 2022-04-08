@@ -1,0 +1,37 @@
+FIT2099 Assignment 1 MA_Lab10Team3
+Design Rationale
+Requirement 5
+
+New Class: Toad
+-Represents the Toad, will handle all functionality relevant to Toad, such as trading and speaking.
+-Inherits Actor, hence obtains all the properties and functionality of an Actor, such as spawning in location, detecting proximity to Player, etc.
+
+New Class: TradeAction
+-Handles all trading-related actions.
+-Inherits Action to access all functionality related to Actions, such as displaying it in the console menu.
+-With this implementation, TradeAction holds a list of SellableItems. It is assumed that the Toad-shop has unlimited stock (Player can purchase the same item multiple times). If this is not the case, a different implementation will be favoured: using the inventory of Toad to represent the shop's items.
+
+New Static Class: Wallet
+-Handles coin storing, picking up, and deduction (for trade)
+-Chosen to be Static because Wallet never needs to be instantiated
+-Alternative: have Wallet as a permanent item in Player's inventory. This was not chosen because Wallet doesn't share many characteristics with other items.
+
+New Class: Coin
+-Represents the coin item
+-Inherits Item to access functionality common to other items which is needed for Coin, like spawning in a position, and being able to be picked up.
+-Sapling has dependency on Coin to potentially spawn it in its location.
+
+New Interface: SellableItems
+-Handles the features unique to items that are sold in the shop.
+-Items that implement this interface have an extra attribute price. This way, the price property of the object is stored inside the item's Class. (Class responsible for own properties)
+-If another item is to be included in the shop, all it needs to do is to implement this interface and add a price property. Scalable.
+
+New Class: Wrench
+-Represents the Wrench item
+-Inherits WeaponItem to access functionality common to other WeaponItems, such as chance to hit, damage.
+-Implements SellableItems.
+
+New Classes: SuperMushroom and PowerStar
+[Covered in REQ 4]
+-Implements SellableItems.
+
