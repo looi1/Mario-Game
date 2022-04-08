@@ -1,0 +1,23 @@
+FIT2099 Assignment 1 MA_Lab10Team3
+Design Rationale
+Requirement 6
+
+New Class: SpeakAction
+-Handles the speaking feature of Toad.
+-Inherits Action, to access the functionality of Actions such as printing to the console.
+-Checks CapabilitySet to get whether PowerStar effect is active.
+-Checks inventory of Player to get whether Player has a wrench.
+-Has an array of Strings for all possible dialogue of Toad. New dialogue can be easily added.
+
+New Class: Toad
+-Represents the Toad, will handle all functionality relevant to Toad, such as trading and speaking.
+-Inherits Actor, hence obtains all the properties and functionality of an Actor, such as spawning in location, detecting proximity to Player, etc.
+
+New Class: Wrench
+-Represents the Wrench item
+-Inherits WeaponItem to access functionality common to other WeaponItems, such as chance to hit, damage.
+-SpeakAction can easily check whether wrench is in Player's inventory.
+
+Changed Enum: Status
+-Extra status added representing the PowerStar effect.
+-Makes use of the existing system to scalably add new effects.
