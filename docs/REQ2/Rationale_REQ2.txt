@@ -1,0 +1,24 @@
+FIT2099 Assignment 1 MA_Lab10 Team 3
+Design Rationale
+Requirement 2
+
+We generated a new class named JumpBehaviour that inherits from the abstract Actor class
+and implements the Behaviour interface class, allowing the player to jump.
+
+Because it is the objects that the Player can jump on (each object has a different
+success rate), JumpBehaviour is dependent on the Sprout, Sapling, Mature, and Wall classes.
+It is also dependent on the Location because we need to know if the objects are adjacent
+to the Player.
+
+Because the Actor can travel down immediately if the ground is not the objects from
+previously, it is also dependent on Ground to check if it's a normal ground or not.
+
+It will also be dependent on the MagicalItems class, because when the Player consumes
+the Super Mushroom, he will have a 100% success rate and will not suffer any fall damage.
+
+The enemies class will be depending on the JumpBehaviour class because if they are
+standing on high ground (Wall, Sprout, Sapling, Mature), they can fall straight down
+if the ground adjacent to them is normal ground.
+
+Finally, we need to change the Display menu since we need to add an action if the
+Player is next to a high ground so that the Player can jump to it.
