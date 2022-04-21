@@ -51,6 +51,11 @@ public class AttackAction extends Action {
 		int damage = weapon.damage();
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
+		if(target instanceof Koopa){
+		((Koopa) target).addBehaviour(9,new FollowBehaviour(actor));}
+		else if(target instanceof Goomba){
+		((Goomba) target).addBehaviour(9,new FollowBehaviour(actor));}
+
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
 			// drop all items
