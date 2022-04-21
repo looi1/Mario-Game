@@ -20,8 +20,9 @@ public class Goomba extends Actor {
 	 * Constructor.
 	 */
 	public Goomba() {
-		super("Goomba", 'g', 50);
+		super("Goomba", 'g', 20);
 		this.behaviours.put(10, new WanderBehaviour());
+
 	}
 
 	/**
@@ -55,6 +56,10 @@ public class Goomba extends Actor {
 				return action;
 		}
 		return new DoNothingAction();
+	}
+	//ts
+	public void addBehaviour(int priority, Behaviour behave){
+		this.behaviours.put(priority,behave);
 	}
 
 }

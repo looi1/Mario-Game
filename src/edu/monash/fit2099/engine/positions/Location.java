@@ -12,7 +12,7 @@ import java.util.*;
  * Class representing a location in the game map.  This includes keeping track of exits,
  * character representation, terrain type, and other game data.
  */
-public class Location implements Printable {
+public class  Location implements Printable {
 
 	private GameMap map;
 	private int x;
