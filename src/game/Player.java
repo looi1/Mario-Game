@@ -6,7 +6,9 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
-
+import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
+import java.util.*;
 /**
  * Class representing the Player.
  */
@@ -31,6 +33,9 @@ public class Player extends Actor  {
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
+		
+		// collect coins automatically
+		collectCoin(map);
 
 		// return/print the console menu
 		return menu.showMenu(this, actions, display);
@@ -39,5 +44,11 @@ public class Player extends Actor  {
 	@Override
 	public char getDisplayChar(){
 		return this.hasCapability(Status.TALL) ? Character.toUpperCase(super.getDisplayChar()): super.getDisplayChar();
+	}
+
+	public void collectCoin(GameMap map) {
+		Location thisLocation = map.locationOf(this);
+		List<Item> itemsList = thisLocation.getItems();
+		System.out.println(itemsList);
 	}
 }

@@ -50,7 +50,7 @@ public class Application {
 
 			// FIXME: the Goomba should be generated from the Tree
 			gameMap.at(35, 10).addActor(new Goomba());
-
+			gameMap.at(35,9).addItem(new Coin(5));
 			world.run();
 
 	}
