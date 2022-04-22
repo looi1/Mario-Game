@@ -68,27 +68,7 @@ public class AttackAction extends Action {
 			result += System.lineSeparator() + target + " is killed.";
 		}
 		//hi guys i scare i forgot which method i edited so i will be leaving ts for all method i had edited
-		else{
-			if(rand.nextInt(100)<= 50){
-				if(target instanceof Goomba){
-					actor.hurt(10);
-					result += target +" attacked "+actor;
 
-				}else if(target instanceof Koopa){
-					actor.hurt(30);
-
-					result += target +" attacked "+actor;
-				}
-
-			}else{
-				result+=" "+ target + " missed!";
-			}
-			if(!actor.isConscious()){
-				map.removeActor(actor);
-			}
-
-
-		}
 		return result;
 	}
 

@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,11 @@ public class Goomba extends Actor {
 	//ts
 	public void addBehaviour(int priority, Behaviour behave){
 		this.behaviours.put(priority,behave);
+	}
+
+	@Override
+	public IntrinsicWeapon getIntrinsicWeapon() {
+		return new IntrinsicWeapon(10, " kick ");
 	}
 
 }

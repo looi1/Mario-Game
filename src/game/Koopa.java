@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,9 @@ public class Koopa extends Actor {
      * Constructor.
      */
     public Koopa() {
-        super("Koopa", 'K', 100);
+        super("Koopa", 'K', 5);
         this.behaviours.put(10, new WanderBehaviour());
+        this.addItemToInventory(new SuperMushroom("SuperMushroom",'^',true));
     }
 
     /**
@@ -57,6 +59,13 @@ public class Koopa extends Actor {
     public void addBehaviour(int priority, Behaviour behave){
         this.behaviours.put(priority,behave);
     }
+
+    @Override
+    public IntrinsicWeapon getIntrinsicWeapon() {
+        return new IntrinsicWeapon(30, "punches");
+    }
+
+
 
 }
 
