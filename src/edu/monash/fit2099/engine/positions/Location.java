@@ -163,7 +163,7 @@ public class  Location implements Printable {
 	public MoveActorAction getMoveAction(Actor actor, String direction, String hotKey) {
 		if(canActorEnter(actor))
 			return new MoveActorAction(this, direction, hotKey);
-		
+
 		return null;
 	}
 	
