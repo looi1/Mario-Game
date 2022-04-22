@@ -54,6 +54,7 @@ public class Application {
 			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(35,9).addItem(new Coin(5));
 			gameMap.at(44,10).addActor(new Toad());
+			Wallet.totalBalance = 1000;
 
 			Koopa koopa = new Koopa();
 			koopa.addBehaviour(8,new AttackBehaviour(mario));

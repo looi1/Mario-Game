@@ -2,11 +2,16 @@ package game;
 
 import edu.monash.fit2099.engine.items.Item;
 
-public class SuperMushroom extends Item {
+public class SuperMushroom extends Item implements SellableItem{
 
+    private int price = 400;
 
-    public SuperMushroom(String name, char displayChar, boolean portable) {
-        super(name, displayChar, portable);
+    public SuperMushroom() {
+        super("Super Mushroom", '^', true);
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
     

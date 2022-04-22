@@ -14,8 +14,6 @@ import java.util.*;
  */
 public class Toad extends Actor{
 
-	private ArrayList<SellableItems> shop = new ArrayList<SellableItems>();
-
     public Toad() {
 		super("Toad", 'O', 1);
 	}
@@ -23,7 +21,13 @@ public class Toad extends Actor{
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		ActionList actions = new ActionList();
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-			//actions.add(new TradeAction(shop));
+			PowerStar powerStar = new PowerStar();
+			powerStar.togglePortability();
+			SuperMushroom superMushroom = new SuperMushroom();
+			superMushroom.togglePortability();
+			actions.add(new BuyAction(powerStar));
+			actions.add(new BuyAction(superMushroom));
+			actions.add(new BuyAction(new Wrench()));
 			actions.add(new SpeakAction());
 		}
 		return actions;
@@ -32,6 +36,10 @@ public class Toad extends Actor{
 	public Action playTurn(ActionList actionList, Action action, GameMap gameMap, Display display) {
 		return new DoNothingAction();
 	}
+
+	
+
+
 
 
 }

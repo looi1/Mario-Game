@@ -21,7 +21,7 @@ public class Koopa extends Actor {
     public Koopa() {
         super("Koopa", 'K', 5);
         this.behaviours.put(10, new WanderBehaviour());
-        this.addItemToInventory(new SuperMushroom("SuperMushroom",'^',true));
+        this.addItemToInventory(new SuperMushroom());
     }
 
     /**
