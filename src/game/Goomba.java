@@ -51,6 +51,10 @@ public class Goomba extends Actor {
 	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+		if(Math.random()<=0.1){
+			map.removeActor(this);
+			return new DoNothingAction();
+		}
 		for(Behaviour Behaviour : behaviours.values()) {
 			Action action = Behaviour.getAction(this, map);
 			if (action != null)

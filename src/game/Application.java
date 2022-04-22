@@ -46,7 +46,7 @@ public class Application {
 			world.addGameMap(gameMap);
 
 			Actor mario = new Player("Player", 'm', 100);
-			world.addPlayer(mario, gameMap.at(42, 10));
+			world.addPlayer(mario, gameMap.at(32, 10));
 
 			// FIXME: the Goomba should be generated from the Tree
 			Goomba goomba = new Goomba();
@@ -58,7 +58,11 @@ public class Application {
 
 			Koopa koopa = new Koopa();
 			koopa.addBehaviour(8,new AttackBehaviour(mario));
-			gameMap.at(30,15).addActor(koopa);
+			gameMap.at(43,11).addActor(koopa);
+
+			//delete
+		Wrench wrench = new Wrench();
+		gameMap.at(33,10).addItem(wrench);
 			world.run();
 
 	}

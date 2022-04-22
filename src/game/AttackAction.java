@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 
 /**
@@ -49,8 +50,10 @@ public class AttackAction extends Action {
 		}
 
 		int damage = weapon.damage();
+
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
+
 		if(target instanceof Koopa){
 		((Koopa) target).addBehaviour(9,new FollowBehaviour(actor));}
 		else if(target instanceof Goomba){
@@ -64,10 +67,16 @@ public class AttackAction extends Action {
 			for (Action drop : dropActions)
 				drop.execute(target, map);
 			// remove actor
+
+			Location koopaLocate = map.locationOf(target);
 			map.removeActor(target);
+
+			if(target instanceof Koopa){
+				target = new Shell();
+				map.addActor(target,koopaLocate);
+			}
 			result += System.lineSeparator() + target + " is killed.";
 		}
-		//hi guys i scare i forgot which method i edited so i will be leaving ts for all method i had edited
 
 		return result;
 	}

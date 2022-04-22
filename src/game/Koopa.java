@@ -22,6 +22,7 @@ public class Koopa extends Actor {
         super("Koopa", 'K', 5);
         this.behaviours.put(10, new WanderBehaviour());
         this.addItemToInventory(new SuperMushroom());
+        //this.addItemToInventory(new Shell());
     }
 
     /**
@@ -63,6 +64,12 @@ public class Koopa extends Actor {
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(30, "punches");
+    }
+
+    public void shell(Shell shell){
+
+        //return new Shell();
+
     }
 
 

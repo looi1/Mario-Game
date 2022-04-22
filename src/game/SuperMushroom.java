@@ -12,6 +12,7 @@ public class SuperMushroom extends Item implements SellableItem{
 
     public int getPrice() {
         return price;
+        super("SuperMushroom", '^', true);
     }
 }
     
