@@ -52,7 +52,7 @@ public class Application {
 			Goomba goomba = new Goomba();
 			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(35,9).addItem(new Coin(5));
-
+			gameMap.at(44,10).addActor(new Toad());
 
 			Koopa koopa = new Koopa();
 			gameMap.at(30,15).addActor(koopa);

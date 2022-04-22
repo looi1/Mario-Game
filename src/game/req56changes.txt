@@ -1,0 +1,15 @@
+- Picking up Coins: 
+    have Coin as an Item
+        - uses PickUpItemAction, but coin goes into inventory, not Wallet
+        - will have a lot of [coin, coin, coin, coin] in inventory
+        - overriding PickUpItemAction to another action violates LSP
+        - Solution: have coin as not portable item, addAction CollectCoinAction
+        
+- Wallet:
+    is not a static class but rather a class with static methods
+
+- TradeAction:
+    should TradeAction hold the list of sellableitems or should toad?
+        - added a new Shop class to store sellableitems (SRP?) Should toad?
+        - Let's just use Toad.
+

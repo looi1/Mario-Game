@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * Records and manages the coins collected.
+ */
 public class Wallet {
     public static int totalBalance = 0;
 

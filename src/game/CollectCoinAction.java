@@ -23,15 +23,13 @@ public class CollectCoinAction extends Action {
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
-		System.out.println("CollectCoinActionExecuted");
 		map.locationOf(actor).removeItem(coin);
 		Wallet.addCoin(coin);
-		System.out.println(Wallet.totalBalance);
 		return actor + " picked up " + coin;
 	}
 
     /**
-	 * Describe the coin picked up.
+	 * Description of this action for the menu.
 	 *
 	 * @see Action#menuDescription(Actor)
 	 * @param actor The actor performing the action.
