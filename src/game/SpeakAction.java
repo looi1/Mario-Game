@@ -8,28 +8,37 @@ import java.util.*;
 
 public class SpeakAction extends Action {
 
-    private Map<Integer, String> voicelines = new HashMap<>();
+    private String[] voicelines = 
+        {
+            "You might need a wrench to smash Koopa's hard shells.",
+            "You better get back to finding the Power Stars.",
+            "The Princess is depending on you! You are our only hope.",
+            "Being imprisoned in these walls can drive a fungus crazy :(",
+        };
 
     public SpeakAction() {
-        voicelines.put(1, "You might need a wrench to smash Koopa's hard shells.");
-        voicelines.put(2, "You better get back to finding the Power Stars.");
-        voicelines.put(3, "The Princess is depending on you! You are our only hope.");
-        voicelines.put(4, "Being imprisoned in these walls can drive a fungus crazy :(");
+
     }
 
     public String execute(Actor actor, GameMap map) {
 
-        // if player.inventory.haswrench, remove first from voicelines
         for (Item item : actor.getInventory()) {
+            if (item instanceof Wrench) {
+                voicelines[0] = null;
+                System.out.println("has wrench");
+            }
         }
 
-        // if player.capability.hascapability, remove second from voicelines
         if (actor.hasCapability(Status.POWERSTAR)) {
-            voicelines.remove(2);
+            voicelines[1] = null;
+            System.out.println("has powerstar");
         }
 
-        // return a random voiceline from voicelines.
-        return "";
+        Integer randomNumber;
+        do {
+        randomNumber = new Random().nextInt(voicelines.length);
+        } while (voicelines[randomNumber].equals(null));
+        return voicelines[randomNumber];
     }
 
     public String menuDescription(Actor actor) {
