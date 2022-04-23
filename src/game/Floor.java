@@ -14,7 +14,7 @@ public class Floor extends Ground {
 	@Override
 	public boolean canActorEnter(Actor actor) {
 
-		if(actor instanceof Goomba | actor instanceof Koopa){
+		if(actor.hasCapability(Status.CANT_ENTER_FLOOR)){
 			return false;
 
 		}else{

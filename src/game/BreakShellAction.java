@@ -24,6 +24,6 @@ public class BreakShellAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " broken a "+targetShell;
+        return actor + " break the "+targetShell;
     }
 }

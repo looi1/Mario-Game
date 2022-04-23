@@ -68,12 +68,12 @@ public class AttackAction extends Action {
 				drop.execute(target, map);
 			// remove actor
 
-			Location koopaLocate = map.locationOf(target);
+			Location locate = map.locationOf(target);
 			map.removeActor(target);
 
-			if(target instanceof Koopa){
-				target = new Shell();
-				map.addActor(target,koopaLocate);
+			if(target.hasCapability(Status.HAS_SHELL)){
+				Shell shell = new Shell();
+				map.addActor(shell,locate);
 			}
 			result += System.lineSeparator() + target + " is killed.";
 		}

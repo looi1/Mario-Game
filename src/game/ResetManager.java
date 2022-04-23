@@ -1,5 +1,8 @@
 package game;
 
+import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.GameMap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,14 +47,18 @@ public class ResetManager {
      * Reset the game by traversing through all the list
      * By doing this way, it will avoid using `instanceof` all over the place.
      */
-    public void run(){
+    public void run(Actor actor, GameMap map){
+        for(Resettable item : this.resettableList){
+            item.resetInstance(actor, map);
+        }
     }
 
     /**
      * Add the Resettable instance to the list
-     * FIXME: it does nothing, you need to implement it :)
+     * FIXME: it does nothing, you need to implement it :) DONE
      */
     public void appendResetInstance(Resettable reset){
+        this.resettableList.add(reset);
     }
 
 
@@ -61,5 +68,11 @@ public class ResetManager {
      * FIXME: it does nothing, you need to implement it :)
      */
     public void cleanUp(Resettable resettable){
+        this.resettableList.remove(resettable);
+    }
+
+
+    public String menuDescription(Actor actor) {
+        return "RESET";
     }
 }

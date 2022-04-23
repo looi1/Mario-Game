@@ -12,22 +12,26 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Koopa extends Actor {
+public class Koopa extends Actor implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
     /**
      * Constructor.
      */
     public Koopa() {
-        super("Koopa", 'K', 5);
+        super("Koopa", 'K', 100);
         this.behaviours.put(10, new WanderBehaviour());
         this.addItemToInventory(new SuperMushroom());
+        this.addCapability(Status.CANT_ENTER_FLOOR);
+        this.addCapability(Status.HAS_SHELL);
+        this.registerInstance();
         //this.addItemToInventory(new Shell());
     }
 
     /**
      * At the moment, we only make it can be attacked by Player.
      * You can do something else with this method.
+     *
      * @param otherActor the Actor that might perform an action.
      * @param direction  String representing the direction of the other Actor
      * @param map        current GameMap
@@ -38,27 +42,29 @@ public class Koopa extends Actor {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
         // it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
-        if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-            actions.add(new AttackAction(this,direction));
+        if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
+            actions.add(new AttackAction(this, direction));
         }
         return actions;
     }
 
     /**
      * Figure out what to do next.
+     *
      * @see Actor#playTurn(ActionList, Action, GameMap, Display)
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        for(Behaviour Behaviour : behaviours.values()) {
+        for (Behaviour Behaviour : behaviours.values()) {
             Action action = Behaviour.getAction(this, map);
             if (action != null)
                 return action;
         }
         return new DoNothingAction();
     }
-    public void addBehaviour(int priority, Behaviour behave){
-        this.behaviours.put(priority,behave);
+
+    public void addBehaviour(int priority, Behaviour behave) {
+        this.behaviours.put(priority, behave);
     }
 
     @Override
@@ -66,13 +72,12 @@ public class Koopa extends Actor {
         return new IntrinsicWeapon(30, "punches");
     }
 
-    public void shell(Shell shell){
 
-        //return new Shell();
+    @Override
+    public void resetInstance(Actor actor, GameMap map) {
+        map.removeActor(this);
+
 
     }
-
-
-
 }
 

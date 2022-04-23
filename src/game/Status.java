@@ -9,4 +9,6 @@ public enum Status {
     TALL, // use this status to tell that current instance has "grown".
     POWERSTAR,
     BREAK_SHELL,
+    CANT_ENTER_FLOOR,
+    HAS_SHELL,
 }

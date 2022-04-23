@@ -58,12 +58,17 @@ public class Application {
 
 			Koopa koopa = new Koopa();
 			koopa.addBehaviour(8,new AttackBehaviour(mario));
-			gameMap.at(43,11).addActor(koopa);
+			gameMap.at(43,18).addActor(koopa);
 
 			//delete
 		Wrench wrench = new Wrench();
 		gameMap.at(33,10).addItem(wrench);
+
+
 			world.run();
+
+
+
 
 	}
 }
