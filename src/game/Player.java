@@ -40,9 +40,10 @@ public class Player extends Actor implements Resettable  {
 
 		if (reset != null){
 			actions.add(reset);}
-
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
+
+		expireStatus();
 
 		// return/print the console menu
 		return menu.showMenu(this, actions, display);
@@ -79,8 +80,7 @@ public class Player extends Actor implements Resettable  {
 
 	}
 
-	// addsupermushroomeffect()
-	/*
-	initialHealth
-	**/
+	public void expireStatus() {
+
+	}
 }
