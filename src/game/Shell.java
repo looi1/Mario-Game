@@ -32,7 +32,7 @@ public class Shell extends Actor {
         String result = "";
 
         //location.map().removeActor(actor);
-        location.addItem(new SuperMushroom());
+        //location.addItem(new SuperMushroom());
         result+= actor + " broken a "+ this;
 
         return result;

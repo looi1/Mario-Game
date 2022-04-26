@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * A little fungus guy.
  */
-public class Goomba extends Actor implements Resettable {
+public class Goomba extends Enemies implements Resettable {
 	private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
 	/**
@@ -65,7 +65,8 @@ public class Goomba extends Actor implements Resettable {
 		return new DoNothingAction();
 	}
 	//ts to add the enemies behaviour
-	public void addBehaviour(int priority, Behaviour behave){
+	@Override
+	public void addBehaviour( int priority, Behaviour behave){
 		this.behaviours.put(priority,behave);
 	}
 

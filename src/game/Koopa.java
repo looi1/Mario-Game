@@ -12,7 +12,7 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Koopa extends Actor implements Resettable {
+public class Koopa extends Enemies implements Resettable{
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
     /**
@@ -62,7 +62,7 @@ public class Koopa extends Actor implements Resettable {
         }
         return new DoNothingAction();
     }
-
+    @Override
     public void addBehaviour(int priority, Behaviour behave) {
         this.behaviours.put(priority, behave);
     }
