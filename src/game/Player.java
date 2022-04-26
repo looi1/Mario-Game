@@ -55,18 +55,7 @@ public class Player extends Actor implements Resettable  {
 		return this.hasCapability(Status.TALL) ? Character.toUpperCase(super.getDisplayChar()): super.getDisplayChar();
 	}
 
-	@Override
-	//ts
-	//player attack by enemies
-	public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-		ActionList actions = new ActionList();
-		//actions.add(new ResetAction());
-		// it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
-		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-			actions.add(new AttackAction(this,direction));
-		}
-		return actions;
-	}
+
 
 	@Override
 	public void resetInstance(Actor actor, GameMap map) {

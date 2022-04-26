@@ -18,7 +18,7 @@ public class AttackAction extends Action {
 	/**
 	 * The Actor that is to be attacked
 	 */
-	protected Actor target;
+	protected Enemies target;
 
 	/**
 	 * The direction of incoming attack.
@@ -35,7 +35,7 @@ public class AttackAction extends Action {
 	 * 
 	 * @param target the Actor to attack
 	 */
-	public AttackAction(Actor target, String direction) {
+	public AttackAction(Enemies target, String direction) {
 		this.target = target;
 		this.direction = direction;
 	}
@@ -53,11 +53,10 @@ public class AttackAction extends Action {
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
+		target.addBehaviour(9,new FollowBehaviour(actor));
 
-		if(target instanceof Koopa){
-		((Koopa) target).addBehaviour(9,new FollowBehaviour(actor));}
-		else if(target instanceof Goomba){
-		((Goomba) target).addBehaviour(9,new FollowBehaviour(actor));}
+
+
 
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
