@@ -11,4 +11,6 @@ public enum Status {
     BREAK_SHELL,
     CANT_ENTER_FLOOR,
     HAS_SHELL,
+    HAS_SPMUSHROOM,
+    HAS_POWERSTAR
 }

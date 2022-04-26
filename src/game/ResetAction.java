@@ -12,6 +12,7 @@ public class ResetAction extends Action {
     public static ResetAction getInstance(){
         if(marker==0){
             instance = new ResetAction();
+
         }else if(instance != null){
             instance = null;
         }
@@ -26,7 +27,7 @@ public class ResetAction extends Action {
     public String execute(Actor actor, GameMap map) {
             String result = "";
 
-
+            result+= actor.getInventory().toString()+" ";
 
             ResetManager.getInstance().run(actor,map);
 
