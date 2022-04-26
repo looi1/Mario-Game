@@ -32,6 +32,7 @@ public class ResetManager {
     public static ResetManager getInstance(){
         if(instance == null){
             instance = new ResetManager();
+
         }
         return instance;
     }
