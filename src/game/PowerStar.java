@@ -2,7 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.items.Item;
 
-public class PowerStar extends Item implements SellableItem{
+public class PowerStar extends Item implements SellableItem, Consumables{
 
     private int price = 600;
 
@@ -12,5 +12,9 @@ public class PowerStar extends Item implements SellableItem{
 
     public int getPrice() {
         return price;
+    }
+
+    public void consume() {
+        
     }
 }
