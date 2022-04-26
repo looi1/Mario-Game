@@ -25,6 +25,23 @@ public class Tree extends Ground implements Resettable {
     @Override
     public void resetInstance(Actor actor, GameMap map) {
         if(randnum.nextInt(100)<=50){
+                int minX = map.getXRange().min();
+                int maxX = map.getXRange().max();
+
+                int minY = map.getYRange().min();
+                int maxY = map.getYRange().max();
+
+                for(int i=0; i<(minX+maxX);i++){
+
+                    for(int j=0 ; j<(minY+maxY);j++){
+
+                        if (map.at(i,j).getGround()==this){
+                            map.at(i,j).setGround(new Dirt());
+                    }
+
+                }
+
+            }
 
 
         }

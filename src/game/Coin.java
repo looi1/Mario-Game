@@ -3,6 +3,7 @@ package game;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 
 public class Coin extends Item implements Resettable{
 
@@ -31,9 +32,19 @@ public class Coin extends Item implements Resettable{
     @Override
     public void resetInstance(Actor actor, GameMap map) {
 
+        int minX = map.getXRange().min();
+        int maxX = map.getXRange().max();
 
+        int minY = map.getYRange().min();
+        int maxY = map.getYRange().max();
 
+        for(int i=0; i<(minX+maxX);i++){
 
+            for(int j=0 ; j<(minY+maxY);j++){
+                map.at(i,j).removeItem(this);
+            }
+
+        }
 
     }
 }
