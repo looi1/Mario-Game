@@ -29,7 +29,7 @@ public class SpeakAction extends Action {
             }
         }
 
-        if (actor.hasCapability(Status.POWERSTAR)) {
+        if (actor.capabilitiesList().contains(Status.POWERSTAR)) {
             voicelines[1] = null;
             System.out.println("has powerstar");
         }

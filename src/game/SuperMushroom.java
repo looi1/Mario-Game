@@ -8,11 +8,15 @@ public class SuperMushroom extends Item implements SellableItem{
 
     public SuperMushroom() {
         super("Super Mushroom", '^', true);
+        // player.status has no supermushroom, 
+        super.addAction(new ConsumeSuperMushroomAction());
+
+
     }
+
 
     public int getPrice() {
         return price;
-        //super("SuperMushroom", '^', true);
     }
 }
     
