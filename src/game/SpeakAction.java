@@ -8,6 +8,7 @@ import java.util.*;
 
 public class SpeakAction extends Action {
 
+    private boolean toadSpeaking;
     private String[] voicelines = 
         {
             "You might need a wrench to smash Koopa's hard shells.",
@@ -16,29 +17,41 @@ public class SpeakAction extends Action {
             "Being imprisoned in these walls can drive a fungus crazy :(",
         };
 
-    public SpeakAction() {
-
+    public SpeakAction(boolean toadSpeaking) {
+        this.toadSpeaking = toadSpeaking;
     }
 
     public String execute(Actor actor, GameMap map) {
 
-        for (Item item : actor.getInventory()) {
-            if (item instanceof Wrench) {
-                voicelines[0] = null;
-                System.out.println("has wrench");
+        if (toadSpeaking) {
+            for (Item item : actor.getInventory()) {
+                if (item instanceof Wrench) {
+                    voicelines[0] = null;
+                }
             }
-        }
 
-        if (actor.capabilitiesList().contains(Status.POWERSTAR)) {
-            voicelines[1] = null;
-            System.out.println("has powerstar");
-        }
+            if (actor.capabilitiesList().contains(Status.POWERSTAR)) {
+                voicelines[1] = null;
+            }
 
-        Integer randomNumber;
-        do {
-        randomNumber = new Random().nextInt(voicelines.length);
-        } while (voicelines[randomNumber].equals(null));
-        return voicelines[randomNumber];
+            Integer randomNumber;
+            do {
+            randomNumber = new Random().nextInt(voicelines.length);
+            } while (voicelines[randomNumber].equals(null));
+            return "Toad says: " + voicelines[randomNumber];
+        } else {
+            return "Mario is speaking to Toad";
+        }
+            
+    }
+
+    @Override
+    public Action getNextAction() {
+        if (!toadSpeaking) {
+            return new SpeakAction(true);
+        } else {
+            return null;
+        }
     }
 
     public String menuDescription(Actor actor) {

@@ -52,7 +52,7 @@ public class Application {
 			Goomba goomba = new Goomba();
 			goomba.addBehaviour(8,new AttackBehaviour(mario));
 			gameMap.at(35, 10).addActor(goomba);
-			gameMap.at(35,9).addItem(new Coin(5));
+			gameMap.at(44,8).addItem(new PowerStar());
 			gameMap.at(44,10).addActor(new Toad());
 			Wallet.totalBalance = 1000;
 

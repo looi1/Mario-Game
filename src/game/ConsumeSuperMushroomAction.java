@@ -15,6 +15,8 @@ public class ConsumeSuperMushroomAction extends Action {
     @Override
     public String execute(Actor actor, GameMap gameMap) {
         actor.removeItemFromInventory(superMushroom);
+        Player player = (Player) actor;
+        player.addSuperMushroomEffect();
         return "Player consumed SuperMushroom";
     }
 
