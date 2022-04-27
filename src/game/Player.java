@@ -9,7 +9,6 @@ import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 
-import java.security.DrbgParameters;
 import java.util.*;
 /**
  * Class representing the Player.
@@ -18,6 +17,8 @@ public class Player extends Actor implements Resettable  {
 
 	private final Menu menu = new Menu();
 	private int marker = 0;
+	private int initialHp;
+	private int powerStarTicker = 0;
 
 	/**
 	 * Constructor.
@@ -30,7 +31,6 @@ public class Player extends Actor implements Resettable  {
 		super(name, displayChar, hitPoints);
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.registerInstance();
-
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class Player extends Actor implements Resettable  {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
+		// check at every turn if certain Status should be removed.
 		expireStatus();
 
 		// return/print the console menu
@@ -55,9 +56,6 @@ public class Player extends Actor implements Resettable  {
 		return this.hasCapability(Status.TALL) ? Character.toUpperCase(super.getDisplayChar()): super.getDisplayChar();
 	}
 
-
-
-
 	@Override
 	public void resetInstance(Actor actor, GameMap map) {
 
@@ -67,10 +65,44 @@ public class Player extends Actor implements Resettable  {
 
 		}
 		this.resetMaxHp(100); //heal to maximum
+	}
+	/**
+	 * Gets the current Hp of Player as int by parsing Actor.printHp()
+	 * @return int currentHp
+	 */
+	private int getCurrentHp() {
+		String hpString = this.printHp();
+		String newHpString = "";
+		for (int i = 1; i < hpString.indexOf('/'); i++) {
+			newHpString += hpString.charAt(i);
+		}
+		return Integer.valueOf(newHpString);
+	}
 
+	public void addSuperMushroomEffect() {
+		this.addCapability(Status.SUPERMUSHROOM);
+		initialHp = getCurrentHp();
+		
+		
+	}
+
+	public void addPowerStarEffect() {
+		this.addCapability(Status.POWERSTAR);
 	}
 
 	public void expireStatus() {
 
+		// SUPERMUSHROOM effect
+		if (this.capabilitiesList().contains(Status.SUPERMUSHROOM)) {
+			if (getCurrentHp() < initialHp) {
+				this.removeCapability(Status.SUPERMUSHROOM);
+			}
+		}
+
+		// POWERSTAR effect
+		if (powerStarTicker <= 0) {
+			
+		}
 	}
+
 }

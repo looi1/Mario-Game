@@ -1,0 +1,34 @@
+Current implementation:
+    - Have a Consume<Item>Action for each consumable item.
+        - This will trigger addSuperMushroomEffect() or addPowerStarEffect() in Player.
+        - Conditions for removing the effects are handled by expireStatus() in Player.
+        - A new Consume<Item>Action will have to be made for every new consumable item, which
+          arguably follows SRP but is tedious. Another implementation was considered to solve 
+          this (see below) but was not implemented.
+    - Printing the action to menu will be done by Items.addAction().
+        - There might unfortunately be multiple prints to the menu.
+
+        
+        
+
+Considered implementation:
+(We have considered a better implementation that follows more principles, but 
+doing so it was not possible to fulfill one of the requirements.)
+
+    - Have an interface Consumable, implementing a method consume().
+        - All consumable items would implement this interface.
+        - The method consume() will handle all the item's effects of consumption
+          to Player, and be implemented in the item's class itself, hence following SRP.
+
+    - A ConsumeAction(ConsumableItem) will handle the consuming for all ConsumableItems.
+        - calls ConsumableItem.consume() and removes the item from Player's inventory.
+        - This follows OCP, as there is no need to add any new code should more ConsumableItems
+          be added.
+        
+    Due to Actor.setDisplayChar() being protected and final, it can only be used in Player and
+    hence this implementation was not possible.
+
+
+Changes:
+    - SuperMushroom has a dependency on Player, so only one ConsumeSuperMushroomAction is
+      printed to the menu.
