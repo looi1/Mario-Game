@@ -19,30 +19,32 @@ public class Mature extends Tree{
         matureAge += 1;
         int spawnRateKoopa = 15;
         int witherRate = 20;
-
-        int high = 101;
-        int low = 0;
-
-        int random = r.nextInt((high - low) + low);
-        if (random <= spawnRateKoopa){
-            location.addActor(new Koopa());
-        }
-
         int x = location.x();
         int y = location.y();
         GameMap map = location.map();
+
+        int high = 101;
+        int low = 0;
 
         int high2 = 3;
         int low2 = -1;
         int randomX = r.nextInt((high2 - low2) + low2) - 1;
         int randomY = r.nextInt((high2 - low2) + low2) - 1;
 
+        //System.out.println("Here");
         if (matureAge >= 0 && matureAge % 5 == 0) {
+            //System.out.println("5 turns");
             if (randomX != 0 && randomY != 0){
-                if (map.at((randomX + x), (randomY + y)).getGround().equals(new Dirt())){
+                //System.out.println(map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.');
+                if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
                     map.at((randomX + x), (randomY + y)).setGround(new Sprout());
                 }
             }
+        }
+
+        int random = r.nextInt((high - low) + low);
+        if (random <= spawnRateKoopa && location.getActor() == null){
+            location.addActor(new Koopa());
         }
 
         random = r.nextInt((high - low) + low);
