@@ -1,7 +1,6 @@
 Current implementation:
     - Have a Consume<Item>Action for each consumable item.
         - This will trigger addSuperMushroomEffect() or addPowerStarEffect() in Player.
-        - Conditions for removing the effects are handled by expireStatus() in Player.
         - A new Consume<Item>Action will have to be made for every new consumable item, which
           arguably follows SRP but is tedious. Another implementation was considered to solve 
           this (see below) but was not implemented.
@@ -29,6 +28,4 @@ doing so it was not possible to fulfill one of the requirements.)
     hence this implementation was not possible.
 
 
-Changes:
-    - SuperMushroom has a dependency on Player, so only one ConsumeSuperMushroomAction is
-      printed to the menu.
+
