@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Mature extends Tree{
     private int matureAge = 0;
+    private final Random r = new Random();
 
     public Mature(){
         super('T');
@@ -19,7 +20,6 @@ public class Mature extends Tree{
         int spawnRateKoopa = 15;
         int witherRate = 20;
 
-        Random r = new Random();
         int high = 101;
         int low = 0;
 
