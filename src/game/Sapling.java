@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Sapling extends Tree{
     private int saplingAge = 0;
+    private final Random r = new Random();
 
     public Sapling(){
         super('t');
@@ -16,8 +17,7 @@ public class Sapling extends Tree{
         super.tick(location);
         saplingAge += 1;
         int spawnRateCoin = 10;
-
-        Random r = new Random();
+        
         int high = 101;
         int low = 0;
         int random = r.nextInt((high - low) + low);
