@@ -51,6 +51,7 @@ public class Player extends Actor implements Resettable  {
 
 	}
 
+
 	@Override
 	public char getDisplayChar(){
 		return this.hasCapability(Status.TALL) ? Character.toUpperCase(super.getDisplayChar()): super.getDisplayChar();

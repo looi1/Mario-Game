@@ -43,7 +43,10 @@ public class Goomba extends Enemies implements Resettable {
 		// it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
 			actions.add(new AttackAction(this,direction));
+			this.behaviours.put(9,new AttackBehaviour(otherActor));
 		}
+
+
 		return actions;
 	}
 
