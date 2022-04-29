@@ -38,4 +38,9 @@ public abstract class Tree extends Ground implements Resettable {
             }
         }
     }
+
+    @Override
+    public boolean canActorEnter(Actor actor) {
+        return false;
+    }
 }
