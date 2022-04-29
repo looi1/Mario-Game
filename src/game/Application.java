@@ -64,19 +64,19 @@ public class Application {
 
 			// FIXME: the Goomba should be generated from the Tree
 			Goomba goomba = new Goomba();
-			goomba.addBehaviour(8,new AttackBehaviour(mario));
+
 			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(44,8).addItem(new PowerStar());
 			gameMap.at(44,10).addActor(new Toad());
 			Wallet.totalBalance = 1000;
 
 			Koopa koopa = new Koopa();
-			koopa.addBehaviour(8,new AttackBehaviour(mario));
+
 			gameMap.at(34,10).addActor(koopa);
 
-			//delete
-		Wrench wrench = new Wrench();
-		gameMap.at(33,10).addItem(wrench);
+
+			Wrench wrench = new Wrench();
+			gameMap.at(33,10).addItem(wrench);
 
 
 			world.run();
