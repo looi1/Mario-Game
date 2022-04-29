@@ -6,9 +6,19 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import java.util.*;
 
+/**
+ * Action for speaking with Toad
+ */
 public class SpeakAction extends Action {
 
+    /**
+     * Change state of action. False: Toad has not yet spoken. True: Toad says his lines.
+     */
     private boolean toadSpeaking;
+
+    /**
+     * Array of all possible voicelines.
+     */
     private String[] voicelines = 
         {
             "You might need a wrench to smash Koopa's hard shells.",
@@ -17,10 +27,22 @@ public class SpeakAction extends Action {
             "Being imprisoned in these walls can drive a fungus crazy :(",
         };
 
+    /**
+     * Constructor.
+     * @param toadSpeaking whether Toad is the one speaking when this action is executed.
+     */
     public SpeakAction(boolean toadSpeaking) {
         this.toadSpeaking = toadSpeaking;
     }
 
+    /**
+	 * Add the item to the player's Wallet.
+	 *
+	 * @see Action#execute(Actor, GameMap)
+	 * @param actor The actor performing the action.
+	 * @param map The map the actor is on.
+	 * @return a message that the Player is speaking to Toad, or the voiceline itself.
+	 */
     public String execute(Actor actor, GameMap map) {
 
         if (toadSpeaking) {
@@ -45,6 +67,9 @@ public class SpeakAction extends Action {
             
     }
 
+    /**
+     * The next action: Toad's turn to speak.
+     */
     @Override
     public Action getNextAction() {
         if (!toadSpeaking) {
@@ -54,6 +79,13 @@ public class SpeakAction extends Action {
         }
     }
 
+    /**
+	 * Description of this action for the menu.
+	 *
+	 * @see Action#menuDescription(Actor)
+	 * @param actor The actor performing the action.
+	 * @return a description to be printed in the menu
+	 */
     public String menuDescription(Actor actor) {
         return "Speak with Toad";
     }

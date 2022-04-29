@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 
 
-public class PowerStar extends Item implements SellableItem {
+public class PowerStar extends Item implements Sellable {
 
     private int lifeSpan;
 

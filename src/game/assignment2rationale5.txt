@@ -1,0 +1,57 @@
+Req 5
+
+Changes:
+    - Toad now has dependencies on each item to be sold, instead of a manager
+      class for all Sellable items.
+    - TradeAction was replaced with BuyAction
+        - This is to simplify printing of the action and buying of each item
+        - Each BuyAction handles the purchase of one item
+    - There is no longer a manager class that stores instances of all Sellable items
+        - The original plan was to store a list of Sellable items, iterate through
+          all of them to display to the menu, much like the ResetManager.
+        - Every new Sellable item would only need to register as one, with no need
+          for Toad to add another dependency on the new item. Hence, this complies
+          with OCP.
+        - However, this was not implemented for simplicity, and because there are
+          only 4 sellable items.
+    - CollectCoinAction was made collect coins, instead of using PickUpItemAction
+        - If PickUpItemAction was used, each Coin would be added to the Player's
+          inventory. This would be a waste of memory.
+        - CollectCoinAction only works on Coins, and adds the value directly to
+          Wallet, which keeps track of the Player's total value of Coins collected.
+    - Wallet is not a static class but a class with static attributes and methods
+
+Principles:
+    OCP:
+    - Interface Sellable implements getPrice() method for each Sellable item. Each
+      item only needs to add one method to become a Sellable item, with no change
+      in BuyAction. Hence, there can be more Sellable items with no modification to
+      BuyAction.
+
+    SRP:
+    - CollectCoinAction was made specifically to handle the collection of coins.
+        - As separate classes from PickUpItemAction, because of the key difference
+          that this Action only works for coins, and collected Coin value goes to
+          Wallet.
+    - BuyAction was made to handle paying and transaction of items
+    - Wallet was made to keep track of Coin balance.
+        - Rather than having to keep track of the balance of total Coins in 
+          inventory.
+        - Only has a single purpose - to store the total balance. No other function
+          is implemented in this class.
+
+    LSP:
+    - Substituting BuyAction or CollectCoinsAction with the parent class Action will
+      not result in any unexpected behaviour.
+    - For CollectCoinsAction, it was considered to override Item.getPickUpAction()
+      with CollectCoinsAction for Coins. But the return type for 
+      Item.getPickUpAction() is PickUpItemAction, and changing that would mean Coin
+      cannot be replaced by parent class Item without unexpected behaviour, thereby
+      violating LSP. So this was not implemented.
+
+
+
+
+
+
+
