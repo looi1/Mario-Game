@@ -4,13 +4,21 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import java.util.*;
-
+/**
+ * Action for buying items
+ */
 public class BuyAction extends Action {
-    private final SellableItem item;
-    
 
-    public BuyAction(SellableItem item) {
+    /**
+     * Item that can be sold
+     */
+    private final Sellable item;
+    
+    /**
+     * Constructor
+     * @param item to be sold
+     */
+    public BuyAction(Sellable item) {
         this.item = item;
     }
     

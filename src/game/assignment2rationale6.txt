@@ -1,0 +1,4 @@
+Changes:
+    - Nothing much changed, except having the POWERSTAR status triggered
+      by ConsumePowerStarAction
+    - In the sequence diagram, minor changes for having actual method names.
