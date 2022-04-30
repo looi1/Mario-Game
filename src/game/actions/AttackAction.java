@@ -1,4 +1,4 @@
-package game;
+package game.actions;
 
 import java.util.Random;
 
@@ -9,6 +9,10 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.behaviours.FollowBehaviour;
+import game.enemies.Shell;
+import game.Status;
+import game.enemies.Enemies;
 
 /**
  * Special Action for attacking other Actors.
@@ -16,7 +20,7 @@ import edu.monash.fit2099.engine.weapons.Weapon;
 public class AttackAction extends Action {
 
 	/**
-	 * The Actor that is to be attacked
+	 * The Enemies that is to be attacked
 	 */
 	protected Enemies target;
 
@@ -30,7 +34,14 @@ public class AttackAction extends Action {
 	 */
 	protected Random rand = new Random();
 
+	/**
+	 * Attack damage
+	 */
 	private int damage;
+
+	/**
+	 * random number
+	 */
 
 	private int randnum;
 

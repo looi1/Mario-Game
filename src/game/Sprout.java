@@ -1,12 +1,9 @@
 package game;
 
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import game.enemies.Goomba;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Sprout extends Tree{

@@ -1,5 +1,5 @@
 //ts
-package game;
+package game.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -8,11 +8,19 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.*;
+import game.actions.AttackAction;
+import game.behaviours.AttackBehaviour;
+import game.behaviours.WanderBehaviour;
+import game.items.SuperMushroom;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Koopa extends Enemies implements Resettable{
+/**
+ * a class representing enemy Koopa
+ */
+public class Koopa extends Enemies implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
     /**
@@ -68,11 +76,20 @@ public class Koopa extends Enemies implements Resettable{
         return new DoNothingAction();
     }
 
+    /**
+     * method to add behaviour to koopa
+     * @param priority prority of the behaviour
+     * @param behave the behaviour
+     */
     @Override
     public void addBehaviour(int priority, Behaviour behave) {
         this.behaviours.put(priority, behave);
     }
 
+    /**
+     * method to implement weapon Koopa used to attack player
+     * @return
+     */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(30, "punches");

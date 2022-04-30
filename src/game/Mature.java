@@ -2,6 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.enemies.Koopa;
 
 import java.util.Random;
 

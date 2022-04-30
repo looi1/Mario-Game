@@ -1,14 +1,32 @@
-package game;
+package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.enemies.Shell;
 
+
+/**
+ * a class to break the shell
+ */
 public class BreakShellAction extends Action {
+
+    /**
+     * Shell that is to break
+     */
     private Actor targetShell;
+
+    /**
+     * location of the shell
+     */
     private Location locationShell;
 
+
+    /**
+     * constructor
+     * @param newTargetShell the shell that is to break
+     */
     public BreakShellAction(Actor newTargetShell) {
         this.targetShell = newTargetShell;
 

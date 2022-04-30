@@ -1,4 +1,4 @@
-package game;
+package game.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -7,10 +7,18 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Status;
+import game.items.SuperMushroom;
+import game.actions.BreakShellAction;
 
+/**
+ * class representing shell of Koopa
+ */
 public class Shell extends Actor {
 
-
+    /**
+     * constructor
+     */
     public Shell() {
         super("Shell", 'D', 50);
         this.addItemToInventory(new SuperMushroom());
@@ -28,6 +36,12 @@ public class Shell extends Actor {
         return actions;
     }
 
+    /**
+     * return String if shell is broken by player
+     * @param actor player
+     * @param location location of shell
+     * @return
+     */
     public String broken(Actor actor, Location location){
         String result = "";
 
