@@ -91,10 +91,6 @@ public class Player extends Actor implements Resettable {
 
 		this.increaseMaxHp(50);
 		this.setDisplayChar('M');
-
-		//TODO: jump
-
-
 	}
 
 	private void removeSuperMushroomEffect() {
@@ -145,7 +141,7 @@ public class Player extends Actor implements Resettable {
 			for (int j = -1; j < 2; j++){
 				if (!(x + i == x && y + j == y)){
 					//System.out.println(highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()));
-					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar())){
+					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()) && x+i >= 0 && y+j >= 01){
 						Location highGround = map.at((x + i), (y + j));
 						actions.add(new JumpBehaviour(highGround.getGround(), highGround));
 					}

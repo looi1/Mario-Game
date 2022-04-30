@@ -68,12 +68,11 @@ public class JumpBehaviour extends Action implements Behaviour {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        //System.out.println(actor.hasCapability(Status.SUPERMUSHROOM));
+        System.out.println("M = " + actor.hasCapability(Status.SUPERMUSHROOM));
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
             this.successRate = 100;
         }
-
-        if (target.getDisplayChar() == '+') {
+        else if (target.getDisplayChar() == '+') {
             this.successRate = 90;
         }
         else if (target.getDisplayChar() == 't'){
