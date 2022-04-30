@@ -9,8 +9,6 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
-import game.enemies.Goomba;
-import game.enemies.Koopa;
 
 /**
  * The main class for the Mario World game.
@@ -66,19 +64,19 @@ public class Application {
 
 			// FIXME: the Goomba should be generated from the Tree
 			Goomba goomba = new Goomba();
-
-			gameMap.at(44, 7).addActor(goomba);
+			goomba.addBehaviour(8,new AttackBehaviour(mario));
+			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(44,8).addItem(new PowerStar());
 			gameMap.at(44,10).addActor(new Toad());
 			Wallet.totalBalance = 1000;
 
 			Koopa koopa = new Koopa();
-
+			koopa.addBehaviour(8,new AttackBehaviour(mario));
 			gameMap.at(34,10).addActor(koopa);
 
-
-			Wrench wrench = new Wrench();
-			gameMap.at(33,10).addItem(wrench);
+			//delete
+		Wrench wrench = new Wrench();
+		gameMap.at(33,10).addItem(wrench);
 
 
 			world.run();
