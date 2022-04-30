@@ -47,6 +47,8 @@ public class Koopa extends Enemies implements Resettable{
             actions.add(new AttackAction(this, direction));
             this.behaviours.put(9,new AttackBehaviour(otherActor));
         }
+
+
         //this.behaviours.put(9,new AttackBehaviour(otherActor));
         return actions;
     }
@@ -65,6 +67,7 @@ public class Koopa extends Enemies implements Resettable{
         }
         return new DoNothingAction();
     }
+
     @Override
     public void addBehaviour(int priority, Behaviour behave) {
         this.behaviours.put(priority, behave);

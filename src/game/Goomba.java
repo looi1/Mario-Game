@@ -47,6 +47,7 @@ public class Goomba extends Enemies implements Resettable {
 		}
 
 
+
 		return actions;
 	}
 
@@ -67,6 +68,7 @@ public class Goomba extends Enemies implements Resettable {
 		}
 		return new DoNothingAction();
 	}
+
 	//ts to add the enemies behaviour
 	@Override
 	public void addBehaviour( int priority, Behaviour behave){
@@ -76,6 +78,7 @@ public class Goomba extends Enemies implements Resettable {
 	@Override
 	public IntrinsicWeapon getIntrinsicWeapon() {
 		return new IntrinsicWeapon(10, " kick ");
+
 	}
 
 	@Override

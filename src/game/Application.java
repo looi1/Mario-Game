@@ -65,7 +65,7 @@ public class Application {
 			// FIXME: the Goomba should be generated from the Tree
 			Goomba goomba = new Goomba();
 
-			gameMap.at(35, 10).addActor(goomba);
+			gameMap.at(44, 7).addActor(goomba);
 			gameMap.at(44,8).addItem(new PowerStar());
 			gameMap.at(44,10).addActor(new Toad());
 			Wallet.totalBalance = 1000;

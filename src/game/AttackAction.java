@@ -30,6 +30,10 @@ public class AttackAction extends Action {
 	 */
 	protected Random rand = new Random();
 
+	private int damage;
+
+	private int randnum;
+
 	/**
 	 * Constructor.
 	 * 
@@ -45,11 +49,19 @@ public class AttackAction extends Action {
 
 		Weapon weapon = actor.getWeapon();
 
-		if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
+		if(actor.hasCapability(Status.POWERSTAR)){
+			this.damage = target.getHp();
+			this.randnum = 0; //since both player and enemies have hitpoint rate of 50, so i set it as a constant here if player consume power star to ensure every hits
+
+		}else{
+			this.damage = weapon.damage();
+			this.randnum = rand.nextInt(100);
+		}
+
+		if (!( this.randnum <= weapon.chanceToHit())) {
 			return actor + " misses " + target + ".";
 		}
 
-		int damage = weapon.damage();
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);

@@ -12,7 +12,7 @@ public class PowerStar extends Item implements Sellable {
     public PowerStar() {
         super("Power Star", '*', true);
         this.lifeSpan = 10;
-        super.addCapability(Status.POWERSTAR);
+        //super.addCapability(Status.POWERSTAR);
         super.addAction(new ConsumePowerStarAction(this));
     }
 

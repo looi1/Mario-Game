@@ -15,6 +15,7 @@ import java.util.Random;
 public class AttackBehaviour extends Action implements Behaviour{
     private final Actor player;
     protected Random rand = new Random();
+    private int damage;
 
     // TODO: develop and use it to attack the player automatically.
 
@@ -23,12 +24,19 @@ public class AttackBehaviour extends Action implements Behaviour{
 
     }
     public String execute(Actor actor, GameMap map) {
+
         Weapon weapon = actor.getWeapon();
+        if(this.player.hasCapability(Status.POWERSTAR)){
+            this.damage=0;
+        }else{
+            this.damage = weapon.damage();
+        }
+
 
         if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
             return actor + " misses " + this.player + ".";}
 
-        int damage = weapon.damage();
+
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
 
