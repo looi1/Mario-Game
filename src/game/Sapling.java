@@ -1,10 +1,11 @@
 package game;
 
 import edu.monash.fit2099.engine.positions.Location;
+import game.ground.Tree;
 
 import java.util.Random;
 
-public class Sapling extends Tree{
+public class Sapling extends Tree {
     private int saplingAge = 0;
     private final Random r = new Random();
 

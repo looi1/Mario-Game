@@ -2,7 +2,6 @@ package game.reset;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.Resettable;
 
 import java.util.ArrayList;
 import java.util.List;

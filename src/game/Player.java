@@ -8,11 +8,12 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ResetAction;
+import game.reset.Resettable;
 
 /**
  * Class representing the Player.
  */
-public class Player extends Actor implements Resettable  {
+public class Player extends Actor implements Resettable {
 
 	private final Menu menu = new Menu();
 	private int marker = 0;

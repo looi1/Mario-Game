@@ -3,10 +3,11 @@ package game;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enemies.Koopa;
+import game.ground.Tree;
 
 import java.util.Random;
 
-public class Mature extends Tree{
+public class Mature extends Tree {
     private int matureAge = 0;
     private final Random r = new Random();
 

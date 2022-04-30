@@ -13,6 +13,7 @@ import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.items.SuperMushroom;
+import game.reset.Resettable;
 
 import java.util.HashMap;
 import java.util.Map;
