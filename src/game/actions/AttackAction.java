@@ -1,4 +1,4 @@
-package game;
+package game.actions;
 
 import java.util.Random;
 
@@ -9,6 +9,10 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.behaviours.FollowBehaviour;
+import game.enemies.Shell;
+import game.Status;
+import game.enemies.Enemies;
 
 /**
  * Special Action for attacking other Actors.
@@ -16,7 +20,7 @@ import edu.monash.fit2099.engine.weapons.Weapon;
 public class AttackAction extends Action {
 
 	/**
-	 * The Actor that is to be attacked
+	 * The Enemies that is to be attacked
 	 */
 	protected Enemies target;
 
@@ -29,6 +33,17 @@ public class AttackAction extends Action {
 	 * Random number generator
 	 */
 	protected Random rand = new Random();
+
+	/**
+	 * Attack damage
+	 */
+	private int damage;
+
+	/**
+	 * random number
+	 */
+
+	private int randnum;
 
 	/**
 	 * Constructor.
@@ -45,11 +60,19 @@ public class AttackAction extends Action {
 
 		Weapon weapon = actor.getWeapon();
 
-		if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
+		if(actor.hasCapability(Status.POWERSTAR)){
+			this.damage = target.getHp();
+			this.randnum = 0; //since both player and enemies have hitpoint rate of 50, so i set it as a constant here if player consume power star to ensure every hits
+
+		}else{
+			this.damage = weapon.damage();
+			this.randnum = rand.nextInt(100);
+		}
+
+		if (!( this.randnum <= weapon.chanceToHit())) {
 			return actor + " misses " + target + ".";
 		}
 
-		int damage = weapon.damage();
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);

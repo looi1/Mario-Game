@@ -5,11 +5,20 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 
-
+/**
+ * class to consume power star
+ */
 public class ConsumePowerStarAction extends Action {
 
+    /**
+     * a power star
+     */
     private final PowerStar powerStar;
 
+    /**
+     * constructor
+     * @param powerStar
+     */
     public ConsumePowerStarAction(PowerStar powerStar) {
         this.powerStar = powerStar;
     };

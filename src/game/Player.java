@@ -7,7 +7,6 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.items.Item;
-import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 
 import java.util.*;
@@ -25,7 +24,7 @@ public class Player extends Actor implements Resettable  {
 	 *
 	 * @param name        Name to call the player in the UI
 	 * @param displayChar Character to represent the player in the UI
-	 * @param hitPoints   Player's starting number of hit points
+	 * @param hitPoints   Player's starting number of hitpoints
 	 */
 	public Player(String name, char displayChar, int hitPoints) {
 		super(name, displayChar, hitPoints);
@@ -37,8 +36,6 @@ public class Player extends Actor implements Resettable  {
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 
 		decayPowerStarEffect(display);
-		actions.add(addJump(map));
-
 		// Handle multi-turn Actions
 		ResetAction reset = ResetAction.getInstance();
 
@@ -48,18 +45,8 @@ public class Player extends Actor implements Resettable  {
 			return lastAction.getNextAction();
 
 		// check at every turn if certain Status should be removed.
-		if(this.hasCapability(Status.POWERSTAR)){
-			Location locate = map.locationOf(this);
-
-			if(map.at(locate.x(),locate.y()+1).getDisplayChar()=='#' || map.at(locate.x(),locate.y()+1).getDisplayChar()=='T' ){
-				Coin coin = new Coin(5);
-
-				map.at(locate.x()-1,locate.y()+1).addItem(coin);
-			}
-		}
 
 		// return/print the console menu
-		display.println(this.printHp());
 		return menu.showMenu(this, actions, display);
 
 	}
@@ -117,33 +104,7 @@ public class Player extends Actor implements Resettable  {
 		}
 	}
 
-	public List<Action> addJump(GameMap map){
-		ArrayList<Action> actions = new ArrayList<Action>();
 
-		Location playerLocation = map.locationOf(this);
-		Location highGroundLocation = null;
-
-		int x = playerLocation.x();
-		int y = playerLocation.y();
-
-		List<Character> highGround = new ArrayList<Character>();
-		highGround.add('#');
-		highGround.add('+');
-		highGround.add('t');
-		highGround.add('T');
-
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				if (!(x+i == x && y+j == y)) {
-					if (highGround.contains(map.at((x + i), (y + j)).getGround().getDisplayChar())) {
-						Ground target = map.at((x + i), (y + j)).getGround();
-						highGroundLocation = map.at((x + i), (y + j));
-						actions.add(new JumpBehaviour(target, highGroundLocation));
-					}
-				}
-			}
-		}
-		return actions;
-	}
+	
 
 }

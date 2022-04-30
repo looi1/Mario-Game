@@ -1,8 +1,10 @@
-package game;
+package game.ground;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
+import game.Dirt;
+import game.reset.Resettable;
 
 import java.util.Random;
 

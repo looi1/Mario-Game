@@ -1,4 +1,4 @@
-package game;
+package game.enemies;
 
 
 import edu.monash.fit2099.engine.actions.Action;
@@ -8,6 +8,11 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.*;
+import game.actions.AttackAction;
+import game.behaviours.AttackBehaviour;
+import game.behaviours.WanderBehaviour;
+import game.reset.Resettable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +20,9 @@ import java.util.Map;
  * A little fungus guy.
  */
 public class Goomba extends Enemies implements Resettable {
+	/**
+	 * hash map that consists behaviour of Goomba
+	 */
 	private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
 	/**
@@ -43,7 +51,11 @@ public class Goomba extends Enemies implements Resettable {
 		// it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
 			actions.add(new AttackAction(this,direction));
+			this.behaviours.put(9,new AttackBehaviour(otherActor));
 		}
+
+
+
 		return actions;
 	}
 
@@ -64,17 +76,32 @@ public class Goomba extends Enemies implements Resettable {
 		}
 		return new DoNothingAction();
 	}
-	//ts to add the enemies behaviour
+
+	/**
+	 * method to add behaviours of Goomba
+	 * @param priority prority of the behaviour
+	 * @param behave the behaviour
+	 */
 	@Override
 	public void addBehaviour( int priority, Behaviour behave){
 		this.behaviours.put(priority,behave);
 	}
 
+	/**
+	 * method to implement the weapon Goomba used to attack player
+	 * @return
+	 */
 	@Override
 	public IntrinsicWeapon getIntrinsicWeapon() {
 		return new IntrinsicWeapon(10, " kick ");
+
 	}
 
+	/**
+	 * method to reset Goomba
+	 * @param actor
+	 * @param map
+	 */
 	@Override
 	public void resetInstance(Actor actor, GameMap map) {
 		map.removeActor(this);

@@ -8,4 +8,11 @@ public abstract class Enemies extends Actor {
     }
 
     public abstract void addBehaviour(int priority, Behaviour behave);
+
+
+
+
+    public int getHp(){
+        return this.getMaxHp();
+    }
 }

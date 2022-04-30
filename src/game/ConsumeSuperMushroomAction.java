@@ -3,11 +3,22 @@ package game;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.items.SuperMushroom;
 
+/**
+ * class to comsume supermushroom
+ */
 public class ConsumeSuperMushroomAction extends Action {
 
+    /**
+     * a super mushroom
+     */
     private final SuperMushroom superMushroom;
 
+    /**
+     * constructor
+     * @param superMushroom
+     */
     public ConsumeSuperMushroomAction(SuperMushroom superMushroom) {
         this.superMushroom = superMushroom;
     };
