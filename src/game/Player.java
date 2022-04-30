@@ -6,14 +6,14 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actions.ResetAction;
-import game.reset.Resettable;
 
+import java.util.*;
 /**
  * Class representing the Player.
  */
-public class Player extends Actor implements Resettable {
+public class Player extends Actor implements Resettable  {
 
 	private final Menu menu = new Menu();
 	private int marker = 0;
@@ -44,23 +44,12 @@ public class Player extends Actor implements Resettable {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
-		if(this.hasCapability(Status.POWERSTAR)){
-			Location locate = map.locationOf(this);
-
-			if(map.at(locate.x(),locate.y()+1).getDisplayChar()=='#' || map.at(locate.x(),locate.y()+1).getDisplayChar()=='T' ){
-				Coin coin = new Coin(5);
-
-				map.at(locate.x()-1,locate.y()+1).addItem(coin);
-			}
-		}
-
 		// check at every turn if certain Status should be removed.
 
 		// return/print the console menu
 		return menu.showMenu(this, actions, display);
 
 	}
-
 
 	@Override
 	public char getDisplayChar(){
@@ -86,7 +75,6 @@ public class Player extends Actor implements Resettable {
 		this.setDisplayChar('M');
 
 		//TODO: jump
-
 		
 	}
 
@@ -105,11 +93,6 @@ public class Player extends Actor implements Resettable {
 	public void addPowerStarEffect() {
 		this.addCapability(Status.POWERSTAR);
 		powerStarEffectTicker = 10;
-		this.increaseMaxHp(200);
-
-
-
-
 	}
 
 	private void decayPowerStarEffect(Display display) {
