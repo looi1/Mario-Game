@@ -19,79 +19,75 @@ public class JumpBehaviour extends Action implements Behaviour {
     private Random r = new Random();
     private int successRate;
     private String name;
+    Location highGroundLocation;
     
     /**
      * Constructor.
      *
-     * @param highGround to check the target ground that the player want to jump against
+     *   to check the target ground that the player want to jump against
      */
-    public JumpBehaviour(Ground highGround) {
+    public JumpBehaviour(Ground highGround, Location highGroundLoc) {
         this.target = highGround;
-        if (target.getDisplayChar() == '+') {
-            this.successRate = 90;
-        } else if (target.getDisplayChar() == 't') {
-            this.successRate = 80;
-        } else if (target.getDisplayChar() == 'T') {
-            this.successRate = 70;
-        } else {
-            this.successRate = 80;
-        }
+        this.highGroundLocation = highGroundLoc;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
         ArrayList<Action> actions = new ArrayList<Action>();
 
-        if (target.canActorEnter(actor) || !map.contains(actor))
-            return null;
-
         Location playerLocation = map.locationOf(actor);
-        Location highGroundLocation = null;
 
         int x = playerLocation.x();
         int y = playerLocation.y();
-        int high2 = 3;
-        int low2 = -1;
-        int randomX = r.nextInt((high2 - low2) + low2) - 1;
-        int randomY = r.nextInt((high2 - low2) + low2) - 1;
-        List<Character> highGround = new ArrayList<Character>();
-        highGround.add('#');
-        highGround.add('+');
-        highGround.add('t');
-        highGround.add('T');
 
-        if (randomX != 0 && randomY != 0){
-            if (highGround.contains(map.at((randomX + x), (randomY + y)).getGround().getDisplayChar())) {
-                actions.add(new JumpBehaviour(map.at((randomX + x), (randomY + y)).getGround()));
-
-                highGroundLocation = map.at((randomX + x), (randomY + y));
-            }
-        }
+        if (target.canActorEnter(actor) || !map.contains(actor))
+            return null;
 
         int currentDistance = distance(playerLocation, highGroundLocation);
-
+        System.out.println(currentDistance);
 
         for (Exit exit : playerLocation.getExits()) {
             Location destination = exit.getDestination();
+            System.out.print("x = " + destination.x());
+            System.out.println(" y = " + destination.y());
+            System.out.println(!(destination.canActorEnter(actor)));
             if (!(destination.canActorEnter(actor))) {
                 int newDistance = distance(destination, highGroundLocation);
+                System.out.println(newDistance);
 
                 if (newDistance < currentDistance) {
+                    System.out.println(exit.getName());
+                    map.moveActor(actor, destination);
                     return new MoveActorAction(destination, exit.getName());
                 }
             }
         }
-
         return null;
     }
 
+
     @Override
     public String execute(Actor actor, GameMap map) {
+        //System.out.println(actor.hasCapability(Status.SUPERMUSHROOM));
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
             this.successRate = 100;
         }
 
-        if ((r.nextInt((101)) <= this.successRate)){
+        if (target.getDisplayChar() == '+') {
+            this.successRate = 90;
+        }
+        else if (target.getDisplayChar() == 't'){
+            this.successRate = 80;
+        }
+        else if (target.getDisplayChar() == 'T'){
+            this.successRate = 70;
+        }
+        else {
+            this.successRate = 80;
+        }
+
+        if (r.nextInt(101) <= this.successRate){
+            getAction(actor, map);
             return "Mario successfully jumped to a " + this.name;
         }
 
@@ -118,13 +114,9 @@ public class JumpBehaviour extends Action implements Behaviour {
             this.name = "Wall";
         }
 
-        return "Jump to a " + this.name;
+        return "Jump to a " + this.name + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }
 
-    @Override
-    public String hotkey() {
-        return "j";
-    }
 
     private int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
