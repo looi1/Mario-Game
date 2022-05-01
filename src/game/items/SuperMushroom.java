@@ -13,13 +13,12 @@ public class SuperMushroom extends Item implements Sellable {
      */
     public SuperMushroom() {
         super("Super Mushroom", '^', true);
-        //super.addCapability(Status.SUPERMUSHROOM);
         super.addAction(new ConsumeSuperMushroomAction(this));
     }
 
     /**
      * get price of supermushroom
-     * @return
+     * @return price
      */
     public int getPrice() {
         return 400;

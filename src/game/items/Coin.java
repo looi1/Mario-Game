@@ -33,6 +33,9 @@ public class Coin extends Item implements Resettable {
         return value;
     }
 
+    /**
+     * Remove all Coins on reset.
+     */
     @Override
     public void resetInstance(Actor actor, GameMap map) {
 

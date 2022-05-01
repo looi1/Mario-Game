@@ -24,6 +24,10 @@ public class Toad extends Actor{
 		super("Toad", 'O', 1);
 	}
 
+	/**
+	 * Add a BuyAction for each of the sold items, and a SpeakAction.
+	 * 
+	 */
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		ActionList actions = new ActionList();
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
