@@ -8,7 +8,7 @@ import game.items.Coin;
 
 import java.util.Random;
 
-public class Mature extends Tree {
+public class Mature extends Tree implements Jumpable {
     private int matureAge = 0;
     private final Random r = new Random();
 
@@ -60,5 +60,17 @@ public class Mature extends Tree {
         if (random <= witherRate && location.getGround().getDisplayChar() == 'T'){
             location.setGround(new Dirt());
         }
+    }
+
+    public int getSuccessRate() {
+		return 70;
+	}
+
+	public int getFallDamage() {
+		return 30;
+	}
+
+    public String getName() {
+        return "Mature";
     }
 }

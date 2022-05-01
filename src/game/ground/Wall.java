@@ -7,7 +7,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.items.Coin;
 
-public class Wall extends Ground {
+public class Wall extends Ground implements Jumpable{
 
 	public Wall() {
 		super('#');
@@ -36,5 +36,17 @@ public class Wall extends Ground {
 				location.addItem(new Coin(5));
 			}
 		}
+	}
+
+	public int getSuccessRate() {
+		return 80;
+	}
+
+	public int getFallDamage() {
+		return 20;
+	}
+
+	public String getName() {
+		return "Wall";
 	}
 }

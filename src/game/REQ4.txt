@@ -7,8 +7,6 @@ Current implementation:
     - Printing the action to menu will be done by Items.addAction().
         - There might unfortunately be multiple prints to the menu.
 
-        
-
 Considered implementation:
 (We have considered a better implementation that follows more principles, but 
 doing so it was not possible to fulfill one of the requirements.)
@@ -25,6 +23,8 @@ doing so it was not possible to fulfill one of the requirements.)
         
     Due to Actor.setDisplayChar() being protected and final, it can only be used in Player and
     hence this implementation was not possible.
+
+
 
 
 
