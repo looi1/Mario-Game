@@ -3,8 +3,10 @@ package game.ground;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
+import game.Status;
 import game.reset.Resettable;
 
+import java.nio.file.StandardCopyOption;
 import java.util.Random;
 
 public abstract class Tree extends Ground implements Resettable {
@@ -42,6 +44,6 @@ public abstract class Tree extends Ground implements Resettable {
 
     @Override
     public boolean canActorEnter(Actor actor) {
-        return false;
+        return actor.hasCapability(Status.POWERSTAR);
     }
 }

@@ -34,7 +34,6 @@ public class JumpBehaviour extends Action implements Behaviour {
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-        ArrayList<Action> actions = new ArrayList<Action>();
 
         Location playerLocation = map.locationOf(actor);
 
@@ -45,19 +44,13 @@ public class JumpBehaviour extends Action implements Behaviour {
             return null;
 
         int currentDistance = distance(playerLocation, highGroundLocation);
-        System.out.println(currentDistance);
 
         for (Exit exit : playerLocation.getExits()) {
             Location destination = exit.getDestination();
-            System.out.print("x = " + destination.x());
-            System.out.println(" y = " + destination.y());
-            System.out.println(!(destination.canActorEnter(actor)));
             if (!(destination.canActorEnter(actor))) {
                 int newDistance = distance(destination, highGroundLocation);
-                System.out.println(newDistance);
 
                 if (newDistance < currentDistance) {
-                    System.out.println(exit.getName());
                     map.moveActor(actor, destination);
                     return new MoveActorAction(destination, exit.getName());
                 }
@@ -69,7 +62,7 @@ public class JumpBehaviour extends Action implements Behaviour {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        System.out.println("M = " + actor.hasCapability(Status.SUPERMUSHROOM));
+        //System.out.println("M = " + actor.hasCapability(Status.SUPERMUSHROOM));
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
             this.successRate = 100;
         }

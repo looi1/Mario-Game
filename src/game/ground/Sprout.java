@@ -2,7 +2,9 @@ package game.ground;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Status;
 import game.enemies.Goomba;
+import game.items.Coin;
 
 import java.util.Random;
 
@@ -24,17 +26,20 @@ public class Sprout extends Tree {
         int low = 0;
         int random = r.nextInt((high - low) + low);
 
-        if (random <= spawnRateGoomba){
-            int x = location.x();
-            int y = location.y();
-            GameMap map = location.map();
+        if (location.getActor() != null) {
+            if (location.getActor().hasCapability(Status.POWERSTAR)) {
+                location.setGround(new Dirt());
+                location.addItem(new Coin(5));
+            }
+        }
 
-            if (map.at(x, y).getActor() == null){
+        if (random <= spawnRateGoomba && location.getGround().getDisplayChar() == '+'){
+            if (location.getActor() == null){
                 location.addActor(new Goomba());
             }
         }
 
-        if (sproutAge == 10) {
+        if (sproutAge == 10 && location.getGround().getDisplayChar() == '+') {
             location.setGround(new Sapling());
         }
     }

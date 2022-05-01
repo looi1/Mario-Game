@@ -43,7 +43,6 @@ public class Player extends Actor implements Resettable {
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 
 		decayPowerStarEffect(display);
-		actions.add(addJump(map));
 		// Handle multi-turn Actions
 		ResetAction reset = ResetAction.getInstance();
 
@@ -56,12 +55,9 @@ public class Player extends Actor implements Resettable {
 		// check at every turn if certain Status should be removed.
 		if(this.hasCapability(Status.POWERSTAR)){
 			Location locate = map.locationOf(this);
-
-			if(map.at(locate.x(),locate.y()+1).getDisplayChar()=='#' || map.at(locate.x(),locate.y()+1).getDisplayChar()=='T' ){
-				Coin coin = new Coin(5);
-
-				map.at(locate.x()-1,locate.y()+1).addItem(coin);
-			}
+		}
+		else {
+			actions.add(addJump(map));
 		}
 
 		// return/print the console menu
@@ -110,11 +106,7 @@ public class Player extends Actor implements Resettable {
 	public void addPowerStarEffect() {
 		this.addCapability(Status.POWERSTAR);
 		powerStarEffectTicker = 10;
-		this.increaseMaxHp(200);
-
-
-
-
+		this.heal(200);
 	}
 
 	private void decayPowerStarEffect(Display display) {
@@ -143,9 +135,14 @@ public class Player extends Actor implements Resettable {
 			for (int j = -1; j < 2; j++){
 				if (!(x + i == x && y + j == y)){
 					//System.out.println(highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()));
-					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()) && x+i >= 0 && y+j >= 01){
-						Location highGround = map.at((x + i), (y + j));
-						actions.add(new JumpBehaviour(highGround.getGround(), highGround));
+					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()) && x+i >= 0 && y+j >= 0){
+						if (this.hasCapability(Status.POWERSTAR)){
+							break;
+						}
+						else {
+							Location highGround = map.at((x + i), (y + j));
+							actions.add(new JumpBehaviour(highGround.getGround(), highGround));
+						}
 					}
 				}
 			}

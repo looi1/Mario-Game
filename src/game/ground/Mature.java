@@ -2,7 +2,9 @@ package game.ground;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Status;
 import game.enemies.Koopa;
+import game.items.Coin;
 
 import java.util.Random;
 
@@ -32,8 +34,14 @@ public class Mature extends Tree {
         int randomX = r.nextInt((high2 - low2) + low2) - 1;
         int randomY = r.nextInt((high2 - low2) + low2) - 1;
 
-        //System.out.println("Here");
-        if (matureAge >= 0 && matureAge % 5 == 0) {
+        if (location.getActor() != null) {
+            if (location.getActor().hasCapability(Status.POWERSTAR)) {
+                location.setGround(new Dirt());
+                location.addItem(new Coin(5));
+            }
+        }
+
+        if (matureAge >= 0 && matureAge % 5 == 0 && location.getGround().getDisplayChar() == 'T') {
             //System.out.println("5 turns");
             if (randomX != 0 && randomY != 0){
                 //System.out.println(map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.');
@@ -44,12 +52,12 @@ public class Mature extends Tree {
         }
 
         int random = r.nextInt((high - low) + low);
-        if (random <= spawnRateKoopa && location.getActor() == null){
+        if (random <= spawnRateKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
             location.addActor(new Koopa());
         }
 
         random = r.nextInt((high - low) + low);
-        if (random <= witherRate){
+        if (random <= witherRate && location.getGround().getDisplayChar() == 'T'){
             location.setGround(new Dirt());
         }
     }

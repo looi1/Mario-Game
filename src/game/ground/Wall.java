@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Status;
+import game.items.Coin;
 
 public class Wall extends Ground {
 
@@ -13,7 +15,7 @@ public class Wall extends Ground {
 	
 	@Override
 	public boolean canActorEnter(Actor actor) {
-		return false;
+		return actor.hasCapability(Status.POWERSTAR);
 	}
 	
 	@Override
@@ -27,5 +29,12 @@ public class Wall extends Ground {
 		int x = location.x();
 		int y = location.y();
 		GameMap map = location.map();
+
+		if (location.getActor() != null) {
+			if (location.getActor().hasCapability(Status.POWERSTAR)) {
+				location.setGround(new Dirt());
+				location.addItem(new Coin(5));
+			}
+		}
 	}
 }
