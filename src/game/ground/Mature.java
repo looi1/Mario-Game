@@ -1,9 +1,8 @@
-package game;
+package game.ground;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enemies.Koopa;
-import game.ground.Tree;
 
 import java.util.Random;
 
