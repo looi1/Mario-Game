@@ -1,7 +1,7 @@
 package game.enemies;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import game.Behaviour;
+import game.behaviours.Behaviour;
 
 /**
  * abstract class representing all the enemies( Goomba and Koopa)

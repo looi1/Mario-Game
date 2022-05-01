@@ -76,9 +76,6 @@ public class Application {
 			gameMap.at(43,8).addItem(new SuperMushroom());
 			gameMap.at(44,10).addActor(new Toad());
 
-			Koopa koopa = new Koopa();
-			gameMap.at(34,10).addActor(koopa);
-
 			world.run();
 
 

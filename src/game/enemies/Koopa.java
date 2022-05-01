@@ -11,6 +11,7 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.*;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
+import game.behaviours.Behaviour;
 import game.behaviours.WanderBehaviour;
 import game.items.SuperMushroom;
 import game.reset.Resettable;

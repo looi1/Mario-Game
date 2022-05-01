@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ResetAction;
+import game.behaviours.JumpBehaviour;
 import game.reset.Resettable;
 import game.items.*;
 
