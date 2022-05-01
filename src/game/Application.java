@@ -72,8 +72,8 @@ public class Application {
 				gameMap.at(x,y).setGround(new Sprout());
 			}
 
-			gameMap.at(44,8).addItem(new PowerStar());
-			gameMap.at(43,8).addItem(new SuperMushroom());
+			gameMap.at(44,9).addItem(new PowerStar());
+			gameMap.at(44,9).addItem(new SuperMushroom());
 			gameMap.at(44,10).addActor(new Toad());
 
 			world.run();

@@ -5,7 +5,7 @@ Current implementation for consuming items and Player gaining the effects:
           follows SRP but is tedious. Another implementation was considered to solve 
           this (see below) but was not implemented.
     - Printing the action to menu will be done by Items.addAction().
-        - There might unfortunately be multiple prints to the menu.
+        - There might unfortunately be multiple identical prints to the menu.
 
 Considered implementation for consuming items and Player gaining the effects:
 (We have considered a better implementation that follows more principles, but 
@@ -23,6 +23,18 @@ doing so it was not possible to fulfill one of the requirements.)
         
     Due to Actor.setDisplayChar() being protected and final, it can only be used in Player and
     hence this implementation was not possible.
+
+Principles:
+    SRP:
+    - ConsumeSuperMushroomAction and ConsumePowerStarAction both only handle their own
+      respective items' consumption and its effects on Player.
+
+    LSP:
+    - In Player, the hurt() method overrides its super and calls a method to remove
+      SuperMushroom effects. However, the return type is still the same. It will not
+      cause any unexpected behaviour if Player is replaced by Actor.
+
+    
 
 
 
