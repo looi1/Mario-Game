@@ -12,6 +12,10 @@ import edu.monash.fit2099.engine.positions.World;
 import game.behaviours.AttackBehaviour;
 import game.enemies.Goomba;
 import game.enemies.Koopa;
+import game.ground.Dirt;
+import game.ground.Floor;
+import game.ground.Sprout;
+import game.ground.Wall;
 import game.items.PowerStar;
 import game.items.SuperMushroom;
 import game.items.Wrench;
@@ -68,24 +72,12 @@ public class Application {
 				gameMap.at(x,y).setGround(new Sprout());
 			}
 
-			// FIXME: the Goomba should be generated from the Tree
-			Goomba goomba = new Goomba();
-			goomba.addBehaviour(8,new AttackBehaviour(mario));
-			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(44,8).addItem(new PowerStar());
 			gameMap.at(43,8).addItem(new SuperMushroom());
-
 			gameMap.at(44,10).addActor(new Toad());
-			Wallet.totalBalance = 1000;
 
 			Koopa koopa = new Koopa();
-			koopa.addBehaviour(8,new AttackBehaviour(mario));
 			gameMap.at(34,10).addActor(koopa);
-
-			//delete
-		Wrench wrench = new Wrench();
-		gameMap.at(33,10).addItem(wrench);
-
 
 			world.run();
 
