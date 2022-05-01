@@ -13,6 +13,7 @@ import game.behaviours.AttackBehaviour;
 import game.enemies.Goomba;
 import game.enemies.Koopa;
 import game.items.PowerStar;
+import game.items.SuperMushroom;
 import game.items.Wrench;
 
 /**
@@ -72,6 +73,8 @@ public class Application {
 			goomba.addBehaviour(8,new AttackBehaviour(mario));
 			gameMap.at(35, 10).addActor(goomba);
 			gameMap.at(44,8).addItem(new PowerStar());
+			gameMap.at(43,8).addItem(new SuperMushroom());
+
 			gameMap.at(44,10).addActor(new Toad());
 			Wallet.totalBalance = 1000;
 

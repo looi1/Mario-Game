@@ -3,8 +3,10 @@ package game.actions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import game.items.SuperMushroom;
 import game.Player;
+
 
 /**
  * class to comsume supermushroom
@@ -26,7 +28,12 @@ public class ConsumeSuperMushroomAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap gameMap) {
-        actor.removeItemFromInventory(superMushroom);
+        Location location = gameMap.locationOf(actor);
+        if (location.getItems().contains(superMushroom)) {
+            location.removeItem(superMushroom);
+        } else {
+            actor.removeItemFromInventory(superMushroom);
+        }
         Player player = (Player) actor;
         player.addSuperMushroomEffect();
         return "Player consumed SuperMushroom";
@@ -35,10 +42,6 @@ public class ConsumeSuperMushroomAction extends Action {
     @Override
     public String menuDescription(Actor actor) {
         return "Consume SuperMushroom";
-    }
-
-    public String hotKey() {
-        return "csm";
     }
 
 }

@@ -8,7 +8,6 @@ Current implementation:
         - There might unfortunately be multiple prints to the menu.
 
         
-        
 
 Considered implementation:
 (We have considered a better implementation that follows more principles, but 
