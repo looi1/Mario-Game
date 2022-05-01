@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
+import game.ground.Jumpable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,9 @@ import java.util.Random;
 
 public class JumpBehaviour extends Action implements Behaviour {
     private Ground target;
+    private Jumpable jumpableTarget;
     private Random r = new Random();
-    private int successRate;
-    private String name;
-    Location highGroundLocation;
+    private Location highGroundLocation;
     
     /**
      * Constructor.
@@ -30,16 +30,13 @@ public class JumpBehaviour extends Action implements Behaviour {
     public JumpBehaviour(Ground highGround, Location highGroundLoc) {
         this.target = highGround;
         this.highGroundLocation = highGroundLoc;
+        this.jumpableTarget = (Jumpable) highGround;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-        ArrayList<Action> actions = new ArrayList<Action>();
 
         Location playerLocation = map.locationOf(actor);
-
-        int x = playerLocation.x();
-        int y = playerLocation.y();
 
         if (target.canActorEnter(actor) || !map.contains(actor))
             return null;
@@ -69,52 +66,25 @@ public class JumpBehaviour extends Action implements Behaviour {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        System.out.println("M = " + actor.hasCapability(Status.SUPERMUSHROOM));
+        int successRate;
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
-            this.successRate = 100;
-        }
-        else if (target.getDisplayChar() == '+') {
-            this.successRate = 90;
-        }
-        else if (target.getDisplayChar() == 't'){
-            this.successRate = 80;
-        }
-        else if (target.getDisplayChar() == 'T'){
-            this.successRate = 70;
-        }
-        else {
-            this.successRate = 80;
+            successRate = 100;
+        } else {
+            successRate = jumpableTarget.getSuccessRate();
         }
 
-        if (r.nextInt(101) <= this.successRate){
+        if (r.nextInt(101) <= successRate){
             getAction(actor, map);
-            return "Mario successfully jumped to a " + this.name;
+            return "Mario successfully jumped to a " + jumpableTarget.getName();
+        } else {
+            actor.hurt(jumpableTarget.getFallDamage());
+            return "ARGHHH!! Mario failed to jump. Mario receives " + jumpableTarget.getFallDamage() + " damage.";
         }
-
-        int fallDamage = 100 - this.successRate;
-        actor.hurt(fallDamage);
-
-        return "ARGHHH!! Mario failed to jump.";
-
     }
 
     @Override
     public String menuDescription(Actor actor) {
-
-        if (target.getDisplayChar() == '+') {
-            this.name = "Sprout";
-        }
-        else if (target.getDisplayChar() == 't'){
-            this.name = "Sapling";
-        }
-        else if (target.getDisplayChar() == 'T'){
-            this.name = "Mature";
-        }
-        else {
-            this.name = "Wall";
-        }
-
-        return "Jump to a " + this.name + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
+        return "Jump to a " + jumpableTarget.getName() + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }
 
 

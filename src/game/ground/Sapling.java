@@ -5,7 +5,7 @@ import game.items.Coin;
 
 import java.util.Random;
 
-public class Sapling extends Tree {
+public class Sapling extends Tree implements Jumpable {
     private int saplingAge = 0;
     private final Random r = new Random();
 
@@ -30,5 +30,17 @@ public class Sapling extends Tree {
         if (saplingAge == 10) {
             location.setGround(new Mature());
         }
+    }
+
+    public int getSuccessRate() {
+		return 80;
+	}
+
+	public int getFallDamage() {
+		return 20;
+	}
+
+    public String getName() {
+        return "Sapling";
     }
 }

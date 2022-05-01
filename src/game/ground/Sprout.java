@@ -6,7 +6,7 @@ import game.enemies.Goomba;
 
 import java.util.Random;
 
-public class Sprout extends Tree {
+public class Sprout extends Tree implements Jumpable{
     private int sproutAge = 0;
     private final Random r = new Random();
 
@@ -37,6 +37,18 @@ public class Sprout extends Tree {
         if (sproutAge == 10) {
             location.setGround(new Sapling());
         }
+    }
+
+    public int getSuccessRate() {
+		return 90;
+	}
+
+	public int getFallDamage() {
+		return 10;
+	}
+
+    public String getName() {
+        return "Sprout";
     }
 
     /*@Override

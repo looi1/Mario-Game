@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 
-public class Wall extends Ground {
+public class Wall extends Ground implements Jumpable{
 
 	public Wall() {
 		super('#');
@@ -27,5 +27,17 @@ public class Wall extends Ground {
 		int x = location.x();
 		int y = location.y();
 		GameMap map = location.map();
+	}
+
+	public int getSuccessRate() {
+		return 80;
+	}
+
+	public int getFallDamage() {
+		return 20;
+	}
+
+	public String getName() {
+		return "Wall";
 	}
 }
