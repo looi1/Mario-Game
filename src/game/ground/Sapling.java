@@ -6,14 +6,33 @@ import game.items.Coin;
 
 import java.util.Random;
 
+/**
+ * A Sprout class that represents a Tree
+ *
+ * @see edu.monash.fit2099.engine.positions.Ground
+ */
 public class Sapling extends Tree implements Jumpable {
+    /**
+     * sapling age that adds each turn
+     */
     private int saplingAge = 0;
+
+    /**
+     * instantiate a new Random class r
+     */
     private final Random r = new Random();
 
+    /**
+     * Constructor
+     */
     public Sapling(){
         super('t');
     }
 
+    /**
+     * Sapling can also experience the joy of time.
+     * @param location The location of the Sapling
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);
@@ -40,14 +59,29 @@ public class Sapling extends Tree implements Jumpable {
         }
     }
 
+    /**
+     * Getter method for jump successRate
+     *
+     * @return Wall success rate when player want to jump
+     */
     public int getSuccessRate() {
 		return 80;
 	}
 
+    /**
+     * Getter method for jump fallDamage
+     *
+     * @return Wall fall damage when player failed to jump
+     */
 	public int getFallDamage() {
 		return 20;
 	}
 
+    /**
+     * Getter method for the high ground name
+     *
+     * @return high ground name
+     */
     public String getName() {
         return "Sapling";
     }

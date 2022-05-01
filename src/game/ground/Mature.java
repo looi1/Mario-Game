@@ -9,13 +9,27 @@ import game.items.Coin;
 import java.util.Random;
 
 public class Mature extends Tree implements Jumpable {
+    /**
+     * mature age that adds each turn
+     */
     private int matureAge = 0;
+
+    /**
+     * instantiate a new Random class r
+     */
     private final Random r = new Random();
 
+    /**
+     * Constructor
+     */
     public Mature(){
         super('T');
     }
 
+    /**
+     * Mature can also experience the joy of time.
+     * @param location The location of the Mature
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);
@@ -42,9 +56,7 @@ public class Mature extends Tree implements Jumpable {
         }
 
         if (matureAge >= 0 && matureAge % 5 == 0 && location.getGround().getDisplayChar() == 'T') {
-            //System.out.println("5 turns");
             if (randomX != 0 && randomY != 0){
-                //System.out.println(map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.');
                 if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
                     map.at((randomX + x), (randomY + y)).setGround(new Sprout());
                 }
@@ -62,14 +74,29 @@ public class Mature extends Tree implements Jumpable {
         }
     }
 
+    /**
+     * Getter method for jump successRate
+     *
+     * @return Wall success rate when player want to jump
+     */
     public int getSuccessRate() {
 		return 70;
 	}
 
+    /**
+     * Getter method for jump fallDamage
+     *
+     * @return Wall fall damage when player failed to jump
+     */
 	public int getFallDamage() {
 		return 30;
 	}
 
+    /**
+     * Getter method for the high ground name
+     *
+     * @return high ground name
+     */
     public String getName() {
         return "Mature";
     }

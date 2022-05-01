@@ -91,7 +91,6 @@ public class JumpBehaviour extends Action implements Behaviour {
     @Override
     public String execute(Actor actor, GameMap map) {
         int successRate;
-
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
             successRate = 100;
         }

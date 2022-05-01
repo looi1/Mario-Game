@@ -1,6 +1,5 @@
 package game.ground;
 
-import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.enemies.Goomba;
@@ -8,14 +7,33 @@ import game.items.Coin;
 
 import java.util.Random;
 
+/**
+ * A Sprout class that represents a Tree
+ *
+ * @see edu.monash.fit2099.engine.positions.Ground
+ */
 public class Sprout extends Tree implements Jumpable{
+    /**
+     * sprout age that adds each turn
+     */
     private int sproutAge = 0;
+
+    /**
+     * instantiate a new Random class r
+     */
     private final Random r = new Random();
 
+    /**
+     * Constructor
+     */
     public Sprout(){
         super('+');
     }
 
+    /**
+     * Sapling can also experience the joy of time.
+     * @param location The location of the Sapling
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);
@@ -44,37 +62,30 @@ public class Sprout extends Tree implements Jumpable{
         }
     }
 
+    /**
+     * Getter method for jump successRate
+     *
+     * @return Wall success rate when player want to jump
+     */
     public int getSuccessRate() {
 		return 90;
 	}
 
+    /**
+     * Getter method for jump fallDamage
+     *
+     * @return Wall fall damage when player failed to jump
+     */
 	public int getFallDamage() {
 		return 10;
 	}
 
+    /**
+     * Getter method for the high ground name
+     *
+     * @return high ground name
+     */
     public String getName() {
         return "Sprout";
     }
-
-    /*@Override
-    public void resetInstance(Actor actor, GameMap map) {
-        if(r.nextInt(100)<=50){
-            int minX = map.getXRange().min();
-            int maxX = map.getXRange().max();
-
-            int minY = map.getYRange().min();
-            int maxY = map.getYRange().max();
-
-            for(int i=0; i<(minX+maxX);i++){
-
-                for(int j=0 ; j<(minY+maxY);j++){
-
-                    if (map.at(i,j).getGround()==this){
-                        map.at(i,j).setGround(new Dirt());
-                    }
-                }
-            }
-        }
-    }*/
-
 }
