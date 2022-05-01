@@ -2,6 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.ground.Tree;
+import game.items.Coin;
 
 import java.util.Random;
 

@@ -1,8 +1,7 @@
 package game.items;
 
 import edu.monash.fit2099.engine.items.Item;
-import game.ConsumeSuperMushroomAction;
-import game.Sellable;
+import game.actions.ConsumeSuperMushroomAction;
 
 /**
  * class representing SuperMushroom

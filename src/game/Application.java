@@ -12,6 +12,8 @@ import edu.monash.fit2099.engine.positions.World;
 import game.behaviours.AttackBehaviour;
 import game.enemies.Goomba;
 import game.enemies.Koopa;
+import game.items.PowerStar;
+import game.items.Wrench;
 
 /**
  * The main class for the Mario World game.

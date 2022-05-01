@@ -1,5 +1,6 @@
 package game;
 
+import game.items.Coin;
 /**
  * Records and manages the coins collected.
  */

@@ -1,4 +1,4 @@
-package game;
+package game.items;
 
 /**
  * Interface for sellable items
