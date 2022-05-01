@@ -1,44 +1,65 @@
 package game.behaviours;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.MoveActorAction;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+/**
+ * A class that figures out a MoveActorAction that will move the actor to the high ground
+ * @see edu.monash.fit2099.engine.actions.MoveActorAction
+ * @see game.behaviours.Behaviour
+ * @see edu.monash.fit2099.engine.actions.Action
+ */
 public class JumpBehaviour extends Action implements Behaviour {
+    /**
+     * target of the high ground
+     */
     private Ground target;
+
+    /**
+     * instantiate a new Random class r
+     */
     private Random r = new Random();
-    private int successRate;
+
+    /**
+     * high ground name
+     */
     private String name;
+
+    /**
+     * Location of the high ground
+     */
     Location highGroundLocation;
     
     /**
      * Constructor.
      *
-     *   to check the target ground that the player want to jump against
+     * @param highGround the high ground that the actor want to jump onto
+     * @param highGroundLoc the location of the high ground
      */
     public JumpBehaviour(Ground highGround, Location highGroundLoc) {
         this.target = highGround;
         this.highGroundLocation = highGroundLoc;
     }
 
+    /**
+     * Get the action MoveActorAction when the player want to jump onto a high ground
+     *
+     * @param actor the Actor acting
+	 * @param map the GameMap containing the Actor
+	 * @return an Action that actor can perform, or null if actor can't do this.
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
         Location playerLocation = map.locationOf(actor);
-
-        int x = playerLocation.x();
-        int y = playerLocation.y();
 
         if (target.canActorEnter(actor) || !map.contains(actor))
             return null;
@@ -60,37 +81,50 @@ public class JumpBehaviour extends Action implements Behaviour {
     }
 
 
+    /**
+     * Perform the Action.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a description of what happened that can be displayed to the user.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
-        //System.out.println("M = " + actor.hasCapability(Status.SUPERMUSHROOM));
+        int successRate;
+
         if (actor.hasCapability(Status.SUPERMUSHROOM)){
-            this.successRate = 100;
+            successRate = 100;
         }
         else if (target.getDisplayChar() == '+') {
-            this.successRate = 90;
+            successRate = 90;
         }
         else if (target.getDisplayChar() == 't'){
-            this.successRate = 80;
+            successRate = 80;
         }
         else if (target.getDisplayChar() == 'T'){
-            this.successRate = 70;
+            successRate = 70;
         }
         else {
-            this.successRate = 80;
+            successRate = 80;
         }
 
-        if (r.nextInt(101) <= this.successRate){
+        if (r.nextInt(101) <= successRate){
             getAction(actor, map);
             return "Mario successfully jumped to a " + this.name;
         }
 
-        int fallDamage = 100 - this.successRate;
+        int fallDamage = 100 - successRate;
         actor.hurt(fallDamage);
 
         return "ARGHHH!! Mario failed to jump.";
-
     }
 
+    /**
+     * Returns a descriptive string
+     *
+     * @param actor The actor performing the action.
+     * @return the text we put on the menu
+     */
     @Override
     public String menuDescription(Actor actor) {
 
@@ -110,7 +144,13 @@ public class JumpBehaviour extends Action implements Behaviour {
         return "Jump to a " + this.name + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }
 
-
+    /**
+     * Compute the Manhattan distance between two locations.
+     *
+     * @param a the first location
+     * @param b the first location
+     * @return the number of steps between a and b if you only move in the four cardinal directions.
+     */
     private int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }

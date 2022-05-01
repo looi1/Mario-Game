@@ -6,12 +6,10 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
-import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ResetAction;
 import game.behaviours.JumpBehaviour;
 import game.reset.Resettable;
-import game.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ import java.util.List;
 public class Player extends Actor implements Resettable {
 
 	private final Menu menu = new Menu();
-	private int marker = 0;
 	private int powerStarEffectTicker;
 
 	/**
@@ -53,15 +50,33 @@ public class Player extends Actor implements Resettable {
 
 
 		// check at every turn if certain Status should be removed.
-		if(this.hasCapability(Status.POWERSTAR)){
-			Location locate = map.locationOf(this);
+		if(!(this.hasCapability(Status.POWERSTAR))) {
+			actions.add(addJump(map)); // if the player don't have the POWERSTAR Status, then add jump action
 		}
-		else {
-			actions.add(addJump(map));
+		String ground;
+		Location here = map.locationOf(this);
+
+		if (here.getGround().getDisplayChar() == '#'){
+			ground = "Wall";
+		}
+		else if (here.getGround().getDisplayChar() == '+'){
+			ground = "Sprout";
+		}
+		else if (here.getGround().getDisplayChar() == 't'){
+			ground = "Sapling";
+		}
+		else if (here.getGround().getDisplayChar() == 'T'){
+			ground = "Mature";
+		}
+		else if (here.getGround().getDisplayChar() == '_'){
+			ground = "Floor";
+		}
+		else{
+			ground = "Dirt";
 		}
 
 		// return/print the console menu
-		display.println(this.printHp() + "(" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ")");
+		display.println("Mario" + this.printHp() + " at " + ground + "(" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ")");
 		return menu.showMenu(this, actions, display);
 
 	}
@@ -83,7 +98,9 @@ public class Player extends Actor implements Resettable {
 		this.resetMaxHp(100); //heal to maximum
 	}
 
-
+	/**
+	 * Add the SuperMushroom effect to the player when consumed
+	 */
 	public void addSuperMushroomEffect() {
 		this.addCapability(Status.SUPERMUSHROOM);
 
@@ -91,6 +108,9 @@ public class Player extends Actor implements Resettable {
 		this.setDisplayChar('M');
 	}
 
+	/**
+	 * Remove the SuperMushroom effect from the player
+	 */
 	private void removeSuperMushroomEffect() {
 		this.removeCapability(Status.SUPERMUSHROOM);
 		this.setDisplayChar('m');
@@ -103,12 +123,21 @@ public class Player extends Actor implements Resettable {
 	}
 
 
+	/**
+	 * Add the PowerStar effect to the player when consumed
+	 */
 	public void addPowerStarEffect() {
 		this.addCapability(Status.POWERSTAR);
 		powerStarEffectTicker = 10;
 		this.heal(200);
 	}
 
+	/**
+	 * Check how many turns that the player has the PowerStar effect (Max 10 turns)
+	 * After 10 turns it will remove the effect
+	 *
+	 * @param display to display the text in the console
+	 */
 	private void decayPowerStarEffect(Display display) {
 		if (powerStarEffectTicker <= 0) {
 			this.removeCapability(Status.POWERSTAR);
@@ -119,6 +148,13 @@ public class Player extends Actor implements Resettable {
 	}
 
 
+	/**
+	 * Check the surrounding Ground around the Player if it is a high ground
+	 * Add the jump action to the actions List if the player doesn't have the POWERSTAR effect
+	 *
+	 * @param map the Game Map containing the Player
+	 * @return List of jump action
+	 */
 	public List<Action> addJump(GameMap map){
 		ArrayList<Action> actions = new ArrayList<Action>();
 
@@ -134,7 +170,6 @@ public class Player extends Actor implements Resettable {
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (!(x + i == x && y + j == y)){
-					//System.out.println(highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()));
 					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()) && x+i >= 0 && y+j >= 0){
 						if (this.hasCapability(Status.POWERSTAR)){
 							break;
