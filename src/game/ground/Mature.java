@@ -8,6 +8,11 @@ import game.items.Coin;
 
 import java.util.Random;
 
+/**
+ * A Mature class that represents Tree and implements Jumpable
+ *
+ * @see edu.monash.fit2099.engine.positions.Ground
+ */
 public class Mature extends Tree implements Jumpable {
     /**
      * mature age that adds each turn

@@ -14,7 +14,7 @@ import java.util.Random;
 
 /**
  * A class that figures out a MoveActorAction that will move the actor to the
- * high ground
+ * high ground that represents Action and implements Behaviour
  * 
  * @see edu.monash.fit2099.engine.actions.MoveActorAction
  * @see game.behaviours.Behaviour
@@ -103,6 +103,7 @@ public class JumpBehaviour extends Action implements Behaviour {
         }
 
         if (r.nextInt(101) <= successRate) {
+            getAction(actor, map);
             return "Mario successfully jumped to a " + jumpableTarget.getName();
         } else {
             actor.hurt(jumpableTarget.getFallDamage());

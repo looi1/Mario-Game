@@ -65,7 +65,7 @@ public class Application {
 			int minY = gameMap.getYRange().min();
 			int maxY = gameMap.getYRange().max();
 
-			for (int i = 0; i < 16; i++){
+			for (int i = 0; i < 20; i++){
 				int x = r.nextInt((maxX - minX) + minX);
 				int y = r.nextInt((maxY - minY) + minY);
 

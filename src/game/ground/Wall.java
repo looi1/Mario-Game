@@ -8,7 +8,7 @@ import game.Status;
 import game.items.Coin;
 
 /**
- * A Wall class that represents Ground
+ * A Wall class that represents Ground and implements Jumpable
  *
  * @see edu.monash.fit2099.engine.positions.Ground
  */
