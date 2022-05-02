@@ -1,0 +1,15 @@
+Changes:
+	- All the class that inherits from the Tree and Tree itself implements Resettable.
+	- Sprout, Sapling and Mature implements Jumpable since it is considered high ground.
+	- Wall also implements Jumpable.
+	- Sprout doesn't associated to Goomba rather than depends since it doesn't have any
+        attribute of Goomba.
+	- Sapling doesn't associated to Coin, but depends on Coin since it only creating
+ 	  Coin object inside of its method and rather than depends on Sprout, should be
+ 	  Sprout that depends on Sapling.
+	- Mature does not associated to Sprout and Koopa, but depends on them.
+
+Principles:
+	LSP:
+	- Substituting Sprout, Sapling and Mature with the parent class Tree will not result
+	  in any unexpected behaviour.
