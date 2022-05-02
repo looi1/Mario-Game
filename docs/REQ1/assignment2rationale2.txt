@@ -1,0 +1,16 @@
+Changes:
+	- JumpBehaviour will extend from Action class rather than Actor.
+	- JumpBehaviour is associated to Ground, Location and Jumpable since it is needed
+	  to keep track of the Ground target and its Locaiton which is a high ground that
+	  the player wants to jump onto and Jumpable to get the high ground attributes.
+	- Rather than MagicalItem, it depends on PowerStar and SuperMushroom.
+	- it will also depends on coin since if the Player has the capability of PowerStar
+	  then the Player can directly walk to the high ground. It will destroy it to a Dirt
+	  and drop a Coin with a value of 5.
+
+Principles:
+	OCP:
+	- Interface Jumpable implements getSuccessRate(), getFallDamage(), getName() methods
+	  for each Jumpable high grounds. Each high ground only needs to be registered
+	  to become a Jumpable ground with no changes in the JumpBehaviour class.
+	  Hence, there can be more Jumpable ground with no modifications in JumpBehaviour.
