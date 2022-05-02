@@ -1,3 +1,14 @@
+Changes:
+    - There is no WalkBehaviour, instead the functionality already provided is used. There is
+      no need for WalkBehaviour.
+    - JumpBehaviour also inherits Action, because 
+    - ConsumeSuperMushroomAction and ConsumePowerStarAction are new Actions
+      for handling the consumption of the items.
+    - The adding of the effects to Player are now done by two methods: addPowerStarEffect()
+      and addSuperMushroomEffect().
+    - Coin has no more relationship with PowerStar, to better follow separation of concerns.
+
+
 Current implementation for consuming items and Player gaining the effects:
     - Have a Consume<Item>Action for each consumable item.
         - This will trigger addSuperMushroomEffect() or addPowerStarEffect() in Player.
