@@ -68,6 +68,6 @@ public abstract class Tree extends Ground implements Resettable {
      */
     @Override
     public boolean canActorEnter(Actor actor) {
-        return actor.hasCapability(Status.POWERSTAR);
+        return actor.hasCapability(Status.POWERSTAR) || actor.hasCapability(Status.ENTER_HIGH_GROUND);
     }
 }

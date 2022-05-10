@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Location;
+import game.actions.AttackAction;
 import game.actions.ResetAction;
 import game.behaviours.JumpBehaviour;
 import game.reset.Resettable;
@@ -22,6 +23,7 @@ public class Player extends Actor implements Resettable {
 
 	private final Menu menu = new Menu();
 	private int powerStarEffectTicker;
+	private Yoshi yoshi;
 
 	/**
 	 * Constructor.
@@ -36,6 +38,10 @@ public class Player extends Actor implements Resettable {
 		this.registerInstance();
 	}
 
+	public void adoptYoshi(Yoshi yoshi) {
+		this.yoshi = yoshi;
+	}
+
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 
@@ -48,6 +54,12 @@ public class Player extends Actor implements Resettable {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
+		if (lastAction instanceof AttackAction) {
+			AttackAction lastAttack = (AttackAction) lastAction;
+			yoshi.attackEnemy(lastAttack.getEnemy());
+		} else {
+			yoshi.disengage();
+		}
 
 		// check at every turn if certain Status should be removed.
 		if(!(this.hasCapability(Status.POWERSTAR))) {
@@ -78,7 +90,6 @@ public class Player extends Actor implements Resettable {
 		// return/print the console menu
 		display.println("Mario" + this.printHp() + " at " + ground + "(" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ")");
 		return menu.showMenu(this, actions, display);
-
 	}
 
 
@@ -118,8 +129,18 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public void hurt(int points) {
-		super.hurt(points);
-		removeSuperMushroomEffect();
+		if (getHp() <= 30 && yoshi.isConscious()) {
+			yoshi.hurt(points);
+		} else {
+			super.hurt(points);
+			removeSuperMushroomEffect();
+		}
+	}
+
+	private int getHp() {
+		String hpString = printHp().split("/")[0];
+		hpString = hpString.substring(1);
+		return Integer.valueOf(hpString);
 	}
 
 
@@ -183,6 +204,10 @@ public class Player extends Actor implements Resettable {
 			}
 		}
 		return actions;
+	}
+
+	public Yoshi getYoshi() {
+		return yoshi;
 	}
 
 

@@ -2,6 +2,7 @@ package game.actions;
 
 import java.util.Random;
 
+import edu.monash.fit2099.demo.conwayslife.Player;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
@@ -79,8 +80,6 @@ public class AttackAction extends Action {
 		target.addBehaviour(9,new FollowBehaviour(actor));
 
 
-
-
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
 			// drop all items
@@ -106,5 +105,9 @@ public class AttackAction extends Action {
 	@Override
 	public String menuDescription(Actor actor) {
 		return actor + " attacks " + target + " at " + direction;
+	}
+
+	public Enemies getEnemy() {
+		return target;
 	}
 }

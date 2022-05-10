@@ -23,7 +23,7 @@ public abstract class Enemies extends Actor {
      * @param priority prority of the behaviour
      * @param behave the behaviour
      */
-    public abstract void addBehaviour(int priority, Behaviour behave);
+public abstract void addBehaviour(int priority, Behaviour behave);
 
 
     /**
