@@ -7,7 +7,7 @@ import game.items.Coin;
 import java.util.Random;
 
 /**
- * A Sprout class that represents a Tree
+ * A Sprout class that represents a Tree and implements Jumpable
  *
  * @see edu.monash.fit2099.engine.positions.Ground
  */
