@@ -26,6 +26,9 @@ public class ConsumeSuperMushroomAction extends Action {
         this.superMushroom = superMushroom;
     };
 
+    /**
+     * Removes the superMushroom from the Ground or Inventory, and calls addPowerStarEffect()
+     */
     @Override
     public String execute(Actor actor, GameMap gameMap) {
         Location location = gameMap.locationOf(actor);
