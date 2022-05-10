@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Status;
+import game.Player;
 
 import java.util.Random;
 
@@ -61,9 +62,13 @@ public class AttackBehaviour extends Action implements Behaviour {
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
 
+        // if (!player.getYoshi().isConscious() && map.contains(player.getYoshi())) {
+        //     map.removeActor(player.getYoshi());
+        //     System.out.println("Yoshi sacrificed himself for you!");
+        // }
+
 
         if (!this.player.isConscious()) {
-
             map.removeActor(this.player);
             result += System.lineSeparator() + this.player + " is killed.";
         }
