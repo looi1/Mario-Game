@@ -31,7 +31,16 @@ public class Wall extends Ground implements Jumpable{
 	 */
 	@Override
 	public boolean canActorEnter(Actor actor) {
-		return actor.hasCapability(Status.POWERSTAR);
+		if(actor.hasCapability(Status.POWERSTAR)) {
+			return true;
+		}
+
+		else if (actor.hasCapability(Status.FLY)){
+			return true;
+		}else{
+			return false;
+		}
+
 	}
 
 	/**
