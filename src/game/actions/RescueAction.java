@@ -12,7 +12,12 @@ public class RescueAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        return null;
+        String result = "";
+
+        map.removeActor(actor);
+        result+="Congratulation! Princess Peach is rescued! You won the game!";
+
+        return result;
     }
 
     @Override
