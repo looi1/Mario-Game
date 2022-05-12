@@ -14,4 +14,7 @@ public enum Status {
     SUPERMUSHROOM,
     FED,
     ENTER_HIGH_GROUND,
+    UNLOCKABLE,
+    FIREATK,
+    FLY,
 }
