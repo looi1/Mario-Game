@@ -119,7 +119,7 @@ import java.util.Map;
          */
         @Override
         public IntrinsicWeapon getIntrinsicWeapon() {
-            return new IntrinsicWeapon(1, " punch ");
+            return new IntrinsicWeapon(80, " punch ");
 
         }
 
