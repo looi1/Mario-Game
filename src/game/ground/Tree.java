@@ -6,7 +6,6 @@ import edu.monash.fit2099.engine.positions.Ground;
 import game.Status;
 import game.reset.Resettable;
 
-import java.nio.file.StandardCopyOption;
 import java.util.Random;
 
 /**
