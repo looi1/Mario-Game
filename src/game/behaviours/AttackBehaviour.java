@@ -11,6 +11,8 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Status;
 import game.Player;
+import game.enemies.Enemies;
+import game.enemies.Fire;
 
 import java.util.Random;
 
@@ -60,6 +62,24 @@ public class AttackBehaviour extends Action implements Behaviour {
 
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
+        ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));
+
+        if (actor.hasCapability(Status.FIREATK)){
+            Location locate = map.locationOf(this.player);
+            locate.addItem(new Fire());
+            //map.addActor(new Fire(),locate);
+
+        }
+
+        /*Location locatePlayer = map.locationOf(this.player);
+        for(int i = 0; i<locatePlayer.getItems().size() ; i++){
+            if (locatePlayer.getItems().get(i).getDisplayChar() == 'v'){
+                this.player.hurt(20);
+            }
+            }*/
+
+
+
 
         if (this.player instanceof Player) {
             Player mario = (Player) this.player;

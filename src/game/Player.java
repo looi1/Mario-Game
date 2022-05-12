@@ -2,6 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
@@ -9,6 +10,8 @@ import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.AttackAction;
 import game.actions.ResetAction;
+import game.behaviours.AttackBehaviour;
+import game.behaviours.FireAttackBehaviour;
 import game.behaviours.JumpBehaviour;
 import game.reset.Resettable;
 
@@ -36,7 +39,9 @@ public class Player extends Actor implements Resettable {
 		super(name, displayChar, hitPoints);
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.registerInstance();
+
 	}
+
 
 	public void adoptYoshi(Yoshi yoshi) {
 		this.yoshi = yoshi;
@@ -44,6 +49,22 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+
+		Location locationPlayer = map.locationOf(this);
+		for(int i = 0; i<locationPlayer.getItems().size() ; i++){
+			if (locationPlayer.getItems().get(i).getDisplayChar() == 'v'){
+				int dmg = locationPlayer.getItems().get(i).asWeapon().damage();
+				this.hurt(dmg);
+				if(!this.isConscious()){
+					map.removeActor(this);
+					display.println(this + " is killed.");
+					return new DoNothingAction();
+
+				}else {
+					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
+				}
+			}
+		}
 
 		decayPowerStarEffect(display);
 		// Handle multi-turn Actions
@@ -86,6 +107,8 @@ public class Player extends Actor implements Resettable {
 		else{
 			ground = "Dirt";
 		}
+
+
 
 		// return/print the console menu
 		display.println("Mario" + this.printHp() + " at " + ground + "(" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ")");

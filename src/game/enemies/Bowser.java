@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -18,6 +19,7 @@ import game.Status;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.FireAttackBehaviour;
 import game.items.Key;
 import game.reset.Resettable;
 
@@ -59,7 +61,9 @@ import java.util.Map;
             // it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
             if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
                 actions.add(new AttackAction(this,direction));
+
                 this.behaviours.put(9,new AttackBehaviour(otherActor));
+
                //this.behaviours.put(1, new FireAttack(this));
             }
 
@@ -75,11 +79,27 @@ import java.util.Map;
         @Override
         public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 
+            Location locationPlayer = map.locationOf(this);
+            for(int i = 0; i<locationPlayer.getItems().size() ; i++) {
+                if (locationPlayer.getItems().get(i).getDisplayChar() == 'v') {
+                    int dmg = locationPlayer.getItems().get(i).asWeapon().damage();
+                    this.hurt(dmg);
+                    if (!this.isConscious()) {
+                        map.removeActor(this);
+                        display.println(this + " is killed!");
+                    } else {
+                        display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
+
+                    }
+                }
+            }
+
             for(game.behaviours.Behaviour Behaviour : behaviours.values()) {
                 Action action = Behaviour.getAction(this, map);
                 if (action != null)
                     return action;
             }
+
             return new DoNothingAction();
         }
 
@@ -99,7 +119,7 @@ import java.util.Map;
          */
         @Override
         public IntrinsicWeapon getIntrinsicWeapon() {
-            return new IntrinsicWeapon(80, " punch ");
+            return new IntrinsicWeapon(1, " punch ");
 
         }
 

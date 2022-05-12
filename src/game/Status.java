@@ -16,4 +16,5 @@ public enum Status {
     FLY,
     UNLOCKABLE,
     FIREATK,
+    FIREDMG,
 }

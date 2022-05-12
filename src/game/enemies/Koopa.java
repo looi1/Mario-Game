@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.*;
 import game.actions.AttackAction;
@@ -70,6 +71,22 @@ public class Koopa extends Enemies implements Resettable {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+
+        Location locationPlayer = map.locationOf(this);
+        for(int i = 0; i<locationPlayer.getItems().size() ; i++) {
+            if (locationPlayer.getItems().get(i).getDisplayChar() == 'v') {
+                int dmg = locationPlayer.getItems().get(i).asWeapon().damage();
+                this.hurt(dmg);
+                if (!this.isConscious()) {
+                    map.removeActor(this);
+                    display.println(this + " is killed!");
+                } else {
+                    display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
+
+                }
+            }
+        }
+
         for (Behaviour Behaviour : behaviours.values()) {
             Action action = Behaviour.getAction(this, map);
             if (action != null)
