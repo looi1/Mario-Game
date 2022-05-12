@@ -58,7 +58,7 @@ public class Player extends Actor implements Resettable {
 				if(!this.isConscious()){
 					map.removeActor(this);
 					display.println(this + " is killed.");
-					return new DoNothingAction();
+
 
 				}else {
 					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
