@@ -114,7 +114,6 @@ public class Player extends Actor implements Resettable {
 	 */
 	public void addSuperMushroomEffect() {
 		this.addCapability(Status.SUPERMUSHROOM);
-
 		this.increaseMaxHp(50);
 		this.setDisplayChar('M');
 	}
@@ -129,7 +128,7 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public void hurt(int points) {
-		if (getHp() <= 30 && yoshi.isConscious()) {
+		if (getHp() <= 40 && yoshi.isConscious()) {
 			yoshi.hurt(points);
 		} else {
 			super.hurt(points);

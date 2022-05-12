@@ -41,7 +41,7 @@ public class Yoshi extends Actor{
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
             for (Object object : otherActor.getInventory()) {
                 if (object instanceof Steak) {
-                    actions.add(new FeedAction(this));
+                    actions.add(new FeedAction(this, (Steak) object));
                     break;
                 }
             }
@@ -91,19 +91,21 @@ public class Yoshi extends Actor{
     }
 
     public void eatSteak() {
+        if (!this.hasCapability(Status.FED)) {
+            increaseMaxHp(40);
+        }
         addCapability(Status.FED);
-        addCapability(Status.ENTER_HIGH_GROUND);
-        timer = 15;
+        addCapability(Status.FLY);
+        timer = 10;
         setDisplayChar('Y');
-        increaseMaxHp(80);
     }
 
     public void getHungryAgain() {
         if (timer <= 0 && hasCapability(Status.FED)) {
             setDisplayChar('y');
-            increaseMaxHp(40);
+            increaseMaxHp(-40);
             removeCapability(Status.FED);
-            removeCapability(Status.ENTER_HIGH_GROUND);
+            removeCapability(Status.FLY);
         } else {
             timer -= 1;
         }
@@ -112,8 +114,7 @@ public class Yoshi extends Actor{
     @Override
     public void hurt(int points) {
         super.hurt(points);
-        System.out.println("Yoshi helps Mario take " + points + " damage!");
-        System.out.println(printHp());
+        System.out.println("Yoshi helps Mario take " + points + " damage! " + printHp());
     }
 
     

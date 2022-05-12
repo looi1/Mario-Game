@@ -57,7 +57,7 @@ public class Application {
 			GameMap gameMap = new GameMap(groundFactory, map);
 			world.addGameMap(gameMap);
 
-			Player mario = new Player("Player", 'm', 30);
+			Player mario = new Player("Player", 'm', 100);
 			world.addPlayer(mario, gameMap.at(44, 9));
 
 			Random r = new Random();
@@ -80,9 +80,7 @@ public class Application {
 			gameMap.at(43,8).addActor(yoshi);
 			mario.adoptYoshi(yoshi);
 			Koopa dummy = new Koopa();
-			gameMap.at(43,9).addActor(dummy);
-			Koopa dummy2 = new Koopa();
-			gameMap.at(44,8).addActor(dummy2);
+			// gameMap.at(43,9).addActor(dummy);
 			
 			
 

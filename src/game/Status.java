@@ -13,8 +13,7 @@ public enum Status {
     HAS_SHELL,
     SUPERMUSHROOM,
     FED,
-    ENTER_HIGH_GROUND,
+    FLY,
     UNLOCKABLE,
     FIREATK,
-    FLY,
 }
