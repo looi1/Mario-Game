@@ -32,15 +32,20 @@ import java.util.Map;
          */
         private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
+        private int coorX;
+        private int coorY;
+
         /**
          * Constructor.
          */
-        public Bowser() {
+        public Bowser(int x, int y) {
             super("Bowser", 'B', 500);
             this.addCapability(Status.CANT_ENTER_FLOOR);  //prevent goomba to enter floor
             this.addItemToInventory(new Key());
             this.addCapability(Status.FIREATK);
-            //this.registerInstance();
+            this.coorX = x;
+            this.coorY = y;
+            this.registerInstance();
         }
 
 
@@ -130,10 +135,19 @@ import java.util.Map;
          **/
         @Override
         public void resetInstance(Actor actor, GameMap map) {
+           //map.removeActor(this);
+            //map.at(coorX,coorY).addActor(new Bowser(coorX,coorY));
+            map.moveActor(this,map.at(coorX,coorY));
+            this.heal(this.getMaxHp());
+            this.removeBehaviour(5);
 
 
 
 
+
+        }
+        public void removeBehaviour(int priority){
+            this.behaviours.remove(priority);
         }
 
     }
