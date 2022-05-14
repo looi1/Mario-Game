@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.behaviours.AttackBehaviour;
+import game.behaviours.FollowBehaviour;
 import game.enemies.Goomba;
 import game.enemies.Koopa;
 import game.ground.Dirt;
@@ -56,7 +57,7 @@ public class Application {
 			GameMap gameMap = new GameMap(groundFactory, map);
 			world.addGameMap(gameMap);
 
-			Actor mario = new Player("Player", 'm', 100);
+			Player mario = new Player("Player", 'm', 100);
 			world.addPlayer(mario, gameMap.at(44, 9));
 
 			Random r = new Random();
@@ -75,6 +76,13 @@ public class Application {
 			gameMap.at(44,9).addItem(new PowerStar());
 			gameMap.at(44,9).addItem(new SuperMushroom());
 			gameMap.at(44,10).addActor(new Toad());
+			Yoshi yoshi = new Yoshi(mario);
+			gameMap.at(43,8).addActor(yoshi);
+			mario.adoptYoshi(yoshi);
+			Koopa dummy = new Koopa();
+			// gameMap.at(43,9).addActor(dummy);
+			
+			
 
 			world.run();
 

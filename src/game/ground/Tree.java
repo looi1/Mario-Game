@@ -6,7 +6,6 @@ import edu.monash.fit2099.engine.positions.Ground;
 import game.Status;
 import game.reset.Resettable;
 
-import java.nio.file.StandardCopyOption;
 import java.util.Random;
 
 /**
@@ -68,6 +67,6 @@ public abstract class Tree extends Ground implements Resettable {
      */
     @Override
     public boolean canActorEnter(Actor actor) {
-        return actor.hasCapability(Status.POWERSTAR);
+        return actor.hasCapability(Status.POWERSTAR)|| actor.hasCapability(Status.FLY);
     }
 }

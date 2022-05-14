@@ -10,6 +10,9 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Status;
+import game.Player;
+import game.enemies.Enemies;
+import game.enemies.Fire;
 
 import java.util.Random;
 
@@ -36,47 +39,69 @@ public class AttackBehaviour extends Action implements Behaviour {
 
     /**
      * constructor
+     * 
      * @param newPlayer
      */
-    public AttackBehaviour(Actor newPlayer){
+    public AttackBehaviour(Actor newPlayer) {
         this.player = newPlayer;
 
     }
 
-
     public String execute(Actor actor, GameMap map) {
 
         Weapon weapon = actor.getWeapon();
-        if(this.player.hasCapability(Status.POWERSTAR)){
-            this.damage=0;
-        }else{
+        if (this.player.hasCapability(Status.POWERSTAR)) {
+            this.damage = 0;
+        } else {
             this.damage = weapon.damage();
         }
 
-
         if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
-            return actor + " misses " + this.player + ".";}
-
+            return actor + " misses " + this.player + ".";
+        }
 
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
+        ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));
 
+        if (actor.hasCapability(Status.FIREATK)){
+            Location locate = map.locationOf(this.player);
+            locate.addItem(new Fire());
+            //map.addActor(new Fire(),locate);
+
+        }
+
+        /*Location locatePlayer = map.locationOf(this.player);
+        for(int i = 0; i<locatePlayer.getItems().size() ; i++){
+            if (locatePlayer.getItems().get(i).getDisplayChar() == 'v'){
+                this.player.hurt(20);
+            }
+            }*/
+
+
+
+
+        if (this.player instanceof Player) {
+            Player mario = (Player) this.player;
+            if (!mario.getYoshi().isConscious() && map.contains(mario.getYoshi())) {
+                map.removeActor(mario.getYoshi());
+                System.out.println("Yoshi sacrificed himself for you!");
+            }
+        }
 
         if (!this.player.isConscious()) {
-
             map.removeActor(this.player);
             result += System.lineSeparator() + this.player + " is killed.";
         }
 
-
         return result;
     }
 
-
     /**
      * return the attack action if player is within the enemy surroundings
+     * 
      * @param actor the Actor acting
-     * @param map the GameMap containing the Actor
+     * @param map   the GameMap containing the Actor
      * @return
      */
     @Override
@@ -84,17 +109,17 @@ public class AttackBehaviour extends Action implements Behaviour {
         if (!map.contains(this.player) || !map.contains(actor))
             return null;
 
-        //Location locaEnemies = map.locationOf(actor);
-        //Location locaPlayer = map.locationOf(this.player);
+        // Location locaEnemies = map.locationOf(actor);
+        // Location locaPlayer = map.locationOf(this.player);
 
         Location here = map.locationOf(actor);
         Location there = map.locationOf(this.player);
 
-        if ((here.x() == there.x() || here.y() == there.y())&&distance(here,there)<=1) {
+        if ((here.x() == there.x() || here.y() == there.y()) && distance(here, there) <= 1) {
             return this;
-        }else if ((here.x() != there.x() && here.y() != there.y())&&distance(here,there)<=2){ //diagonal
-            return this;}
-        else{
+        } else if ((here.x() != there.x() && here.y() != there.y()) && distance(here, there) <= 2) { // diagonal
+            return this;
+        } else {
             return null;
         }
 
@@ -102,6 +127,7 @@ public class AttackBehaviour extends Action implements Behaviour {
 
     /**
      * calculate the distance between 2 location
+     * 
      * @param a location a
      * @param b location b
      * @return
@@ -114,8 +140,5 @@ public class AttackBehaviour extends Action implements Behaviour {
     public String menuDescription(Actor actor) {
         return "";
     }
-
-
-
 
 }

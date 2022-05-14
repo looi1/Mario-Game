@@ -3,6 +3,7 @@ package game.ground;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
+import game.enemies.FlyingKoopa;
 import game.enemies.Koopa;
 import game.items.Coin;
 
@@ -40,6 +41,9 @@ public class Mature extends Tree implements Jumpable {
         super.tick(location);
         matureAge += 1;
         int spawnRateKoopa = 15;
+
+        int spawnRateFKoopa = 50;
+
         int witherRate = 20;
         int x = location.x();
         int y = location.y();
@@ -60,6 +64,7 @@ public class Mature extends Tree implements Jumpable {
             }
         }
 
+
         if (matureAge >= 0 && matureAge % 5 == 0 && location.getGround().getDisplayChar() == 'T') {
             if (randomX != 0 && randomY != 0){
                 if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
@@ -69,8 +74,13 @@ public class Mature extends Tree implements Jumpable {
         }
 
         int random = r.nextInt((high - low) + low);
-        if (random <= spawnRateKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
+
+        if(random>spawnRateKoopa && random<=spawnRateFKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
+            location.addActor(new FlyingKoopa());
+        }
+        else if (random <= spawnRateKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
             location.addActor(new Koopa());
+
         }
 
         random = r.nextInt((high - low) + low);

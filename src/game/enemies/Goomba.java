@@ -7,11 +7,13 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.*;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.FireAttackBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.reset.Resettable;
 
@@ -52,6 +54,7 @@ public class Goomba extends Enemies implements Resettable {
 		// it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
 			actions.add(new AttackAction(this,direction));
+
 			this.behaviours.put(9,new AttackBehaviour(otherActor));
 		}
 
@@ -66,6 +69,22 @@ public class Goomba extends Enemies implements Resettable {
 	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+
+		Location locationPlayer = map.locationOf(this);
+		for(int i = 0; i<locationPlayer.getItems().size() ; i++) {
+			if (locationPlayer.getItems().get(i).getDisplayChar() == 'v') {
+				int dmg = locationPlayer.getItems().get(i).asWeapon().damage();
+				this.hurt(dmg);
+				if (!this.isConscious()) {
+					map.removeActor(this);
+					display.println(this + " is killed!");
+				} else {
+					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
+
+				}
+			}
+		}
+
 		if(Math.random()<=0.1){
 			map.removeActor(this);
 			return new DoNothingAction();
@@ -95,7 +114,6 @@ public class Goomba extends Enemies implements Resettable {
 	@Override
 	public IntrinsicWeapon getIntrinsicWeapon() {
 		return new IntrinsicWeapon(10, " kick ");
-
 	}
 
 	/**

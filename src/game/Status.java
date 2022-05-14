@@ -11,5 +11,10 @@ public enum Status {
     BREAK_SHELL,
     CANT_ENTER_FLOOR,
     HAS_SHELL,
-    SUPERMUSHROOM
+    SUPERMUSHROOM,
+    FED,
+    FLY,
+    UNLOCKABLE,
+    FIREATK,
+    FIREDMG,
 }

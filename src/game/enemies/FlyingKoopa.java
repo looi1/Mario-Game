@@ -1,4 +1,3 @@
-//ts
 package game.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
@@ -9,7 +8,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.*;
+import game.Status;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
@@ -20,26 +19,19 @@ import game.reset.Resettable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * a class representing enemy Koopa
- */
-public class Koopa extends Enemies implements Resettable {
+public class FlyingKoopa extends Enemies implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
-    /**
-     * Constructor.
-     */
-    public Koopa() {
-        super("Koopa", 'K', 100);
+    public FlyingKoopa(){
+        super("FlyingKoopa",'F',150);
         this.behaviours.put(10, new WanderBehaviour());
         this.addItemToInventory(new SuperMushroom());
         this.addCapability(Status.CANT_ENTER_FLOOR);
         this.addCapability(Status.HAS_SHELL);
+        this.addCapability(Status.FLY);
 
         this.registerInstance();
-        //this.addItemToInventory(new Shell());
     }
-
     /**
      * At the moment, we only make it can be attacked by Player.
      * You can do something else with this method.
@@ -87,7 +79,7 @@ public class Koopa extends Enemies implements Resettable {
             }
         }
 
-        for (Behaviour Behaviour : behaviours.values()) {
+        for (game.behaviours.Behaviour Behaviour : behaviours.values()) {
             Action action = Behaviour.getAction(this, map);
             if (action != null)
                 return action;
@@ -122,4 +114,3 @@ public class Koopa extends Enemies implements Resettable {
 
     }
 }
-
