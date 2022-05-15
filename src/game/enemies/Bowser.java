@@ -19,7 +19,7 @@ import game.Status;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
-import game.behaviours.FireAttackBehaviour;
+//import game.behaviours.FireAttackBehaviour;
 import game.items.Key;
 import game.reset.Resettable;
 

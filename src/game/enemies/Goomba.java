@@ -13,7 +13,7 @@ import game.*;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
-import game.behaviours.FireAttackBehaviour;
+//import game.behaviours.FireAttackBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.reset.Resettable;
 

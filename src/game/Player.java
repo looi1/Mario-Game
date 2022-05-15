@@ -11,7 +11,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.actions.AttackAction;
 import game.actions.ResetAction;
 import game.behaviours.AttackBehaviour;
-import game.behaviours.FireAttackBehaviour;
+//import game.behaviours.FireAttackBehaviour;
 import game.behaviours.JumpBehaviour;
 import game.reset.Resettable;
 
