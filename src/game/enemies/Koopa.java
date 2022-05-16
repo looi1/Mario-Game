@@ -13,7 +13,9 @@ import game.*;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.DrinkBehaviour;
 import game.behaviours.WanderBehaviour;
+import game.items.Fountains;
 import game.items.SuperMushroom;
 import game.reset.Resettable;
 
@@ -26,6 +28,8 @@ import java.util.Map;
 public class Koopa extends Enemies implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
+    private int damage;
+
     /**
      * Constructor.
      */
@@ -35,6 +39,8 @@ public class Koopa extends Enemies implements Resettable {
         this.addItemToInventory(new SuperMushroom());
         this.addCapability(Status.CANT_ENTER_FLOOR);
         this.addCapability(Status.HAS_SHELL);
+        this.damage = 30;
+        this.behaviours.put(9,new DrinkBehaviour());
 
         this.registerInstance();
         //this.addItemToInventory(new Shell());
@@ -56,7 +62,7 @@ public class Koopa extends Enemies implements Resettable {
         // it can be attacked only by the HOSTILE opponent, and this action will not attack the HOSTILE enemy back.
         if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
             actions.add(new AttackAction(this, direction));
-            this.behaviours.put(9,new AttackBehaviour(otherActor));
+            this.behaviours.put(7,new AttackBehaviour(otherActor));
         }
 
 
@@ -111,7 +117,7 @@ public class Koopa extends Enemies implements Resettable {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(30, "punches");
+        return new IntrinsicWeapon(this.damage, "punches");
     }
 
 
@@ -119,6 +125,11 @@ public class Koopa extends Enemies implements Resettable {
     public void resetInstance(Actor actor, GameMap map) {
         map.removeActor(this);
 
+
+    }
+    @Override
+    public void setDamage(int newDamage) {
+        this.damage += newDamage;
 
     }
 }

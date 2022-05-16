@@ -12,6 +12,7 @@ import game.Status;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.DrinkBehaviour;
 import game.reset.Resettable;
 
 import java.util.HashMap;
@@ -19,9 +20,11 @@ import java.util.Map;
 
 public class PiranhaPlant extends Enemies implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
-
+    private int damage;
     public PiranhaPlant(){
         super("PiranhaPlant",'Y',150);
+        this.damage = 90;
+        this.behaviours.put(9,new DrinkBehaviour());
         this.registerInstance();
     }
     @Override
@@ -55,7 +58,7 @@ public class PiranhaPlant extends Enemies implements Resettable {
     }
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(90, "chomps");
+        return new IntrinsicWeapon(this.damage, "chomps");
     }
 
     @Override
@@ -66,6 +69,12 @@ public class PiranhaPlant extends Enemies implements Resettable {
 
         }
 
+    @Override
+    public void setDamage(int newDamage) {
+        this.damage += newDamage;
 
     }
+
+
+}
 

@@ -20,6 +20,7 @@ import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 //import game.behaviours.FireAttackBehaviour;
+import game.behaviours.DrinkBehaviour;
 import game.items.Key;
 import game.reset.Resettable;
 
@@ -31,7 +32,7 @@ import java.util.Map;
          * hash map that consists behaviour of Goomba
          */
         private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
-
+        private int damage;
         private int coorX;
         private int coorY;
 
@@ -45,6 +46,9 @@ import java.util.Map;
             this.addCapability(Status.FIREATK);
             this.coorX = x;
             this.coorY = y;
+            this.damage = 80;
+
+            this.behaviours.put(9,new DrinkBehaviour());
             this.registerInstance();
         }
 
@@ -118,15 +122,18 @@ import java.util.Map;
             this.behaviours.put(priority,behave);
         }
 
+
+
         /**
          * method to implement the weapon Goomba used to attack player
          * @return
          */
         @Override
         public IntrinsicWeapon getIntrinsicWeapon() {
-            return new IntrinsicWeapon(80, " punch ");
+            return new IntrinsicWeapon(damage, " punch ");
 
         }
+
 
         /**
          * method to reset Goomba
@@ -148,6 +155,12 @@ import java.util.Map;
         }
         public void removeBehaviour(int priority){
             this.behaviours.remove(priority);
+        }
+
+        @Override
+        public void setDamage(int newDamage) {
+            this.damage+=newDamage;
+
         }
 
     }

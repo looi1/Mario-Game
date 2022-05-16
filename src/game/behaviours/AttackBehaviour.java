@@ -62,7 +62,7 @@ public class AttackBehaviour extends Action implements Behaviour {
 
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
-        ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));
+        ((Enemies)actor).addBehaviour(1,new FollowBehaviour(this.player));
 
         if (actor.hasCapability(Status.FIREATK)){
             Location locate = map.locationOf(this.player);
