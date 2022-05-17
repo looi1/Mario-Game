@@ -88,7 +88,8 @@ public class AttackAction extends Action {
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
-		target.addBehaviour(9,new FollowBehaviour(actor));
+		if(!target.hasCapability(Status.CANTMOVE)){
+		target.addBehaviour(5,new FollowBehaviour(actor));}
 
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
