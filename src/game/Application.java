@@ -54,7 +54,7 @@ public class Application {
 				".......................................................##.......................");
 
 		List<String> secondMap = Arrays.asList(
-				"C.......................##........................",
+				"........................##........................",
 				"...................L......#.......................",
 				"..........................#............L..........",
 				".......L...................##..............L......",
@@ -97,12 +97,14 @@ public class Application {
 				gameMap1.at(x,y).setGround(new Sprout());
 			}
 
-			for (int j = 0; j < 4; j++){
+			for (int j = 0; j < 3; j++){
 				int x = r.nextInt((maxX - minX) + minX);
 				int y = r.nextInt((maxY - minY) + minY);
 
 				gameMap1.at(x,y).setGround(new WarpPipe());
 			}
+			gameMap1.at(44,7).setGround(new WarpPipe());
+			gameMap2.at(0,0).setGround(new WarpPipe());
 
 			for (int j = 0; j < 8; j++){
 				int x = r.nextInt((maxX - minX) + minX);
