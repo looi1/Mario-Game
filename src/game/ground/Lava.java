@@ -29,9 +29,9 @@ public class Lava extends Ground {
     public void tick(Location location) {
         super.tick(location);
 
-        if (location.getActor().getDisplayChar() == 'm' || location.getActor().getDisplayChar() == 'M'){
-            location.getActor().hurt(15);
-        }
+        // if (location.getActor().getDisplayChar() == 'm' || location.getActor().getDisplayChar() == 'M'){
+        //     location.getActor().hurt(15);
+        // }
     }
 
     /**

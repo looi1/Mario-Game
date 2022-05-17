@@ -27,7 +27,7 @@ public class CollectCoinAction extends Action {
 	public String execute(Actor actor, GameMap map) {
 		map.locationOf(actor).removeItem(coin);
 		Wallet.addCoin(coin);
-		return actor + " picked up " + coin;
+		return actor + " picked up " + coin + "(Total: $" + Wallet.totalBalance + ")";
 	}
 
     /**

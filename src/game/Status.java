@@ -17,4 +17,8 @@ public enum Status {
     UNLOCKABLE,
     FIREATK,
     FIREDMG,
+    AURA,
+    FREEZE,
+    HEAL,
+    INDMG;
 }

@@ -12,6 +12,7 @@ import game.Status;
 import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.DrinkBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.items.SuperMushroom;
 import game.reset.Resettable;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class FlyingKoopa extends Enemies implements Resettable {
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
-
+    private int damage;
     public FlyingKoopa(){
         super("FlyingKoopa",'F',150);
         this.behaviours.put(10, new WanderBehaviour());
@@ -29,6 +30,8 @@ public class FlyingKoopa extends Enemies implements Resettable {
         this.addCapability(Status.CANT_ENTER_FLOOR);
         this.addCapability(Status.HAS_SHELL);
         this.addCapability(Status.FLY);
+        this.behaviours.put(9,new DrinkBehaviour());
+        this.damage = 30;
 
         this.registerInstance();
     }
@@ -88,7 +91,7 @@ public class FlyingKoopa extends Enemies implements Resettable {
     }
 
     /**
-     * method to add behaviour to koopa
+     * method to add behaviour to flying koopa
      * @param priority prority of the behaviour
      * @param behave the behaviour
      */
@@ -98,12 +101,21 @@ public class FlyingKoopa extends Enemies implements Resettable {
     }
 
     /**
+     * method to remove behaviour to flying koopa
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
+    }
+
+    /**
      * method to implement weapon Koopa used to attack player
      * @return
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(30, "punches");
+        return new IntrinsicWeapon(this.damage, "punches");
     }
 
 
@@ -112,5 +124,10 @@ public class FlyingKoopa extends Enemies implements Resettable {
         map.removeActor(this);
 
 
+    }
+
+    @Override
+    public void setDamage(int newDamage) {
+        this.damage+=newDamage;
     }
 }

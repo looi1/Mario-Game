@@ -14,6 +14,7 @@ import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 //import game.behaviours.FireAttackBehaviour;
+import game.behaviours.DrinkBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.reset.Resettable;
 
@@ -28,6 +29,8 @@ public class Goomba extends Enemies implements Resettable {
 	 */
 	private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
+
+	private int damage;
 	/**
 	 * Constructor.
 	 */
@@ -35,6 +38,8 @@ public class Goomba extends Enemies implements Resettable {
 		super("Goomba", 'g', 20);
 		this.behaviours.put(10, new WanderBehaviour());
 		this.addCapability(Status.CANT_ENTER_FLOOR);  //prevent goomba to enter floor
+		this.damage = 10;
+		this.behaviours.put(9,new DrinkBehaviour());
 		this.registerInstance();
 
 	}
@@ -69,7 +74,6 @@ public class Goomba extends Enemies implements Resettable {
 	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-
 		Location locationPlayer = map.locationOf(this);
 		for(int i = 0; i<locationPlayer.getItems().size() ; i++) {
 			if (locationPlayer.getItems().get(i).getDisplayChar() == 'v') {
@@ -106,6 +110,14 @@ public class Goomba extends Enemies implements Resettable {
 	public void addBehaviour( int priority, Behaviour behave){
 		this.behaviours.put(priority,behave);
 	}
+	/**
+     * method to remove behaviour
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
+    }
 
 	/**
 	 * method to implement the weapon Goomba used to attack player
@@ -113,7 +125,7 @@ public class Goomba extends Enemies implements Resettable {
 	 */
 	@Override
 	public IntrinsicWeapon getIntrinsicWeapon() {
-		return new IntrinsicWeapon(10, " kick ");
+		return new IntrinsicWeapon(this.damage, " kick ");
 	}
 
 	/**
@@ -126,6 +138,12 @@ public class Goomba extends Enemies implements Resettable {
 		map.removeActor(this);
 
 
+
+	}
+
+	@Override
+	public void setDamage(int newDamage) {
+		this.damage += newDamage;
 
 	}
 }

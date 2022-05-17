@@ -23,7 +23,14 @@ public abstract class Enemies extends Actor {
      * @param priority prority of the behaviour
      * @param behave the behaviour
      */
-public abstract void addBehaviour(int priority, Behaviour behave);
+    public abstract void addBehaviour(int priority, Behaviour behave);
+    /**
+     * abstract method to remove behaviour of the enemy
+     * @param key ket of the behaviour
+     */ 
+    public abstract void removeBehaviour(int key);
+
+   public abstract void setDamage(int newDamage);
 
 
     /**
@@ -33,4 +40,14 @@ public abstract void addBehaviour(int priority, Behaviour behave);
     public int getHp(){
         return this.getMaxHp();
     }
+
+    /**
+     * method to get current Hp of enemies, using Actor.printHp()
+     * @return current Hp of enemies
+     */
+    public int getCurrentHp() {
+		String hpString = printHp().split("/")[0];
+		hpString = hpString.substring(1);
+		return Integer.valueOf(hpString);
+	}
 }
