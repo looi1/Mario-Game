@@ -5,15 +5,18 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Location;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actions.AttackAction;
 import game.actions.ResetAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.FireAttackBehaviour;
 import game.behaviours.FrozenBehaviour;
 import game.behaviours.JumpBehaviour;
+import game.items.Fountains;
 import game.reset.Resettable;
 import edu.monash.fit2099.engine.*;
 import game.enemies.*;
@@ -34,6 +37,9 @@ public class Player extends Actor implements Resettable {
 	private int remainingAura;
 	private int freezesLeft;
 	private Yoshi yoshi;
+	private int healthFoundTicker;
+	private int powerFoundTicker;
+	private int damage;
 
 	/**
 	 * Constructor.
@@ -46,6 +52,9 @@ public class Player extends Actor implements Resettable {
 		super(name, displayChar, hitPoints);
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.registerInstance();
+		this.damage = 5;
+		this.healthFoundTicker=0;
+		this.powerFoundTicker=0;
 
 	}
 
@@ -64,9 +73,10 @@ public class Player extends Actor implements Resettable {
 				if (!this.isConscious()) {
 					map.removeActor(this);
 					display.println(this + " is killed.");
-				} else {
-					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg
-							+ " damages!");
+					return new DoNothingAction();
+
+				}else {
+					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
 				}
 			}
 		}
@@ -75,6 +85,8 @@ public class Player extends Actor implements Resettable {
 		effects(lastAction, map, display);
 
 		// Reset
+		capacityFountain(display,map);
+		// Handle multi-turn Actions
 		ResetAction reset = ResetAction.getInstance();
 		if (reset != null) {
 			actions.add(reset);
@@ -228,6 +240,34 @@ public class Player extends Actor implements Resettable {
 			this.removeCapability(Status.FREEZE);
 		}
 	}
+	private void capacityFountain(Display display, GameMap map){
+		Location locate = map.locationOf(this);
+		String text="";
+
+		for(int i = 0; i<locate.getItems().size();i++){
+			if(locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
+				text +=this + " Health Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+				}
+			else if(locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0) {
+				//this.healthFoundTicker += 1;
+				text +="Health Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+				//if (this.healthFoundTicker % 5 == 0) {
+					//((Fountains) locate.getItems().get(i)).setCapacity();
+				//}
+
+			}if(locate.getItems().get(i).hasCapability(Status.INDMG )  && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
+				text+=this + " Power Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+			}else if(locate.getItems().get(i).hasCapability(Status.INDMG) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0){
+				//this.powerFoundTicker+=1;
+				text +="Power Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+				//if (this.powerFoundTicker % 5 == 0) {
+					//((Fountains) locate.getItems().get(i)).setCapacity();
+				//}
+
+			}
+		}display.println(text);
+	}
+
 
 	/**
 	 * Check the surrounding Ground around the Player if it is a high ground
@@ -285,5 +325,15 @@ public class Player extends Actor implements Resettable {
 	public Yoshi getYoshi() {
 		return yoshi;
 	}
+
+	@Override
+	public IntrinsicWeapon getIntrinsicWeapon() {
+		return new IntrinsicWeapon(this.damage, " punch ");
+
+	}
+	public void setDamage(int newDmg){
+		this.damage+=newDmg;
+	}
+
 
 }

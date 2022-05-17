@@ -20,33 +20,41 @@ import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 //import game.behaviours.FireAttackBehaviour;
+import game.behaviours.DrinkBehaviour;
 import game.items.Key;
 import game.reset.Resettable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bowser extends Enemies implements Resettable {
-    /**
-     * hash map that consists behaviour of Goomba
-     */
-    private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
+    public class Bowser extends Enemies implements Resettable {
+        /**
+         * hash map that consists behaviour of Goomba
+         */
+        private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
+        private int damage;
+        private int coorX;
+        private int coorY;
 
-    private int coorX;
-    private int coorY;
+        /**
+         * Constructor.
+         */
+        public Bowser(int x, int y) {
+            super("Bowser", 'B', 500);
+            this.addCapability(Status.CANT_ENTER_FLOOR);  //prevent goomba to enter floor
+            this.addItemToInventory(new Key());
+            this.addCapability(Status.FIREATK);
+            this.coorX = x;
+            this.coorY = y;
+            this.damage = 80;
 
-    /**
-     * Constructor.
-     */
-    public Bowser(int x, int y) {
-        super("Bowser", 'B', 500);
-        this.addCapability(Status.CANT_ENTER_FLOOR); // prevent goomba to enter floor
-        this.addItemToInventory(new Key());
-        this.addCapability(Status.FIREATK);
-        this.coorX = x;
-        this.coorY = y;
-        this.registerInstance();
-    }
+            this.behaviours.put(9,new DrinkBehaviour());
+            this.registerInstance();
+        }
+
+
+
+
 
     /**
      * At the moment, we only make it can be attacked by Player.
@@ -107,6 +115,19 @@ public class Bowser extends Enemies implements Resettable {
         return new DoNothingAction();
     }
 
+
+        /**
+         * method to implement the weapon Goomba used to attack player
+         * @return
+         */
+        @Override
+        public IntrinsicWeapon getIntrinsicWeapon() {
+            return new IntrinsicWeapon(damage, " punch ");
+
+        }
+
+
+
     /**
      * method to add behaviours of Goomba
      * 
@@ -128,16 +149,7 @@ public class Bowser extends Enemies implements Resettable {
         this.behaviours.remove(key);
     }
 
-    /**
-     * method to implement the weapon Goomba used to attack player
-     * 
-     * @return
-     */
-    @Override
-    public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(80, " punch ");
 
-    }
 
     /**
      * method to reset Goomba
@@ -152,7 +164,13 @@ public class Bowser extends Enemies implements Resettable {
         map.moveActor(this, map.at(coorX, coorY));
         this.heal(this.getMaxHp());
         this.removeBehaviour(5);
-
     }
+
+        @Override
+        public void setDamage(int newDamage) {
+            this.damage+=newDamage;
+
+        }
+    
 
 }

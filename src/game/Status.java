@@ -19,4 +19,6 @@ public enum Status {
     FIREDMG,
     AURA,
     FREEZE,
+    HEAL,
+    INDMG;
 }

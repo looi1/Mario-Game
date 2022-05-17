@@ -30,6 +30,9 @@ public abstract class Enemies extends Actor {
      */ 
     public abstract void removeBehaviour(int key);
 
+   public abstract void setDamage(int newDamage);
+
+
     /**
      * method to get the hp of enemies
      * @return the maximum hp of enemies
