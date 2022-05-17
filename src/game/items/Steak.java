@@ -9,7 +9,7 @@ public class Steak extends Item implements Sellable {
     }
 
     public int getPrice() {
-        return 0;
+        return 50;
     }
 
 

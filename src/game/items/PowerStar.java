@@ -3,12 +3,14 @@ package game.items;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actions.ConsumePowerStarAction;
+import game.Status;
+import game.actions.ConsumeAction;
+import game.items.Consumable;
 
 /**
  * a class representing PowerStar
  */
-public class PowerStar extends Item implements Sellable {
+public class PowerStar extends Item implements Sellable, Consumable {
 
     /**
      * life span of powerstar
@@ -21,7 +23,7 @@ public class PowerStar extends Item implements Sellable {
     public PowerStar() {
         super("Power Star", '*', true);
         this.lifeSpan = 10;
-        super.addAction(new ConsumePowerStarAction(this));
+        super.addAction(new ConsumeAction(this));
     }
 
     /**
@@ -57,6 +59,10 @@ public class PowerStar extends Item implements Sellable {
      */
     public int getPrice() {
         return 600;
+    }
+    
+    public Enum<?> getConsumeStatus() {
+        return Status.POWERSTAR;
     }
     
     

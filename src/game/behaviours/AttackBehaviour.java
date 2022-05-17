@@ -17,7 +17,7 @@ import game.enemies.Fire;
 import java.util.Random;
 
 /**
- * class representing the attack behaviour of enemies
+ * class representing the attack behaviour of enemies and Yoshi
  */
 public class AttackBehaviour extends Action implements Behaviour {
     /**
@@ -62,13 +62,14 @@ public class AttackBehaviour extends Action implements Behaviour {
 
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
-        ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));
+        if (actor instanceof Enemies) {
+            ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));
+        }
 
         if (actor.hasCapability(Status.FIREATK)){
             Location locate = map.locationOf(this.player);
             locate.addItem(new Fire());
             //map.addActor(new Fire(),locate);
-
         }
 
         /*Location locatePlayer = map.locationOf(this.player);
@@ -77,9 +78,6 @@ public class AttackBehaviour extends Action implements Behaviour {
                 this.player.hurt(20);
             }
             }*/
-
-
-
 
         if (this.player instanceof Player) {
             Player mario = (Player) this.player;

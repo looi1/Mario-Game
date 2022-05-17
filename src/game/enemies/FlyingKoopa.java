@@ -88,13 +88,22 @@ public class FlyingKoopa extends Enemies implements Resettable {
     }
 
     /**
-     * method to add behaviour to koopa
+     * method to add behaviour to flying koopa
      * @param priority prority of the behaviour
      * @param behave the behaviour
      */
     @Override
     public void addBehaviour(int priority, Behaviour behave) {
         this.behaviours.put(priority, behave);
+    }
+
+    /**
+     * method to remove behaviour to flying koopa
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
     }
 
     /**

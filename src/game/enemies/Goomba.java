@@ -69,7 +69,6 @@ public class Goomba extends Enemies implements Resettable {
 	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-
 		Location locationPlayer = map.locationOf(this);
 		for(int i = 0; i<locationPlayer.getItems().size() ; i++) {
 			if (locationPlayer.getItems().get(i).getDisplayChar() == 'v') {
@@ -106,6 +105,14 @@ public class Goomba extends Enemies implements Resettable {
 	public void addBehaviour( int priority, Behaviour behave){
 		this.behaviours.put(priority,behave);
 	}
+	/**
+     * method to remove behaviour
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
+    }
 
 	/**
 	 * method to implement the weapon Goomba used to attack player

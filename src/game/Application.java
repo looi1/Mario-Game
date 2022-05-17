@@ -15,6 +15,7 @@ import game.enemies.Goomba;
 import game.enemies.Koopa;
 import game.ground.*;
 import game.items.PowerStar;
+import game.items.StinkBug;
 import game.items.SuperMushroom;
 import game.items.Wrench;
 
@@ -78,8 +79,10 @@ public class Application {
 			world.addGameMap(gameMap1);
 			world.addGameMap(gameMap2);
 
-			Player mario = new Player("Player", 'm', 100);
+			Player mario = new Player("Player", 'm', 1000);
 			world.addPlayer(mario, gameMap1.at(44, 9));
+			// world.addPlayer(mario, gameMap1.at(30, 9));
+
 
 			Random r = new Random();
 			int minX = gameMap1.getXRange().min();
@@ -101,16 +104,26 @@ public class Application {
 				gameMap1.at(x,y).setGround(new WarpPipe());
 			}
 
+			for (int j = 0; j < 8; j++){
+				int x = r.nextInt((maxX - minX) + minX);
+				int y = r.nextInt((maxY - minY) + minY);
+
+				gameMap1.at(x,y).addItem(new StinkBug());
+			}
+
+			
+
 			gameMap1.at(44,9).addItem(new PowerStar());
 			gameMap1.at(44,9).addItem(new SuperMushroom());
 			gameMap1.at(44,10).addActor(new Toad());
 			Yoshi yoshi = new Yoshi(mario);
 			gameMap1.at(43,8).addActor(yoshi);
 			mario.adoptYoshi(yoshi);
-			Koopa dummy = new Koopa();
-			// gameMap.at(43,9).addActor(dummy);
-			
-			
+			gameMap1.at(31,9).addActor(new Koopa());
+			// gameMap1.at(30,10).addActor(new Koopa());
+			// gameMap1.at(29,10).addActor(new Koopa());
+
+			Wallet.totalBalance = 10000;
 
 			world.run();
 

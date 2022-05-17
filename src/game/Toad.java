@@ -39,6 +39,9 @@ public class Toad extends Actor{
 			actions.add(new BuyAction(superMushroom));
 			actions.add(new BuyAction(new Wrench()));
 			actions.add(new BuyAction(new Steak()));
+			actions.add(new BuyAction(new AuraPotion()));
+			actions.add(new BuyAction(new FreezePotion()));
+			actions.add(new BuyAction(new StinkBug()));
 			actions.add(new SpeakAction(false));
 		}
 		return actions;

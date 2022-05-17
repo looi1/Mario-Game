@@ -106,6 +106,15 @@ public class Koopa extends Enemies implements Resettable {
     }
 
     /**
+     * method to remove behaviour
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
+    }
+
+    /**
      * method to implement weapon Koopa used to attack player
      * @return
      */

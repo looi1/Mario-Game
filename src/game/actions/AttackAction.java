@@ -11,9 +11,14 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.behaviours.FollowBehaviour;
+import game.behaviours.FrozenBehaviour;
 import game.enemies.Shell;
 import game.Status;
 import game.enemies.Enemies;
+import java.util.ArrayList;
+import edu.monash.fit2099.engine.positions.Exit;
+import game.behaviours.FrozenBehaviour;
+import java.util.List;
 
 /**
  * Special Action for attacking other Actors.
@@ -74,11 +79,16 @@ public class AttackAction extends Action {
 			return actor + " misses " + target + ".";
 		}
 
+		if (actor.hasCapability(Status.FREEZE)) {
+			if (rand.nextInt(100) >= 40) {
+				target.addBehaviour(1, new FrozenBehaviour());
+			}
+		}
+
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
 		target.addBehaviour(9,new FollowBehaviour(actor));
-
 
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
@@ -101,6 +111,8 @@ public class AttackAction extends Action {
 
 		return result;
 	}
+
+	
 
 	@Override
 	public String menuDescription(Actor actor) {

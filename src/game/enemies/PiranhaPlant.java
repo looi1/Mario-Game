@@ -53,6 +53,15 @@ public class PiranhaPlant extends Enemies implements Resettable {
     public void addBehaviour(int priority, Behaviour behave) {this.behaviours.put(priority, behave);
 
     }
+
+    /**
+     * method to remove behaviour
+     * @param key key of the behaviour
+     */
+    @Override
+    public void removeBehaviour(int key) {
+        this.behaviours.remove(key);
+    }
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(90, "chomps");
