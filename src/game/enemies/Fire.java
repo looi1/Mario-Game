@@ -15,6 +15,9 @@ import game.actions.AttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 
+/**
+ * class representing bowser's attack Fire
+ */
 public class Fire extends WeaponItem {
     private int lifeSpan = 3;
     private Actor actor;
@@ -28,6 +31,10 @@ public class Fire extends WeaponItem {
 
     }
 
+    /**
+     * a method to remove the fire from map based on turn
+     * @param location
+     */
     @Override
     public void tick(Location location) {
         if (lifeSpan <= 0) {
@@ -37,30 +44,4 @@ public class Fire extends WeaponItem {
         }
     }
 
-    /*@Override
-    public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-        return null;
-    }
-
-    @Override
-    public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        return null;
-    }
-
-    //@Override
-    //public void tick(Location location){
-        //if(this.lifeSpan==0){
-            //location.removeItem(this);
-        //}else{
-            //this.lifeSpan-=1;
-        //}
-    @Override
-    public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(20, "burn");
-    }
-
-    @Override
-    public void addBehaviour(int priority, Behaviour behave) {
-
-    }*/
 }

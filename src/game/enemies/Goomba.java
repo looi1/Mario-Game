@@ -137,10 +137,11 @@ public class Goomba extends Enemies implements Resettable {
 	public void resetInstance(Actor actor, GameMap map) {
 		map.removeActor(this);
 
-
-
 	}
-
+	/**
+	 * method to set Goomba damage
+	 * @param newDamage an integer representing the new damage
+	 */
 	@Override
 	public void setDamage(int newDamage) {
 		this.damage += newDamage;
