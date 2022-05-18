@@ -1,11 +1,12 @@
 package game.items;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
-import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.actions.ConsumeAction;
-import game.items.Consumable;
 
+
+/**
+ * Class representing AuraPotion, a Consumable object that grants a passive ability to damage all surrounding enemies and grant armor
+ */
 public class AuraPotion extends Item implements Sellable,Consumable {
     /**
      * constructor
@@ -16,8 +17,8 @@ public class AuraPotion extends Item implements Sellable,Consumable {
     }
 
     /**
-     * method to get price of power star
-     * @return
+     * Price
+     * 
      */
     public int getPrice() {
         return 300;

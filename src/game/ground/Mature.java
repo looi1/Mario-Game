@@ -1,5 +1,6 @@
 package game.ground;
 
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
@@ -66,9 +67,15 @@ public class Mature extends Tree implements Jumpable {
 
 
         if (matureAge >= 0 && matureAge % 5 == 0 && location.getGround().getDisplayChar() == 'T') {
-            if (randomX != 0 && randomY != 0){
-                if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
-                    map.at((randomX + x), (randomY + y)).setGround(new Sprout());
+            // if (randomX != 0 && randomY != 0){
+            //     if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
+            //         map.at((randomX + x), (randomY + y)).setGround(new Sprout());
+            //     }
+            // }
+            for (Exit exit: location.getExits()) {
+                Location loc = exit.getDestination();
+                if (loc.getGround().getDisplayChar() == '.') {
+                    loc.setGround(new Sprout());
                 }
             }
         }

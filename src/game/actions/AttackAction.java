@@ -2,7 +2,6 @@ package game.actions;
 
 import java.util.Random;
 
-import edu.monash.fit2099.demo.conwayslife.Player;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
@@ -17,7 +16,6 @@ import game.Status;
 import game.enemies.Enemies;
 import java.util.ArrayList;
 import edu.monash.fit2099.engine.positions.Exit;
-import game.behaviours.FrozenBehaviour;
 import java.util.List;
 
 /**
@@ -88,7 +86,8 @@ public class AttackAction extends Action {
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		target.hurt(damage);
-		target.addBehaviour(9,new FollowBehaviour(actor));
+		if(!target.hasCapability(Status.CANTMOVE)){
+		target.addBehaviour(5,new FollowBehaviour(actor));}
 
 		if (!target.isConscious()) {
 			ActionList dropActions = new ActionList();
@@ -119,6 +118,9 @@ public class AttackAction extends Action {
 		return actor + " attacks " + target + " at " + direction;
 	}
 
+	/**
+	 * method to get the enemy attacked by this AttackAction
+	 */
 	public Enemies getEnemy() {
 		return target;
 	}

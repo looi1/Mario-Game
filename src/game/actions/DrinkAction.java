@@ -11,18 +11,23 @@ import game.enemies.Enemies;
 import game.items.Fountains;
 import game.items.HealthFountain;
 
+/**
+ * class representing the drink action
+ */
 public class DrinkAction extends Action {
-    private Player player;
-    private int playerDmg;
-    private Fountains fountain;
-    private boolean powerFoundCap;
-    private boolean healthFoundCap;
 
+    /**
+     * Fountains object
+     */
+    private Fountains fountain;
+
+    /**
+     * constructor
+     * @param fountain Fountains object
+     */
     public DrinkAction(Fountains fountain){
         this.fountain = fountain;
-        this.playerDmg = 5;
-        this.powerFoundCap = true;
-        this.healthFoundCap = true;
+
     }
 
     @Override
@@ -39,7 +44,6 @@ public class DrinkAction extends Action {
                     result = actor + " drank Health Fountain!";
 
                 } else if(locate.getItems().get(i).hasCapability(Status.HEAL) && !(((Fountains) locate.getItems().get(i)).useFound() )){
-                    this.healthFoundCap=false;
                     result += "Health Fountain is empty";
                 }
                 if (locate.getItems().get(i).hasCapability(Status.INDMG) && ((Fountains) locate.getItems().get(i)).useFound()) {
@@ -48,7 +52,6 @@ public class DrinkAction extends Action {
                     ((Fountains) locate.getItems().get(i)).drink();
                     result = actor + " drank Power Fountain!";
                 }else if(locate.getItems().get(i).hasCapability(Status.INDMG) && !(((Fountains) locate.getItems().get(i)).useFound() )){
-                    this.powerFoundCap=false;
                     result += "Power Fountain is empty";
                 }
 

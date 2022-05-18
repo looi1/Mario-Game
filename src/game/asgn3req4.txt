@@ -1,0 +1,11 @@
+New Classes:
+    - Yoshi
+        - adds FollowBehaviour and AttackBehaviour targeting an enemy
+        recently attacked by Player
+        - disengages when a Player stops attacking the enemy.       
+    - FeedAction
+    - Steak
+
+- SCP: Yoshi, FeedAction and Steak are their own separate classes, representing and handling the features of their own specific objects.
+- OCP: Steak implements Sellable. As a new Sellable object Steak only needs to implement Sellable.getPrice() method without a need to check for the Sellable item's type to get its price.
+    

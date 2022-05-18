@@ -3,21 +3,24 @@ package game.items;
 import edu.monash.fit2099.engine.actors.Actor;
 import game.Status;
 
+/**
+ * class representing the power fountain
+ */
 public class PowerFountain extends Fountains{
 
     /***
      * Constructor.
-     * @param name the name of this Item
-     * @param displayChar the character to use to represent this item if it is on the ground
-     * @param portable true if and only if the Item can be picked up
      */
-    public PowerFountain(String name, char displayChar, Boolean portable) {
-
-        super(name, displayChar, portable);
+    public PowerFountain() {
+        super("power fountain",'P',false);
         this.addCapability(Status.INDMG);
 
     }
 
+    /**
+     * method to check whether the fountain is empty
+     * @return boolean to determine whether the fountain is empty
+     */
     @Override
     public boolean useFound() {
         if (this.getCapacity()>0){

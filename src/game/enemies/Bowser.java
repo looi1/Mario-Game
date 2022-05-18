@@ -27,14 +27,28 @@ import game.reset.Resettable;
 import java.util.HashMap;
 import java.util.Map;
 
-    public class Bowser extends Enemies implements Resettable {
-        /**
-         * hash map that consists behaviour of Goomba
-         */
-        private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
-        private int damage;
-        private int coorX;
-        private int coorY;
+/**
+ * class representing the Bowser enemy
+ */
+
+public class Bowser extends Enemies implements Resettable {
+    /**
+     * hash map that consists behaviour of Bowser
+     */
+    private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
+    /**
+     * Bowser's damage
+     */
+    private int damage;
+    /**
+     * Bowser's initial x coordinates
+     */
+    private int coorX;
+
+    /**
+     * Bower's initial y coordinates
+     */
+    private int coorY;
 
         /**
          * Constructor.
@@ -76,7 +90,6 @@ import java.util.Map;
 
             this.behaviours.put(9, new AttackBehaviour(otherActor));
 
-            // this.behaviours.put(1, new FireAttack(this));
         }
 
         return actions;
@@ -166,11 +179,15 @@ import java.util.Map;
         this.removeBehaviour(5);
     }
 
-        @Override
-        public void setDamage(int newDamage) {
-            this.damage+=newDamage;
+    /**
+     * method to set Bowser damage
+     * @param newDamage
+     */
+    @Override
+    public void setDamage(int newDamage) {
+        this.damage+=newDamage;
 
-        }
+    }
     
 
 }

@@ -1,0 +1,43 @@
+
+Changes:
+- Consuming items
+    - Refactored ConsumePowerStarAction and ConsumeSuperMushroomAction into consumeAction
+    - ConsumeAction will be responsible of consuming of all items.
+        - Better follows DRY and OCP.
+        - Calls Player.addEffect(Status) to add the Status
+            - addEffect(Status) will use multiple if-statements to get which exact Status effects
+              to add, arguably violating DRY and OCP. An alternative was suggested in the implementation
+              in the last assignment, where the object's own consumption effects are implemented in the
+              object's class itself, but due to SuperMushroom's effect of changing the display character
+              being only doable with Actor.setDisplayChar() which is protected and final, the effects could
+              only be implemented in Player. So, all other item's effects are also implemented in Player
+              for consistency. The verbosity in addEffect(Status) is the trade-off for a unified ConsumeAction.
+            - Effect management is then handled by new functions effects() and removeEffect(Status), instead 
+              of separate methods like addSuperMushroomEffect(). This is consistent with addEffect(Status),
+              and is more readable.
+
+    - Interface Consumable was made for items that are consumable
+        - Implements getStatusEffect() to get the capability that the item grants
+            - This was made because Actor.hasCapability() mistakes having the capability of an item
+              possessed but not consumed, so we cannot use Item.addCapability() to give the item its
+              capability to be granted when consumed. getStatusEffect() is used instead.
+        - Follows ISP, as it is separate from interface Sellable.
+
+New Classes:
+- StinkBug (a mine)
+    - Conveniently uses DropItemAction as a means to deploy (follows DRY)
+- AuraPotion
+    - Uses ConsumeAction to handle its consumption (along with other consumable items)(follows OCP)
+- FreezePotion
+    - Uses ConsumeAction to handle its consumption (along with other consumable items)(follows OCP)
+    - Reuses AttackAction to add FrozenBehaviour to enemies attacked by AttackAction
+- FrozenBehaviour
+- Consumable (described earlier)
+- ConsumeAction (described earlier)
+
+- SRP: The new items have their own separate classes which manage each item as if they were separate entities.
+- OCP: ConsumeAction along with Consumable handles every consumable object's consumption effects. There is no need to modify ConsumeAction if another new Consumable item is made.
+- ISP: Separate interfaces Sellable and Consumable handle the feature of items that are sold and those that can be consumed.
+
+
+    
