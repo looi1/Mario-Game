@@ -1,12 +1,12 @@
 package game.items;
 
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
-import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.actions.ConsumeAction;
-import game.items.Consumable;
 
+/**
+ * FreezePotion, a consumable item that grants Player's attacks a chance to Freeze the enemy, making them unable to move or attack.
+ */
 public class FreezePotion extends Item implements Sellable,Consumable{
 
     /**
@@ -25,6 +25,9 @@ public class FreezePotion extends Item implements Sellable,Consumable{
         return 300;
     }
 
+    /**
+     * Get Status that FreezePotion will grant
+     */
     public Enum<?> getConsumeStatus() {
         return Status.FREEZE;
     }
