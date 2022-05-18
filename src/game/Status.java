@@ -20,5 +20,6 @@ public enum Status {
     AURA,
     FREEZE,
     HEAL,
-    INDMG;
+    INDMG,
+    CANTMOVE,
 }

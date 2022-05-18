@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
+import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actions.AttackAction;
@@ -18,7 +19,7 @@ import game.behaviours.FrozenBehaviour;
 import game.behaviours.JumpBehaviour;
 import game.items.Fountains;
 import game.reset.Resettable;
-import edu.monash.fit2099.engine.*;
+//import edu.monash.fit2099.engine.*;
 import game.enemies.*;
 import game.items.FreezePotion;
 import edu.monash.fit2099.engine.positions.Exit;
@@ -288,6 +289,7 @@ public class Player extends Actor implements Resettable {
 		highGrounds.add('+');
 		highGrounds.add('t');
 		highGrounds.add('T');
+		highGrounds.add('C');
 
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {

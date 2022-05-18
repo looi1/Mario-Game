@@ -104,6 +104,9 @@ public class JumpBehaviour extends Action implements Behaviour {
 
         if (r.nextInt(101) <= successRate) {
             getAction(actor, map);
+            if (target.getDisplayChar() == 'C'){
+                return "Mario teleported to the Lava Zone!";
+            }
             return "Mario successfully jumped to a " + jumpableTarget.getName();
         } else {
             actor.hurt(jumpableTarget.getFallDamage());
@@ -120,7 +123,9 @@ public class JumpBehaviour extends Action implements Behaviour {
      */
     @Override
     public String menuDescription(Actor actor) {
-
+        if (this.target.getDisplayChar() == 'C'){
+            return "Teleport to Lava Zone";
+        }
         return "Jump to a " + jumpableTarget.getName() + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }
 
