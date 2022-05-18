@@ -4,8 +4,14 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 
+/**
+ * class representing the rescue action
+ */
 public class RescueAction extends Action {
 
+    /**
+     * constructor
+     */
     public RescueAction(){
 
     }

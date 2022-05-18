@@ -20,9 +20,22 @@ import game.reset.Resettable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * a class representing the FlyingKoopa enemy
+ */
 public class FlyingKoopa extends Enemies implements Resettable {
+    /**
+     * hash map that consists behaviour of Flying Koopa
+     */
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
+    /**
+     * Flying koopa's damage
+     */
     private int damage;
+
+    /**
+     * Constructor.
+     */
     public FlyingKoopa(){
         super("FlyingKoopa",'F',150);
         this.behaviours.put(10, new WanderBehaviour());
@@ -118,7 +131,11 @@ public class FlyingKoopa extends Enemies implements Resettable {
         return new IntrinsicWeapon(this.damage, "punches");
     }
 
-
+    /**
+     * method to reset Flying Koopa
+     * @param actor
+     * @param map
+     */
     @Override
     public void resetInstance(Actor actor, GameMap map) {
         map.removeActor(this);
@@ -126,6 +143,10 @@ public class FlyingKoopa extends Enemies implements Resettable {
 
     }
 
+    /**
+     * method to set Flying Koopa's damage
+     * @param newDamage new Flying Koopa's damage
+     */
     @Override
     public void setDamage(int newDamage) {
         this.damage+=newDamage;

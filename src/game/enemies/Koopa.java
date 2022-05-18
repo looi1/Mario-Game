@@ -26,8 +26,13 @@ import java.util.Map;
  * a class representing enemy Koopa
  */
 public class Koopa extends Enemies implements Resettable {
+    /**
+     * hash map that consists behaviour of Koopa
+     */
     private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
-
+    /**
+     * Koopa's damage
+     */
     private int damage;
 
     /**
@@ -129,13 +134,22 @@ public class Koopa extends Enemies implements Resettable {
         return new IntrinsicWeapon(this.damage, "punches");
     }
 
-
+    /**
+     * method to reset Goomba
+     * @param actor
+     * @param map
+     */
     @Override
     public void resetInstance(Actor actor, GameMap map) {
         map.removeActor(this);
 
 
     }
+
+    /**
+     * method to set Koopa's damage
+     * @param newDamage
+     */
     @Override
     public void setDamage(int newDamage) {
         this.damage += newDamage;

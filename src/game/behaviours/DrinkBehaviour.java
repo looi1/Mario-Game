@@ -13,24 +13,13 @@ import game.items.Fountains;
 
 import java.util.Random;
 
+/**
+ * class representing enemy's drink behaviour
+ */
 public class DrinkBehaviour extends Action implements Behaviour {
 
-    /**
-     * actor to be attacked
-     */
-    private Fountains fountain;
 
-    /**
-     * generate raondom number
-     */
-    protected Random rand = new Random();
-
-    /**
-     * attack damage
-     */
-    private int damage;
-
-    // TODO: develop and use it to attack the player automatically.
+    // TODO: develop and use it to drink automatically.
 
     /**
      * constructor

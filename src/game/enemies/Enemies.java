@@ -30,7 +30,11 @@ public abstract class Enemies extends Actor {
      */ 
     public abstract void removeBehaviour(int key);
 
-   public abstract void setDamage(int newDamage);
+    /**
+     * method to set enemy's damage
+     * @param newDamage
+     */
+    public abstract void setDamage(int newDamage);
 
 
     /**
