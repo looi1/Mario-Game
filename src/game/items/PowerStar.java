@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.actions.ConsumeAction;
-import game.items.Consumable;
 
 /**
  * a class representing PowerStar
@@ -61,6 +60,9 @@ public class PowerStar extends Item implements Sellable, Consumable {
         return 600;
     }
     
+    /**
+     * Get Status granted by this item
+     */
     public Enum<?> getConsumeStatus() {
         return Status.POWERSTAR;
     }

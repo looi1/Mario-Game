@@ -7,35 +7,43 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.*;
-import game.actions.AttackAction;
 import game.actions.FeedAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 import game.behaviours.FollowBehaviour;
 import game.enemies.Enemies;
 import game.items.Steak;
-import game.actions.FeedAction;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that represents Yoshi, an friendly Actor that is Mario's companion
+ */
 public class Yoshi extends Actor{
 
     /**
-     * target of Yoshi to follow/attack
+     * timer that counts down the remaining duration of the FED buff
      */
     private int timer;
 
     /**
-	 * hash map that consists behaviour of Goomba
+	 * hash map that consists behaviour of Yoshi
 	 */
 	private final Map<Integer, Behaviour> behaviours = new HashMap<>(); // priority, behaviour
 
+    /**
+     * constructor
+     * @param player the player to follow
+     */
     public Yoshi(Actor player) {
         super("Yoshi", 'y', 40);
         this.behaviours.put(10, new FollowBehaviour(player));
     }
 
+    /**
+     * Actions to be added to Player's console. Adds a FeedAction when Mario has steak.
+     */
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		ActionList actions = new ActionList();
 		if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
@@ -79,17 +87,27 @@ public class Yoshi extends Actor{
         }
 	}
 
+    /**
+     * attack a new enemy
+     * @param enemy the enemy to attack
+     */
     public void attackEnemy(Enemies enemy) {
         disengage();
         this.behaviours.put(9, new FollowBehaviour(enemy));
         this.behaviours.put(8, new AttackBehaviour(enemy));
     }
 
+    /**
+     * Stop attacking the enemy
+     */
     public void disengage() {
         this.behaviours.remove(9);
         this.behaviours.remove(8);
     }
 
+    /**
+     * method that gives Yoshi the buffs after being fed
+     */
     public void eatSteak() {
         if (!this.hasCapability(Status.FED)) {
             increaseMaxHp(40);
@@ -100,6 +118,9 @@ public class Yoshi extends Actor{
         setDisplayChar('Y');
     }
 
+    /**
+     * method that manages to countdown till the FED buff wears off
+     */
     public void getHungryAgain() {
         if (timer <= 0 && hasCapability(Status.FED)) {
             setDisplayChar('y');
@@ -111,6 +132,9 @@ public class Yoshi extends Actor{
         }
     }
 
+    /**
+     * Yoshi takes damage
+     */
     @Override
     public void hurt(int points) {
         super.hurt(points);

@@ -35,8 +35,6 @@ public class AttackBehaviour extends Action implements Behaviour {
      */
     private int damage;
 
-    // TODO: develop and use it to attack the player automatically.
-
     /**
      * constructor
      * 
@@ -62,7 +60,7 @@ public class AttackBehaviour extends Action implements Behaviour {
 
         String result = actor + " " + weapon.verb() + " " + this.player + " for " + damage + " damage.";
         this.player.hurt(damage);
-        if(!actor.hasCapability(Status.CANTMOVE)){
+        if(actor instanceof Enemies && !actor.hasCapability(Status.CANTMOVE)){
             ((Enemies)actor).addBehaviour(5,new FollowBehaviour(this.player));}
 
 
