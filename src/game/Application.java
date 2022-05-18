@@ -108,7 +108,7 @@ public class Application {
 				int x = r.nextInt((maxX - minX) + minX);
 				int y = r.nextInt((maxY - minY) + minY);
 
-				gameMap1.at(x,y).addItem(new StinkBug());
+				gameMap1.at(x,y).addItem(new StinkBug(gameMap1));
 			}
 
 			
