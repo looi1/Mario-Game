@@ -42,7 +42,8 @@ public class JumpBehaviour extends Action implements Behaviour {
      */
     private Jumpable jumpableTarget;
 
-    private GameMap map;
+
+    private static boolean onLavaWorld = false;
 
     /**
      * Constructor.
@@ -68,8 +69,6 @@ public class JumpBehaviour extends Action implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
         Location playerLocation = map.locationOf(actor);
-
-        this.map = map;
 
         if (target.canActorEnter(actor) || !map.contains(actor))
             return null;
@@ -109,7 +108,12 @@ public class JumpBehaviour extends Action implements Behaviour {
         if (r.nextInt(101) <= successRate) {
             getAction(actor, map);
             if (target.getDisplayChar() == 'C'){
-                return "Mario teleported to the Lava Zone!";
+                onLavaWorld = !onLavaWorld;
+                if (onLavaWorld) {
+                    return "Mario teleported to the Lava Zone!";
+                } else {
+                    return "Mario teleported to Normal World!";
+                }
             }
             return "Mario successfully jumped to a " + jumpableTarget.getName();
         } else {
@@ -127,8 +131,12 @@ public class JumpBehaviour extends Action implements Behaviour {
      */
     @Override
     public String menuDescription(Actor actor) {
-        if (this.target.getDisplayChar() == 'C'){
-            return "Teleport to Lava Zone.";
+        if (target.getDisplayChar() == 'C'){
+            if (onLavaWorld) {
+                return "Teleport to Normal World";
+            } else {
+                return "Teleport to Lava Zone";
+            }
         }
         return "Jump to a " + jumpableTarget.getName() + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }

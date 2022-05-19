@@ -18,7 +18,8 @@ public class WarpPipe extends Ground implements Jumpable {
     private GameMap gameMap1;
     private GameMap gameMap2;
     private World world;
-    private Location lastLocation;
+    private static Location lastLocation;
+    private boolean onLavaWorld;
 
     /**
      * Constructor.
@@ -29,6 +30,7 @@ public class WarpPipe extends Ground implements Jumpable {
         this.gameMap2 = secondMap;
         this.world = world;
     }
+    
 
     public WarpPipe() {
         super('C');
@@ -45,20 +47,16 @@ public class WarpPipe extends Ground implements Jumpable {
             location.addActor(this.piranhaPlant);
         }
 
-        System.out.println();
         if (location.getActor() instanceof Player && gameMap1.contains(location.getActor())){
-            this.gameMap1 = location.map();
-            this.lastLocation = location;
+            lastLocation = location;
             Actor mario = location.getActor();
             this.gameMap1.removeActor(location.getActor());
-            Location teleportToLava = new Location(gameMap2, 0, 0);
-            this.world.addPlayer(mario, teleportToLava);
-        }
-        else if (location.getActor() instanceof Player && gameMap2.contains(location.getActor()) && lastLocation != null){
+            Location newLocation = new Location(gameMap2, 0, 1);
+            this.world.addPlayer(mario, newLocation);
+        } else if (location.getActor() instanceof Player && !gameMap1.contains(location.getActor())){
             Actor mario = location.getActor();
-            this.gameMap2.removeActor(location.getActor());
-            Location teleportBack = new Location(gameMap1, this.lastLocation.x(), this.lastLocation.y());
-            this.world.addPlayer(mario, teleportBack);
+            this.gameMap2.removeActor(mario);
+            this.world.addPlayer(mario, lastLocation);
         }
     }
 

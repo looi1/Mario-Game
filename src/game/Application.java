@@ -18,6 +18,7 @@ import game.items.PowerStar;
 import game.items.StinkBug;
 import game.items.SuperMushroom;
 import game.items.Wrench;
+import game.WarpPipe;
 
 /**
  * The main class for the Mario World game.
@@ -102,10 +103,12 @@ public class Application {
 				int x = r.nextInt((maxX - minX) + minX);
 				int y = r.nextInt((maxY - minY) + minY);
 
-				gameMap1.at(x,y).setGround(new WarpPipe(gameMap1, gameMap2, display));
+				gameMap1.at(x,y).setGround((new WarpPipe(gameMap1, gameMap2, world)));
 			}
-			gameMap1.at(44,7).setGround(new WarpPipe(gameMap1, gameMap2, display));
-			gameMap2.at(0,0).setGround(new WarpPipe(gameMap1, gameMap2, display));
+			gameMap1.at(44,7).setGround(new WarpPipe(gameMap1, gameMap2, world));
+			gameMap1.at(40,7).setGround(new WarpPipe(gameMap1, gameMap2, world));
+
+			gameMap2.at(0,0).setGround(new WarpPipe(gameMap1, gameMap2, world));
 
 			for (int j = 0; j < 8; j++){
 				int x = r.nextInt((maxX - minX) + minX);
