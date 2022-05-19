@@ -18,6 +18,7 @@ import game.items.PowerStar;
 import game.items.StinkBug;
 import game.items.SuperMushroom;
 import game.items.Wrench;
+import game.WarpPipe;
 
 /**
  * The main class for the Mario World game.
@@ -27,13 +28,13 @@ public class Application {
 
 	public static void main(String[] args) {
 
-			Display display = new Display();
-			World world = new World(display);
+		Display display = new Display();
+		World world = new World(display);
 
-			FancyGroundFactory groundFactory1 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe());
-			FancyGroundFactory groundFactory2 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe(), new Lava());
+		FancyGroundFactory groundFactory1 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe());
+		FancyGroundFactory groundFactory2 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe(), new Lava());
 
-			List<String> firstMap = Arrays.asList(
+		List<String> firstMap = Arrays.asList(
 				"..........................................##....................................",
 				"............................................#...................................",
 				"............................................#...................................",
@@ -75,63 +76,61 @@ public class Application {
 				".........................L..........#......L......",
 				".....................................##...........");
 
-			GameMap gameMap1 = new GameMap(groundFactory1, firstMap);
-			GameMap gameMap2 = new GameMap(groundFactory2, secondMap);
-			world.addGameMap(gameMap1);
-			world.addGameMap(gameMap2);
+		GameMap gameMap1 = new GameMap(groundFactory1, firstMap);
+		GameMap gameMap2 = new GameMap(groundFactory2, secondMap);
+		world.addGameMap(gameMap1);
+		world.addGameMap(gameMap2);
 
-			Player mario = new Player("Player", 'm', 1000);
-			world.addPlayer(mario, gameMap1.at(44, 9));
-			// world.addPlayer(mario, gameMap1.at(30, 9));
+		Player mario = new Player("Player", 'm', 1000);
+		world.addPlayer(mario, gameMap1.at(44, 9));
+		// world.addPlayer(mario, gameMap1.at(30, 9));
 
 
-			Random r = new Random();
-			int minX = gameMap1.getXRange().min();
-			int maxX = gameMap1.getXRange().max();
-			int minY = gameMap1.getYRange().min();
-			int maxY = gameMap1.getYRange().max();
+		Random r = new Random();
+		int minX = gameMap1.getXRange().min();
+		int maxX = gameMap1.getXRange().max();
+		int minY = gameMap1.getYRange().min();
+		int maxY = gameMap1.getYRange().max();
 
-			for (int i = 0; i < 20; i++){
-				int x = r.nextInt((maxX - minX) + minX);
-				int y = r.nextInt((maxY - minY) + minY);
+		for (int i = 0; i < 20; i++){
+			int x = r.nextInt((maxX - minX) + minX);
+			int y = r.nextInt((maxY - minY) + minY);
 
-				gameMap1.at(x,y).setGround(new Sprout());
-			}
+			gameMap1.at(x,y).setGround(new Sprout());
+		}
 
-			for (int j = 0; j < 3; j++){
-				int x = r.nextInt((maxX - minX) + minX);
-				int y = r.nextInt((maxY - minY) + minY);
+		for (int j = 0; j < 3; j++){
+			int x = r.nextInt((maxX - minX) + minX);
+			int y = r.nextInt((maxY - minY) + minY);
 
-				gameMap1.at(x,y).setGround(new WarpPipe(gameMap1, gameMap2, display));
-			}
-			gameMap1.at(44,7).setGround(new WarpPipe(gameMap1, gameMap2, display));
-			gameMap2.at(0,0).setGround(new WarpPipe(gameMap1, gameMap2, display));
+			gameMap1.at(x,y).setGround((new WarpPipe(gameMap1, gameMap2, world)));
+		}
+		gameMap1.at(44,7).setGround(new WarpPipe(gameMap1, gameMap2, world));
+		gameMap1.at(40,7).setGround(new WarpPipe(gameMap1, gameMap2, world));
 
-			for (int j = 0; j < 8; j++){
-				int x = r.nextInt((maxX - minX) + minX);
-				int y = r.nextInt((maxY - minY) + minY);
+		gameMap2.at(0,0).setGround(new WarpPipe(gameMap1, gameMap2, world));
 
-				gameMap1.at(x,y).addItem(new StinkBug(gameMap1));
-			}
+		for (int j = 0; j < 8; j++){
+			int x = r.nextInt((maxX - minX) + minX);
+			int y = r.nextInt((maxY - minY) + minY);
 
-			
-
-			gameMap1.at(44,9).addItem(new PowerStar());
-			gameMap1.at(44,9).addItem(new SuperMushroom());
-			gameMap1.at(44,10).addActor(new Toad());
-			Yoshi yoshi = new Yoshi(mario);
-			gameMap1.at(43,8).addActor(yoshi);
-			mario.adoptYoshi(yoshi);
-			gameMap1.at(31,9).addActor(new Koopa());
-			// gameMap1.at(30,10).addActor(new Koopa());
-			// gameMap1.at(29,10).addActor(new Koopa());
-
-			Wallet.totalBalance = 10000;
-
-			world.run();
+			gameMap1.at(x,y).addItem(new StinkBug(gameMap1));
+		}
 
 
 
+		gameMap1.at(44,9).addItem(new PowerStar());
+		gameMap1.at(44,9).addItem(new SuperMushroom());
+		gameMap1.at(44,10).addActor(new Toad());
+		Yoshi yoshi = new Yoshi(mario);
+		gameMap1.at(43,8).addActor(yoshi);
+		mario.adoptYoshi(yoshi);
+		gameMap1.at(31,9).addActor(new Koopa());
+		// gameMap1.at(30,10).addActor(new Koopa());
+		// gameMap1.at(29,10).addActor(new Koopa());
 
+		Wallet.totalBalance = 10000;
+
+		world.run();
 	}
 }
