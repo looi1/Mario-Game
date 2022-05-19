@@ -35,7 +35,7 @@ public class PiranhaPlant extends Enemies implements Resettable {
      * Constructor.
      */
     public PiranhaPlant(){
-        super("PiranhaPlant",'Y',150);
+        super("PiranhaPlant",'Y',10);
         this.damage = 90;
         this.behaviours.put(9,new DrinkBehaviour());
         this.addCapability(Status.CANTMOVE);

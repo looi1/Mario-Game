@@ -27,7 +27,8 @@ public class Application {
 
 	public static void main(String[] args) {
 
-			World world = new World(new Display());
+			Display display = new Display();
+			World world = new World(display);
 
 			FancyGroundFactory groundFactory1 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe());
 			FancyGroundFactory groundFactory2 = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Sprout(), new WarpPipe(), new Lava());
@@ -101,10 +102,10 @@ public class Application {
 				int x = r.nextInt((maxX - minX) + minX);
 				int y = r.nextInt((maxY - minY) + minY);
 
-				gameMap1.at(x,y).setGround(new WarpPipe());
+				gameMap1.at(x,y).setGround(new WarpPipe(gameMap1, gameMap2, display));
 			}
-			gameMap1.at(44,7).setGround(new WarpPipe());
-			gameMap2.at(0,0).setGround(new WarpPipe());
+			gameMap1.at(44,7).setGround(new WarpPipe(gameMap1, gameMap2, display));
+			gameMap2.at(0,0).setGround(new WarpPipe(gameMap1, gameMap2, display));
 
 			for (int j = 0; j < 8; j++){
 				int x = r.nextInt((maxX - minX) + minX);
