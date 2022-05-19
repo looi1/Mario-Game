@@ -291,18 +291,10 @@ public class Player extends Actor implements Resettable {
 		highGrounds.add('T');
 		highGrounds.add('C');
 
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				if (!(x + i == x && y + j == y)) {
-					if (highGrounds.contains(map.at((x + i), (y + j)).getDisplayChar()) && x + i >= 0 && y + j >= 0) {
-						if (this.hasCapability(Status.POWERSTAR)) {
-							break;
-						} else {
-							Location highGround = map.at((x + i), (y + j));
-							actions.add(new JumpBehaviour(highGround.getGround(), highGround));
-						}
-					}
-				}
+		for (Exit exit: map.locationOf(this).getExits()) {
+			Location loc = exit.getDestination();
+			if (highGrounds.contains(loc.getDisplayChar()) && !this.hasCapability(Status.POWERSTAR)) {
+				actions.add(new JumpBehaviour(loc.getGround(), loc));
 			}
 		}
 		return actions;

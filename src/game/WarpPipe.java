@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import edu.monash.fit2099.engine.positions.World;
 import game.enemies.PiranhaPlant;
 import game.ground.Jumpable;
 
@@ -16,37 +17,17 @@ public class WarpPipe extends Ground implements Jumpable {
     private PiranhaPlant piranhaPlant;
     private GameMap gameMap1;
     private GameMap gameMap2;
-    private Display display;
+    private World world;
     private Location lastLocation;
-    List<String> secondMap = Arrays.asList(
-            "........................##........................",
-            "...................L......#.......................",
-            "..........................#............L..........",
-            ".......L...................##..............L......",
-            ".............................#....................",
-            "..............................#.........L.........",
-            "..............L.................#.................",
-            "........................L......##.....L...........",
-            "..............................##..................",
-            "....L.L.L..............#____####..................",
-            "...L..L..L............#_____###....L..............",
-            "...L.L.L.L............#______###..................",
-            "....L.L.L..............#_____###..................",
-            "...............................##...........L.....",
-            ".................................#................",
-            "..................................#...............",
-            "..........L........................#..............",
-            ".........................L..........#......L......",
-            ".....................................##...........");
 
     /**
      * Constructor.
      */
-    public WarpPipe(GameMap firstMap, GameMap secondMap, Display display) {
+    public WarpPipe(GameMap firstMap, GameMap secondMap, World world) {
         super('C');
         this.gameMap1 = firstMap;
         this.gameMap2 = secondMap;
-        this.display = display;
+        this.world = world;
     }
 
     public WarpPipe() {
@@ -59,18 +40,25 @@ public class WarpPipe extends Ground implements Jumpable {
 
         this.turns += 1;
 
-        if (this.turns == 1){
+        if (this.turns == 1 && location.x() != 0 && location.y() != 0){
             this.piranhaPlant = new PiranhaPlant();
             location.addActor(this.piranhaPlant);
         }
 
-        if (location.getActor() instanceof Player){
+        System.out.println();
+        if (location.getActor() instanceof Player && gameMap1.contains(location.getActor())){
             this.gameMap1 = location.map();
             this.lastLocation = location;
+            Actor mario = location.getActor();
             this.gameMap1.removeActor(location.getActor());
             Location teleportToLava = new Location(gameMap2, 0, 0);
-            this.gameMap2.addActor(location.getActor(), teleportToLava);
-            //this.gameMap2.draw(display);
+            this.world.addPlayer(mario, teleportToLava);
+        }
+        else if (location.getActor() instanceof Player && gameMap2.contains(location.getActor()) && lastLocation != null){
+            Actor mario = location.getActor();
+            this.gameMap2.removeActor(location.getActor());
+            Location teleportBack = new Location(gameMap1, this.lastLocation.x(), this.lastLocation.y());
+            this.world.addPlayer(mario, teleportBack);
         }
     }
 

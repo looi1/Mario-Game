@@ -42,6 +42,8 @@ public class JumpBehaviour extends Action implements Behaviour {
      */
     private Jumpable jumpableTarget;
 
+    private GameMap map;
+
     /**
      * Constructor.
      *
@@ -66,6 +68,8 @@ public class JumpBehaviour extends Action implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
         Location playerLocation = map.locationOf(actor);
+
+        this.map = map;
 
         if (target.canActorEnter(actor) || !map.contains(actor))
             return null;
@@ -124,7 +128,7 @@ public class JumpBehaviour extends Action implements Behaviour {
     @Override
     public String menuDescription(Actor actor) {
         if (this.target.getDisplayChar() == 'C'){
-            return "Teleport to Lava Zone";
+            return "Teleport to Lava Zone.";
         }
         return "Jump to a " + jumpableTarget.getName() + "(" + this.highGroundLocation.x() + ", " + this.highGroundLocation.y() + ")";
     }
