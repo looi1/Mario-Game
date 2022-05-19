@@ -52,7 +52,7 @@ public class WarpPipe extends Ground implements Jumpable {
             lastLocation = location;
             Actor mario = location.getActor();
             this.gameMap1.removeActor(location.getActor());
-            Location newLocation = new Location(gameMap2, 0, 1);
+            Location newLocation = new Location(gameMap2, 0, 0);
             this.world.addPlayer(mario, newLocation);
         } else if (location.getActor() instanceof Player && !gameMap1.contains(location.getActor())){
             Actor mario = location.getActor();
