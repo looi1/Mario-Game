@@ -30,6 +30,7 @@ public class WarpPipe extends Ground implements Jumpable {
         this.gameMap2 = secondMap;
         this.world = world;
     }
+    
 
 
     public WarpPipe() {
