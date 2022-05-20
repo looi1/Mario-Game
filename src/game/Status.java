@@ -22,4 +22,5 @@ public enum Status {
     HEAL,
     INDMG,
     CANTMOVE,
+    HAS_BOTTLE
 }

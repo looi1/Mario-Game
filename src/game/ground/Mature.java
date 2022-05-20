@@ -1,7 +1,6 @@
 package game.ground;
 
 import edu.monash.fit2099.engine.positions.Exit;
-import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Status;
 import game.enemies.FlyingKoopa;
@@ -42,22 +41,13 @@ public class Mature extends Tree implements Jumpable {
         super.tick(location);
         matureAge += 1;
         int spawnRateKoopa = 15;
-
         int spawnRateFKoopa = 50;
-
         int witherRate = 20;
-        int x = location.x();
-        int y = location.y();
-        GameMap map = location.map();
 
         int high = 101;
         int low = 0;
 
-        int high2 = 3;
-        int low2 = -1;
-        int randomX = r.nextInt((high2 - low2) + low2) - 1;
-        int randomY = r.nextInt((high2 - low2) + low2) - 1;
-
+        // Destroy the Mature and drop a Coin($5) if the Player walks into it while having Powerstar effect
         if (location.getActor() != null) {
             if (location.getActor().hasCapability(Status.POWERSTAR)) {
                 location.setGround(new Dirt());
@@ -65,32 +55,33 @@ public class Mature extends Tree implements Jumpable {
             }
         }
 
-
+        // Mature will grow a new Sprout in every 5 turns
         if (matureAge >= 0 && matureAge % 5 == 0 && location.getGround().getDisplayChar() == 'T') {
-            // if (randomX != 0 && randomY != 0){
-            //     if (map.at((randomX + x), (randomY + y)).getGround().getDisplayChar() == '.'){
-            //         map.at((randomX + x), (randomY + y)).setGround(new Sprout());
-            //     }
-            // }
             for (Exit exit: location.getExits()) {
                 Location loc = exit.getDestination();
                 if (loc.getGround().getDisplayChar() == '.') {
                     loc.setGround(new Sprout());
+                    break;
                 }
             }
         }
 
         int random = r.nextInt((high - low) + low);
 
-        if(random>spawnRateKoopa && random<=spawnRateFKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
-            location.addActor(new FlyingKoopa());
-        }
-        else if (random <= spawnRateKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
-            location.addActor(new Koopa());
-
+        // Mature will spawn either Koopa or Flying Koopa depending on the spawn rate
+        if (random <= spawnRateKoopa && location.getActor() == null && location.getGround().getDisplayChar() == 'T'){
+            int random2 = r.nextInt((high - low) + low);
+            if (random2 <= spawnRateFKoopa) {
+                location.addActor(new FlyingKoopa());
+            }
+            else {
+                location.addActor(new Koopa());
+            }
         }
 
         random = r.nextInt((high - low) + low);
+
+        // Mature has 20% rate to wither and die
         if (random <= witherRate && location.getGround().getDisplayChar() == 'T'){
             location.setGround(new Dirt());
         }

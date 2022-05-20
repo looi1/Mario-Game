@@ -5,30 +5,26 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
-import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actions.AttackAction;
 import game.actions.ResetAction;
-import game.behaviours.AttackBehaviour;
-import game.behaviours.FireAttackBehaviour;
-import game.behaviours.FrozenBehaviour;
 import game.behaviours.JumpBehaviour;
 import game.items.Fountains;
 import game.reset.Resettable;
-//import edu.monash.fit2099.engine.*;
 import game.enemies.*;
-import game.items.FreezePotion;
 import edu.monash.fit2099.engine.positions.Exit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing the Player.
+ * Class representing the Player that represent Actor and implements Resettable
+ *
+ * @see edu.monash.fit2099.engine.actors.Actor
+ * @see game.reset.Resettable
  */
 public class Player extends Actor implements Resettable {
 
@@ -38,8 +34,6 @@ public class Player extends Actor implements Resettable {
 	private int remainingAura;
 	private int freezesLeft;
 	private Yoshi yoshi;
-	private int healthFoundTicker;
-	private int powerFoundTicker;
 	private int damage;
 
 	/**
@@ -54,15 +48,27 @@ public class Player extends Actor implements Resettable {
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.registerInstance();
 		this.damage = 5;
-		this.healthFoundTicker=0;
-		this.powerFoundTicker=0;
 
 	}
 
+	/**
+	 * Method to adopt Yoshi
+	 *
+	 * @param yoshi the Yoshi that the Player wants to adopt
+	 */
 	public void adoptYoshi(Yoshi yoshi) {
 		this.yoshi = yoshi;
 	}
 
+	/**
+	 * Select and return an action to perform on the current turn.
+	 *
+	 * @param actions    collection of possible Actions for this Actor
+	 * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+	 * @param map        the map containing the Actor
+	 * @param display    the I/O object to which messages may be written
+	 * @return the Action to be performed
+	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 
@@ -76,17 +82,18 @@ public class Player extends Actor implements Resettable {
 					display.println(this + " is killed.");
 					return new DoNothingAction();
 
-				}else {
+				} else {
 					display.println(this + " " + locationPlayer.getItems().get(i).asWeapon().verb() + " with " + dmg + " damages!");
 				}
 			}
 		}
 
-		// use effects at every turn, while checking for conditions of effect removal
+		// Use effects at every turn, while checking for conditions of effect removal
 		effects(lastAction, map, display);
 
 		// Reset
 		capacityFountain(display,map);
+
 		// Handle multi-turn Actions
 		ResetAction reset = ResetAction.getInstance();
 		if (reset != null) {
@@ -109,7 +116,6 @@ public class Player extends Actor implements Resettable {
 		if (!(this.hasCapability(Status.POWERSTAR))) {
 			actions.add(addJump(map)); // if the player don't have the POWERSTAR Status, then add jump action
 		}
-
 
 		// Print health and status
 		String ground;
@@ -134,6 +140,13 @@ public class Player extends Actor implements Resettable {
 		return menu.showMenu(this, actions, display);
 	}
 
+	/**
+	 * Do some damage to the current Actor.
+	 *
+	 * If the Actor's hitpoints go down to zero, it will be knocked out.
+	 *
+	 * @param points number of hitpoints to deduct.
+	 */
 	@Override
 	public void hurt(int points) {
 		if (getCurrentHp() <= 40 && yoshi.isConscious()) {
@@ -144,12 +157,22 @@ public class Player extends Actor implements Resettable {
 		}
 	}
 
+	/**
+	 * A getter method to get the Player current HP
+	 *
+	 * @return Player current HP
+	 */
 	private int getCurrentHp() {
 		String hpString = printHp().split("/")[0];
 		hpString = hpString.substring(1);
-		return Integer.valueOf(hpString);
+		return Integer.parseInt(hpString);
 	}
 
+	/**
+	 * Method to add effect to the Player
+	 *
+	 * @param effect that wants to be added
+	 */
 	public void addEffect(Enum<?> effect) {
 		System.out.println("Add effect : " + effect);
 		if (effect.equals(Status.POWERSTAR)) {
@@ -177,6 +200,13 @@ public class Player extends Actor implements Resettable {
 		}
 	}
 
+	/**
+	 * Method to check if the Player has any effect
+	 *
+	 * @param lastAction Player last action
+	 * @param map the map that the Player is in
+	 * @param display to display the message
+	 */
 	private void effects(Action lastAction, GameMap map, Display display) {
 
 		if (this.hasCapability(Status.POWERSTAR)) {
@@ -200,7 +230,7 @@ public class Player extends Actor implements Resettable {
 						map.removeActor(enemy);
 					}
 					remainingAura -= auraDamage;
-				};
+				}
 				if (remainingAura <= 0) {
 					removeEffect(Status.AURA);
 					display.println("Aura depleted");
@@ -221,6 +251,11 @@ public class Player extends Actor implements Resettable {
 
 	}
 
+	/**
+	 * Method to remove the effect on the Player
+	 *
+	 * @param effect the effect that wants to be removed
+	 */
 	private void removeEffect(Enum<?> effect) {
 
 		if (effect.equals(Status.POWERSTAR)) {
@@ -241,32 +276,41 @@ public class Player extends Actor implements Resettable {
 			this.removeCapability(Status.FREEZE);
 		}
 	}
+
+	/**
+	 * Method to display the fountain capacity
+	 *
+	 * @param display message to display
+	 * @param map map where the fountain is located
+	 */
 	private void capacityFountain(Display display, GameMap map){
 		Location locate = map.locationOf(this);
 		String text="";
 
-		for(int i = 0; i<locate.getItems().size();i++){
-			if(locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
-				text +=this + " Health Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
-				}
-			else if(locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0) {
+		for (int i = 0; i<locate.getItems().size();i++) {
+			if (locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
+				text +="Health Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+			}
+			else if (locate.getItems().get(i).hasCapability(Status.HEAL) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0) {
 				//this.healthFoundTicker += 1;
 				text +="Health Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
-				//if (this.healthFoundTicker % 5 == 0) {
+				// if (this.healthFoundTicker % 5 == 0) {
 					//((Fountains) locate.getItems().get(i)).setCapacity();
 				//}
+			}
 
-			}if(locate.getItems().get(i).hasCapability(Status.INDMG )  && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
-				text+=this + " Power Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
-			}else if(locate.getItems().get(i).hasCapability(Status.INDMG) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0){
+			if (locate.getItems().get(i).hasCapability(Status.INDMG )  && ((Fountains)locate.getItems().get(i) ).getCapacity()>0){
+				text+= "Power Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
+			}
+			else if (locate.getItems().get(i).hasCapability(Status.INDMG) && ((Fountains)locate.getItems().get(i) ).getCapacity()<=0){
 				//this.powerFoundTicker+=1;
 				text +="Power Fountain " + ((Fountains)locate.getItems().get(i) ).getCapacity()+"/10";
 				//if (this.powerFoundTicker % 5 == 0) {
 					//((Fountains) locate.getItems().get(i)).setCapacity();
 				//}
-
 			}
-		}display.println(text);
+		}
+		display.println(text);
 	}
 
 
@@ -279,12 +323,9 @@ public class Player extends Actor implements Resettable {
 	 * @return List of jump action
 	 */
 	public List<Action> addJump(GameMap map) {
-		ArrayList<Action> actions = new ArrayList<Action>();
+		ArrayList<Action> actions = new ArrayList<>();
 
-		int x = map.locationOf(this).x();
-		int y = map.locationOf(this).y();
-
-		List<Character> highGrounds = new ArrayList<Character>();
+		List<Character> highGrounds = new ArrayList<>();
 		highGrounds.add('#');
 		highGrounds.add('+');
 		highGrounds.add('t');
@@ -313,9 +354,14 @@ public class Player extends Actor implements Resettable {
 			this.removeCapability(this.capabilitiesList().get(i));
 
 		}
-		this.resetMaxHp(100); // heal to maximum
+		this.resetMaxHp(1000); // heal to maximum
 	}
 
+	/**
+	 * A getter method to get the Yoshi object
+	 *
+	 * @return yoshi
+	 */
 	public Yoshi getYoshi() {
 		return yoshi;
 	}
@@ -325,9 +371,13 @@ public class Player extends Actor implements Resettable {
 		return new IntrinsicWeapon(this.damage, " punch ");
 
 	}
+
+	/**
+	 * Method to increase the Player base damage
+	 *
+	 * @param newDmg how much damage that wants to be increased by
+	 */
 	public void setDamage(int newDmg){
 		this.damage+=newDmg;
 	}
-
-
 }

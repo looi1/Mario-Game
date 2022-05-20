@@ -11,13 +11,11 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.FollowBehaviour;
+import game.enemies.Bowser;
 import game.enemies.Goomba;
 import game.enemies.Koopa;
 import game.ground.*;
-import game.items.PowerStar;
-import game.items.StinkBug;
-import game.items.SuperMushroom;
-import game.items.Wrench;
+import game.items.*;
 import game.WarpPipe;
 
 /**
@@ -117,7 +115,8 @@ public class Application {
 				gameMap1.at(x,y).addItem(new StinkBug(gameMap1));
 			}
 
-			
+			gameMap1.at(42,10).addItem(new HealthFountain());
+			gameMap1.at(43,10).addItem(new PowerFountain());
 
 			gameMap1.at(44,9).addItem(new PowerStar());
 			gameMap1.at(44,9).addItem(new SuperMushroom());
@@ -128,6 +127,9 @@ public class Application {
 			gameMap1.at(31,9).addActor(new Koopa());
 			// gameMap1.at(30,10).addActor(new Koopa());
 			// gameMap1.at(29,10).addActor(new Koopa());
+
+			gameMap2.at(12,2).addActor(new PrincessPeach());
+			gameMap2.at(13,2).addActor(new Bowser(13,10));
 
 			Wallet.totalBalance = 10000;
 

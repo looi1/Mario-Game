@@ -26,7 +26,6 @@ public class Toad extends Actor{
 
 	/**
 	 * Add a BuyAction for each of the sold items, and a SpeakAction.
-	 * 
 	 */
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		ActionList actions = new ActionList();
@@ -43,6 +42,10 @@ public class Toad extends Actor{
 			actions.add(new BuyAction(new FreezePotion()));
 			actions.add(new BuyAction(new StinkBug(map)));
 			actions.add(new SpeakAction(false));
+
+			if (!(otherActor.hasCapability(Status.HAS_BOTTLE))){
+				actions.add(new BuyAction(new Bottle()));
+			}
 		}
 		return actions;
 	}
@@ -50,11 +53,5 @@ public class Toad extends Actor{
 	public Action playTurn(ActionList actionList, Action action, GameMap gameMap, Display display) {
 		return new DoNothingAction();
 	}
-
-	
-
-
-
-
 }
 
