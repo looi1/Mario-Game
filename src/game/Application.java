@@ -4,19 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
-import game.behaviours.AttackBehaviour;
-import game.behaviours.FollowBehaviour;
 import game.enemies.Bowser;
-import game.enemies.Goomba;
 import game.enemies.Koopa;
 import game.ground.*;
 import game.items.*;
-import game.WarpPipe;
+import game.ground.WarpPipe;
 
 /**
  * The main class for the Mario World game.
@@ -134,9 +130,5 @@ public class Application {
 			Wallet.totalBalance = 10000;
 
 			world.run();
-
-
-
-
 	}
 }
