@@ -1,28 +1,30 @@
 package game.actions;
 
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.behaviours.Behaviour;
-import game.items.Bottle;
-import game.items.Sellable;
+import game.Status;
 import game.Wallet;
+import game.items.Bottle;
+
+import java.nio.file.StandardCopyOption;
+
 /**
- * Action for buying items
+ * An ObtainItemAction Class that represents Action for obtaining items
  */
-public class BuyAction extends Action {
+public class ObtainItemAction extends Action {
 
     /**
-     * Item that can be sold
+     * Item that can be obtained
      */
-    private final Sellable item;
-    
+    private final Item item;
+
     /**
      * Constructor
      * @param item to be sold
      */
-    public BuyAction(Sellable item) {
+    public ObtainItemAction (Item item) {
         this.item = item;
     }
 
@@ -35,12 +37,13 @@ public class BuyAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (item.getPrice() <= Wallet.totalBalance) {
-            Wallet.totalBalance -= item.getPrice();
-            actor.addItemToInventory((Item) item);
-            return "Bought " + item;
+        if (this.item instanceof Bottle) {
+            if (!(actor.getInventory().contains(this.item))){
+                actor.addItemToInventory(this.item);
+            }
+            return "Mario obtained Magical Bottle from Toad";
         } else {
-            return "You don't have enough coins!";
+            return "You already have a magical bottle in your inventory!";
         }
     }
 
@@ -52,8 +55,6 @@ public class BuyAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return "Buy " + item + " ($" + item.getPrice() + ")" ;
+        return "Obtain " + this.item;
     }
-
-    
 }

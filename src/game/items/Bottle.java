@@ -10,13 +10,13 @@ import game.reset.Resettable;
 import java.util.ArrayList;
 
 /**
- * A Bottle class to store the magical waters that represents Item and implements Sellable, Consumable and Resettable
+ * A Bottle class to store the magical waters that represents Item and implements Consumable and Resettable
  *
  * @see edu.monash.fit2099.engine.items.Item
  * @see game.items.Sellable
  * @see game.items.Consumable
  */
-public class Bottle extends Item implements Sellable, Consumable, Resettable {
+public class Bottle extends Item implements Consumable, Resettable {
     /**
      * An ArrayList that contains the magical waters and act as a Stack
      */
@@ -40,14 +40,6 @@ public class Bottle extends Item implements Sellable, Consumable, Resettable {
     @Override
     public Enum<?> getConsumeStatus() {
         return null;
-    }
-
-    /**
-     * Get price of the item
-     */
-    @Override
-    public int getPrice() {
-        return 0;
     }
 
     /**

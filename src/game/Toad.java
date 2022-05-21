@@ -44,7 +44,7 @@ public class Toad extends Actor{
 			actions.add(new SpeakAction(false));
 
 			if (!(otherActor.hasCapability(Status.HAS_BOTTLE))){
-				actions.add(new BuyAction(new Bottle()));
+				actions.add(new ObtainItemAction(new Bottle()));
 			}
 		}
 		return actions;
